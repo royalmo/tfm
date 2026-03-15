@@ -298,3 +298,5 @@ TSWLatexianTemp*
 #*Notes.bib
 
 .vscode
+
+*.xmpdata
