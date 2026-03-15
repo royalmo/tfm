@@ -1,13 +1,13 @@
 # Default option creates the pdf and removes all texlive "junk".
 
-.PHONY: clean remove-pdf purge default redo
+.PHONY: clean remove-pdf purge default redo trigger-pdf-redo
 
 IMAGE_FILES := $(shell find images -type f 2>/dev/null)
 MISC_FILES := $(shell find misc -type f 2>/dev/null)
 
 default: thesis.pdf clean
 
-redo: remove-pdf thesis.pdf clean
+redo: trigger-pdf-redo thesis.pdf clean
 
 thesis.pdf: thesis.tex chapters/*.tex include/* $(IMAGE_FILES) $(MISC_FILES)
 	pdflatex thesis.tex
@@ -20,5 +20,8 @@ clean:
 
 remove-pdf:
 	rm thesis.pdf
+
+trigger-pdf-redo:
+	touch thesis.tex
 
 purge: remove-pdf clean
