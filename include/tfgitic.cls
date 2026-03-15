@@ -274,20 +274,25 @@ round-pad=false]{siunitx}[>v3]
     \thispagestyle{empty}
     \if@creativecommons
     \begin{minipage}{1.0\linewidth}
-      \iflanguage{english}{
-        \large This work is licensed under the Creative Commons
-        Attribution-NonCommercial-ShareAlike 4.0 License. To view
-        a copy of this license, visit
-        \url{https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode}
-        or send a letter to Creative Commons, PO Box 1866,
-        Mountain View, CA 94042, USA.}{}
-      \iflanguage{catalan}{
+      % \iflanguage{catalan}{} was giving me problems because in my LaTeX
+      % installation both English and Catalan were mapped to the same
+      % language id (0). \if@catalanlang makes it more robust and allows lazy
+      % people like me to avoid reinstalling or fixing the LaTeX environment.
+      \if@catalanlang
         \large Aquesta obra està subjecta a una llicència
         Attribution-NonCommercial-ShareAlike 4.0 de Creative
         Commons. Per veure'n una còpia, visiteu
         \url{https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.es}
         o envieu una carta a Creative Commons, 171 Second Street, Suite
-        300, San Francisco, California 94105, USA.}{}
+        300, San Francisco, California 94105, USA.
+      \else
+        \large This work is licensed under the Creative Commons
+        Attribution-NonCommercial-ShareAlike 4.0 License. To view
+        a copy of this license, visit
+        \url{https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode}
+        or send a letter to Creative Commons, PO Box 1866,
+        Mountain View, CA 94042, USA.
+      \fi
     \end{minipage}
     \else
     \mbox{}
@@ -316,8 +321,7 @@ round-pad=false]{siunitx}[>v3]
     \vskip 3cm
     \begin{center}
       \Large
-      \iflanguage{english}{\textbf{Acknowledgments}}{}
-      \iflanguage{catalan}{\textbf{Agraïments}}{}
+    \if@catalanlang\textbf{Agraïments}\else\textbf{Acknowledgments}\fi
     \end{center}
     \medskip
     \ackmsg
@@ -390,11 +394,11 @@ round-pad=false]{siunitx}[>v3]
 
 
 % enumeracions amb parèntesi (només en català)
-\iflanguage{catalan}{
+\if@catalanlang
   \renewcommand{\labelenumi}{\arabic{enumi})}
   \renewcommand{\labelenumii}{\alph{enumii})}
   \renewcommand{\labelenumiii}{\roman{enumiii})}
-}
+\fi
 
 \newcommand{\acro}[1]{\textsc{#1}}
 \newcommand{\est}[1]{\textit{#1}}
