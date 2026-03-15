@@ -17,7 +17,8 @@ TODO (write when more ready)
 
 ## Build
 
-Generate the PDF or pick one from the releases page.
+Generate the PDF locally, or download it from GitHub Actions artifacts or the
+releases page.
 
 ### Installation (linux)
 
@@ -56,3 +57,14 @@ make
 This generates `thesis.pdf` in the repository root.
 
 You can run `make redo` to generate a pdf even if one has already been created.
+
+## Download PDF from GitHub
+
+On every push to `main`, GitHub Actions runs the `Build Thesis PDF` workflow and
+uploads a timestamped PDF artifact.
+
+To download it:
+
+1. Go to the **Actions** tab in this repository.
+2. Open a recent `Build Thesis PDF` run.
+3. Download the `thesis-<utc-timestamp>-<commit-sha>` artifact from the run summary.
