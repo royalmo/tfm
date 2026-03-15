@@ -1,0 +1,61 @@
+\chapter{Current Results, Gaps, and Risks}
+
+\section{Status snapshot}
+
+At this draft stage, the thesis has:
+
+\begin{itemize}
+    \item completed and published forward-solving baseline,
+    \item functional Duckietown integration prototype,
+    \item functional inverse-estimation prototype pipeline.
+\end{itemize}
+
+\section{What is already supported by evidence}
+
+Evidence is currently strongest for:
+
+\begin{enumerate}
+    \item scalability gains of approximate GOOP solving
+    \cite{delasheras:2025},
+    \item end-to-end feasibility of the manager--bridge--adapter architecture,
+    \item operational preference-order inference workflow.
+\end{enumerate}
+
+\section{What is still missing for final claims}
+
+The following pieces are still needed for final thesis-level conclusions:
+
+\begin{itemize}
+    \item broader quantitative integration benchmarks,
+    \item larger and noisier inverse-estimation benchmark sets,
+    \item tighter cross-validation between simulation and embodied runs.
+\end{itemize}
+
+\section{Main technical risks}
+
+\begin{enumerate}
+    \item inverse search scalability with larger objective sets,
+    \item runtime sensitivity to communication delays,
+    \item scenario overfitting if benchmark diversity remains limited.
+\end{enumerate}
+
+\section{Risk mitigation}
+
+Planned mitigation actions:
+
+\begin{itemize}
+    \item prioritize one primary benchmark protocol before adding variants,
+    \item enforce fixed configuration templates for comparison,
+    \item add stress-test suites early to detect integration bottlenecks.
+\end{itemize}
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\parbox{0.92\linewidth}{
+    \textbf{Placeholder figure: Progress tracker.}
+    A progress bar chart for SP1/SP2/SP3 with completed items, ongoing items,
+    and remaining validation tasks.
+    }}
+    \caption{Current maturity and remaining work by thesis subproblem.}
+    \label{fig:progress_tracker}
+\end{figure}

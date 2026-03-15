@@ -1,0 +1,169 @@
+\chapter{Introduction}
+
+\section*{Motivation}
+
+Autonomous driving systems repeatedly face decisions that cannot be reduced to a
+single scalar objective. In practice, an autonomous agent must simultaneously
+reason about safety, traffic rules, comfort, and task completion. These
+objectives often conflict, and the conflicts are contextual: what is considered a
+reasonable trade-off in a highway setting may be unacceptable in dense urban
+traffic. This creates a central modeling challenge: how should an autonomous
+agent represent and compute decisions when some objectives have strict priority
+over others?
+
+Games of ordered preference (GOOPs) provide a principled formulation for this
+setting by combining multi-agent interaction with lexicographic objective
+hierarchies \cite{lee:2025}. Instead of assigning fixed scalar weights to all
+objectives, GOOPs encode priority order directly. This makes the formulation
+closer to rule-based driving requirements and to how human experts reason about
+non-negotiable versus negotiable constraints.
+
+The main downside is computational cost. As the number of agents, horizon
+length, or preference levels increases, the induced optimization problems become
+hard to solve online. Recent work has shown that approximate methods based on
+iterated best response (IBR) can provide strong practical performance in this
+regime \cite{delasheras:2025}. This thesis starts from that contribution and
+extends it toward deployment and estimation.
+
+\section*{From paper to thesis}
+
+This master thesis is organized around four artifacts that represent successive
+stages of the same research line:
+
+\begin{enumerate}
+    \item The paper \emph{Approximate solutions to games of ordered preference},
+    which introduces lexicographic IBR over time as an efficient approximate
+    solver in receding horizon \cite{delasheras:2025}.
+    \item The \texttt{patos} project, which integrates the paper's planning
+    concepts into Duckietown robotics software, connecting optimization outputs
+    to real-time robot control.
+    \item The \texttt{InverseGoopSolver} project, which explores inverse and
+    decentralized estimation workflows on top of the same GOOP library.
+    \item An ongoing follow-up manuscript (targeting RA-L) focused on inference
+    of preference relations from partial observations in interactive driving-like
+    scenarios.
+\end{enumerate}
+
+The thesis objective is not only to summarize these artifacts independently, but
+to connect them into a coherent progression:
+
+\begin{center}
+\emph{efficient forward solving $\rightarrow$ embodied multi-robot integration
+$\rightarrow$ inverse preference estimation.}
+\end{center}
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\parbox{0.92\linewidth}{
+    \textbf{Placeholder figure: Thesis pipeline.} A visual summary showing four
+    blocks and data flow: (1) GOOP theory and lexicographic IBR over time,
+    (2) software package LEXIBROverTime.jl, (3) Duckietown integration in
+    \texttt{patos}, and (4) inverse preference-order estimation in
+    \texttt{InverseGoopSolver} and the ongoing RA-L manuscript.
+    }}
+    \caption{End-to-end research pipeline addressed by this thesis.}
+    \label{fig:intro_pipeline}
+\end{figure}
+
+\section*{Problem statement}
+
+The broad problem addressed by this thesis is:
+
+\begin{quote}
+How can we make lexicographically structured multi-agent planning practical for
+interactive autonomous systems when both \emph{computation} and \emph{information}
+are limited?
+\end{quote}
+
+This broad problem decomposes into two practical bottlenecks:
+
+\begin{description}
+    \item[Computation bottleneck.] Exact or tightly coupled formulations of
+    GOOPs can be expensive to solve in receding horizon, especially when
+    preference hierarchies are deep and interactions are strongly coupled
+    \cite{lee:2025}.
+    \item[Information bottleneck.] In realistic environments, an agent does not
+    directly observe the preference hierarchy of others. Even if a forward solver
+    is efficient, using it in mixed-traffic settings requires some form of
+    inverse estimation of hidden preference structure.
+\end{description}
+
+The first bottleneck is the main contribution of the published paper
+\cite{delasheras:2025}. The second bottleneck motivates the ongoing extension
+work in \texttt{InverseGoopSolver} and the follow-up manuscript.
+
+\section*{Scope of this draft}
+
+This document is intentionally written as a \emph{strong first master-thesis
+draft}. Some work packages are still under active development, so the current
+version emphasizes:
+
+\begin{itemize}
+    \item coherent formulation and notation,
+    \item reproducible software architecture,
+    \item clear methodology for upcoming experiments,
+    \item transparent separation between completed and ongoing results.
+\end{itemize}
+
+Final quantitative comparisons for all extensions are not yet complete at the
+time of writing. Therefore, this version includes preliminary discussion and an
+explicit completion roadmap instead of definitive final conclusions.
+
+\section*{Contributions of this thesis draft}
+
+At this stage, the thesis contributes the following integrated narrative:
+
+\begin{enumerate}
+    \item A unified presentation of GOOP modeling and lexicographic IBR over
+    time, grounded in the published paper and adapted to thesis-level detail.
+    \item A system-level description of how the method is bridged into a
+    Duckietown control stack (ROS nodes, Julia solver bridge, state-feedback
+    loop, and safety fallbacks).
+    \item A structured report of inverse estimation prototypes that test
+    centralized, decentralized, and preference-order identification workflows on
+    top of the same planning core.
+    \item A concrete plan to transition from software prototypes to final
+    thesis-grade experimental evidence and final manuscript conclusions.
+\end{enumerate}
+
+\section*{Thesis structure}
+
+The rest of this manuscript is organized as follows.
+
+\begin{itemize}
+    \item Chapter~2 defines research objectives, questions, and expected
+    deliverables.
+    \item Chapter~3 reviews related work on prioritized objectives,
+    game-theoretic planning, and inverse estimation.
+    \item Chapter~4 introduces the technical formulation used across the thesis:
+    trajectory games, lexicographic optimization, and GOOPs in receding horizon.
+    \item Chapter~5 details the paper-based contribution on approximate GOOP
+    solutions with lexicographic IBR over time.
+    \item Chapter~6 presents the Duckietown integration in \texttt{patos}.
+    \item Chapter~7 presents the \texttt{InverseGoopSolver} extension and current
+    estimation workflows.
+    \item Chapter~8 maps the ongoing RA-L direction on preference estimation from
+    partial observations.
+    \item Chapter~9 summarizes current status, preliminary findings, and
+    limitations.
+    \item Chapter~10 provides the completion roadmap for the final thesis
+    version.
+\end{itemize}
+
+\section*{Positioning within current research}
+
+This thesis sits at the intersection of three active lines of work:
+
+\begin{enumerate}
+    \item \textbf{prioritized decision-making} in autonomous systems
+    \cite{zanardi:2022,lee:2025},
+    \item \textbf{efficient trajectory-game computation} in receding horizon
+    \cite{hall:2022,hall:2024,laine:2023}, and
+    \item \textbf{inverse multi-agent inference} from partial observations
+    \cite{peters:2023,li:2023,liu:2024}.
+\end{enumerate}
+
+The core thesis claim is that these lines are more useful when treated as one
+continuous pipeline rather than isolated topics: forward planning methods should
+be designed with deployment constraints in mind, and deployment-ready systems
+should naturally expose interfaces for inverse estimation.

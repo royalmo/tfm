@@ -1,0 +1,84 @@
+\chapter{Mathematical Foundations}
+
+\section{Trajectory-game model}
+
+Let $i \in [N]$ index agents. At time $t$, each agent state is
+$x_t^i \in \mathcal{X}^i$, control is $u_t^i \in \mathcal{U}^i$, and decision
+variable is $z_t^i = [x_t^i, u_t^i]$. Over horizon $T$, trajectory
+$\mathbf{z}^i = \{z_0^i,\dots,z_{T-1}^i\}$.
+
+A constrained trajectory game for agent $i$ is:
+\begin{equation}
+\begin{aligned}
+\min_{\mathbf{z}^i} \quad & J^i(\mathbf{z}^i,\mathbf{z}^{-i};\theta^i) \\
+\text{s.t.}\quad & x_{t+1}^i = f^i(x_t^i,u_t^i), \\
+& x_0^i = \hat{x}_0^i, \\
+& g^i(\mathbf{z})=0,\; h^i(\mathbf{z})\ge0, \\
+& g^s(\mathbf{z})=0,\; h^s(\mathbf{z})\ge0.
+\end{aligned}
+\label{eq:traj_game_foundation}
+\end{equation}
+
+\section{Ordered preferences and lexicographic optimization}
+
+Each agent has an ordered objective list
+$\{J_1^i, J_2^i, \dots, J_{K^i}^i\}$, where lower index means higher priority.
+GOOP solutions enforce strict precedence through nested optimization
+\cite{lee:2025}:
+\begin{equation}
+\begin{aligned}
+\min_{\mathbf{z}_{K^i}^i} \;& J_{K^i}^i(\mathbf{z}_{K^i}^i,\mathbf{z}^{-i}) \\
+\text{s.t.}\;& \mathbf{z}_{K^i}^i \in \arg\min_{\mathbf{z}_{K^i-1}^i} J_{K^i-1}^i(\cdot), \\
+& \vdots \\
+& \mathbf{z}_2^i \in \arg\min_{\mathbf{z}_1^i} J_1^i(\mathbf{z}_1^i,\mathbf{z}^{-i}),
+\end{aligned}
+\label{eq:goop_nested_foundation}
+\end{equation}
+plus private and shared feasibility constraints.
+
+\section{Receding-horizon execution}
+
+Long-horizon solves are split into repeated short-horizon solves of length $T$
+with execution chunk $T_l \le T$ \cite{christophersen:2007,hall:2022}. At each
+step:
+
+\begin{enumerate}
+    \item measure current joint state,
+    \item solve GOOP over window $T$,
+    \item execute first $T_l$ controls,
+    \item shift and repeat.
+\end{enumerate}
+
+\section{Lexicographic IBR over time}
+
+The baseline method used in this thesis is lexicographic IBR over time
+\cite{delasheras:2025}:
+
+\begin{itemize}
+    \item decompose multi-agent GOOP into per-agent lexicographic best
+    responses,
+    \item iterate best responses for a bounded number of rounds $L$,
+    \item warm start each step with shifted trajectories from previous solves.
+\end{itemize}
+
+This introduces a runtime-quality trade-off controlled by $L$ and makes larger
+receding-horizon problems tractable in practice.
+
+\section{Bridge to inverse estimation}
+
+The same model supports inverse questions: if objective primitives are known but
+ordering is unknown, estimate ordering by matching predicted and observed
+behavior over an identification horizon. This bridge is central to the
+\texttt{InverseGoopSolver} extension.
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\parbox{0.92\linewidth}{
+    \textbf{Placeholder figure: Forward/inverse shared model.}
+    Diagram showing that forward solving and inverse estimation share dynamics,
+    constraints, and objective primitives, differing mainly in which variables
+    are optimized versus inferred.
+    }}
+    \caption{Shared mathematical core across thesis work packages.}
+    \label{fig:shared_core}
+\end{figure}

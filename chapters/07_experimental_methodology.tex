@@ -1,0 +1,84 @@
+\chapter{Experimental Methodology}
+
+\section{Evaluation philosophy}
+
+The thesis evaluation strategy is incremental:
+
+\begin{enumerate}
+    \item validate solver behavior in controlled simulation,
+    \item validate software integration under runtime constraints,
+    \item validate inverse estimation quality under increasing uncertainty.
+\end{enumerate}
+
+This staged methodology prevents mixing algorithmic and systems failures in a
+single experiment.
+
+\section{Evaluation dimensions}
+
+Three dimensions are measured across work packages:
+
+\begin{itemize}
+    \item \textbf{efficiency}: solve time and runtime overhead,
+    \item \textbf{behavior}: safety/goal/lane metrics and qualitative
+    trajectory signatures,
+    \item \textbf{estimation}: preference-order identification quality and
+    downstream prediction impact.
+\end{itemize}
+
+\section{Forward-solver benchmarks}
+
+For forward solving, the baseline metrics from \cite{delasheras:2025} are reused
+and extended:
+
+\begin{itemize}
+    \item solve time per receding-horizon step,
+    \item compile/setup overhead,
+    \item convergence or stabilization behavior versus IBR rounds.
+\end{itemize}
+
+\section{Integration benchmarks}
+
+For \texttt{patos}, planned metrics include:
+
+\begin{itemize}
+    \item manager cycle consistency,
+    \item solver timeout/fallback rate,
+    \item command tracking and safety-clearance indicators,
+    \item behavior under multi-robot load.
+\end{itemize}
+
+\section{Inverse-estimation benchmarks}
+
+For \texttt{InverseGoopSolver}, planned metrics include:
+
+\begin{itemize}
+    \item exact-match rate of inferred order,
+    \item rank-distance metrics between inferred and true order,
+    \item trajectory mismatch before/after estimation,
+    \item robustness against observation noise and partial state access.
+\end{itemize}
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\parbox{0.92\linewidth}{
+    \textbf{Placeholder figure: Metric dashboard layout.}
+    Panel view with efficiency, safety/behavior, and estimation metrics to be
+    reported uniformly across experiments.
+    }}
+    \caption{Planned unified metric dashboard for final results chapters.}
+    \label{fig:metric_dashboard}
+\end{figure}
+
+\section{Reproducibility protocol}
+
+To keep comparisons reliable, each final experiment set will record:
+
+\begin{itemize}
+    \item exact configuration parameters,
+    \item software commit references,
+    \item random seeds,
+    \item generated plots and serialized summary artifacts.
+\end{itemize}
+
+This protocol will be used for both simulation runs and embodied Duckietown
+experiments.

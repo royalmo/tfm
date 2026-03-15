@@ -1,0 +1,84 @@
+\chapter{Published Baseline: Approximate GOOP Solving}
+
+\section{Chapter role}
+
+This chapter documents the completed and published foundation of the thesis:
+\emph{Approximate solutions to games of ordered preference}
+\cite{delasheras:2025}. The rest of the manuscript extends this baseline rather
+than replacing it.
+
+\section{Core idea}
+
+The published method combines receding horizon with lexicographic IBR over time
+for approximate GOOP solving. The motivation is to avoid the cost of repeatedly
+solving a tightly coupled multi-agent lexicographic program at each control
+cycle.
+
+\section{Algorithmic structure}
+
+For each receding-horizon step:
+
+\begin{enumerate}
+    \item initialize trajectory predictions for all agents from shifted previous
+    solutions,
+    \item run bounded IBR rounds,
+    \item in each round, each agent solves its lexicographic best-response
+    subproblem against fixed predictions,
+    \item aggregate resulting controls and execute the next segment.
+\end{enumerate}
+
+This process keeps preference semantics explicit while reducing per-step
+computational burden.
+
+\section{Implementation and tooling}
+
+The implementation is in Julia \cite{julia} and uses the GOOP ecosystem around
+TrajectoryGamesBase.jl \cite{peters:2024a}, ParametricMCPs.jl
+\cite{peters:2025}, and PATH-backed complementarity solving
+\cite{dirkse:1995}. The released package is LEXIBROverTime.jl \cite{code}.
+
+\section{Representative results}
+
+The paper reports substantial runtime gains compared to a tightly coupled
+baseline while preserving approximate solution quality over practical iteration
+budgets.
+
+\begin{table}[tbp]
+\centering
+\caption{Representative values reported in \cite{delasheras:2025}.}
+\label{tab:published_runtime}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{$K=2$} & \multicolumn{2}{c}{$K=3$} \\
+\cmidrule(r){2-3}\cmidrule(l){4-5}
+Method & Solve time [s] & $L_1$ distance & Solve time [s] & $L_1$ distance \\
+\midrule
+Baseline & 44.51 & -- & 2676.00 & -- \\
+$L=1$ & 0.36 & $3.28\times10^{-4}$ & 0.32 & $5.45\times10^{-4}$ \\
+$L=2$ & 0.59 & $1.22\times10^{-5}$ & 0.63 & $6.56\times10^{-5}$ \\
+$L=5$ & 1.39 & $1.78\times10^{-6}$ & 1.20 & $4.96\times10^{-5}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{What is reused in this thesis}
+
+This baseline contributes the reusable components adopted in later chapters:
+
+\begin{itemize}
+    \item receding-horizon execution interface,
+    \item trajectory warm-start logic,
+    \item lexicographic objective structure,
+    \item solver hyperparameterization and diagnostics.
+\end{itemize}
+
+\section{Open points left by the paper}
+
+The paper leaves two practical gaps addressed by the MSc thesis:
+
+\begin{enumerate}
+    \item deployment-level integration with physical/simulated robots,
+    \item inverse estimation of hidden preference structure.
+\end{enumerate}
+
+These are exactly the focus of the following chapters.

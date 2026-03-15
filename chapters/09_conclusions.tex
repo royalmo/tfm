@@ -1,0 +1,101 @@
+\chapter{Current Status and Preliminary Discussion}
+
+\section{Purpose of this chapter}
+
+Because part of the thesis work is still ongoing, this chapter intentionally
+provides a \emph{status-oriented discussion} instead of a final conclusion
+chapter. The goal is to make progress explicit, identify current evidence, and
+highlight what remains to reach thesis completion.
+
+\section{Status by work package}
+
+Table~\ref{tab:status_matrix} summarizes the current maturity of each work
+package.
+
+\begin{table}[tbp]
+\centering
+\caption{Current status matrix (draft stage).}
+\label{tab:status_matrix}
+\begin{tabular}{@{}p{0.22\linewidth}p{0.2\linewidth}p{0.5\linewidth}@{}}
+\toprule
+Work package & Status & Evidence available in this draft \\
+\midrule
+WP1: Approximate GOOP solving (paper) & Completed & Formal method, implementation, and published-style quantitative results \cite{delasheras:2025}. \\
+WP2: Duckietown integration (\texttt{patos}) & Functional prototype & End-to-end software architecture, manager/adapter/bridge loop, deployment scripts, and test workflow documentation. \\
+WP3: Inverse estimation (\texttt{InverseGoopSolver}) & Exploratory prototype & Centralized/decentralized runners and candidate-based preference-order inference workflow with reproducible outputs. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{What is already demonstrated}
+
+At this stage, the thesis already supports the following claims with concrete
+artifacts:
+
+\begin{enumerate}
+    \item Approximate lexicographic IBR over time can drastically reduce solve
+    time versus tightly coupled baseline solves in representative GOOP scenarios.
+    \item The same planning concepts can be integrated into a practical robotics
+    stack with clear interfaces and runtime safety fallbacks.
+    \item Preference-order estimation can be operationalized as a reproducible
+    inverse workflow on top of the same planning backbone.
+\end{enumerate}
+
+These claims are currently strongest for algorithmic feasibility and software
+architecture. They are weaker for broad statistical generalization, which
+requires additional experiments.
+
+\section{Main limitations of the current draft}
+
+The current draft has four important limitations:
+
+\begin{itemize}
+    \item \textbf{Incomplete WP2 quantitative evaluation.} Runtime robustness and
+    closed-loop quality metrics in broader multi-robot conditions are still being
+    collected.
+    \item \textbf{Incomplete WP3 statistical evaluation.} Preference-order
+    estimation is implemented but not yet benchmarked at the scale needed for
+    final claims.
+    \item \textbf{Combinatorial growth in inverse search.} Full permutation
+    testing does not scale to large objective sets.
+    \item \textbf{Partial integration of inverse methods with embodied tests.}
+    The full bridge from inverse estimation to real-robot execution remains
+    ongoing.
+\end{itemize}
+
+\section{Preliminary interpretation}
+
+Even with these limitations, the current evidence suggests that the thesis
+pipeline is coherent:
+
+\begin{itemize}
+    \item the forward method is fast enough to support repeated replanning,
+    \item the software integration makes this method executable in a realistic
+    robotics loop,
+    \item inverse estimation can reuse the same formal objects and code
+    abstractions, reducing conceptual and implementation fragmentation.
+\end{itemize}
+
+This coherence is important: it indicates that final thesis value is likely to
+come from \emph{integration quality} as much as from any single algorithmic
+result.
+
+\section{Risks to final completion}
+
+The main risks between this draft and the final thesis submission are:
+
+\begin{enumerate}
+    \item delays in collecting stable WP2 multi-robot metrics,
+    \item insufficient statistical depth for WP3 evaluation,
+    \item scope creep in inverse-model variants before consolidating a primary
+    benchmark protocol.
+\end{enumerate}
+
+Mitigation actions are listed in the roadmap chapter.
+
+\section{Takeaway}
+
+This draft already establishes a strong technical baseline and integrated
+architecture. The final thesis effort is now concentrated on completion-quality
+evidence: broader experiments, consolidated metrics, and final synthesis across
+forward solving, deployment, and inverse estimation.

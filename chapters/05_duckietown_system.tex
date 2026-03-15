@@ -1,0 +1,95 @@
+\chapter{Duckietown System Integration (\texttt{patos})}
+
+\section{Objective}
+
+This chapter covers the engineering extension that brings the planning stack
+into an executable Duckietown workflow. The goal is robust closed-loop operation,
+not only offline trajectory generation.
+
+\section{Runtime architecture}
+
+The runtime is organized into three coordinated modules:
+
+\begin{enumerate}
+    \item manager node (state aggregation and acceleration publication),
+    \item Julia TCP bridge (receding-horizon solver service),
+    \item per-robot adapter node (acceleration-to-command conversion).
+\end{enumerate}
+
+\begin{figure}[tbp]
+    \centering
+    \fbox{\parbox{0.92\linewidth}{
+    \textbf{Placeholder figure: \texttt{patos} runtime architecture.}
+    Include ROS topics and TCP request/response path between manager and Julia
+    bridge.
+    }}
+    \caption{Runtime architecture of the \texttt{patos} integration.}
+    \label{fig:patos_runtime_arch}
+\end{figure}
+
+\section{Manager behavior}
+
+The manager supports multi-robot operation and can run in:
+
+\begin{itemize}
+    \item trajectory-sequence mode (CSV-driven),
+    \item Julia-solver mode (online solver queries).
+\end{itemize}
+
+In solver mode, it sends per-robot $(x,y,v_x,v_y,\theta)$ snapshots and
+receives $(a_x,a_y)$ commands. Error handling is explicit: on solver timeout or
+failure, the manager can publish zero acceleration or fallback controls depending
+on configuration.
+
+\section{Adapter behavior}
+
+Each adapter converts incoming acceleration vectors into bounded
+velocity/yaw-rate commands using an internal velocity-vector controller with
+state decay and heading correction. The adapter also publishes telemetry,
+including model state, command state, and optional encoder/wheel-command
+feedback.
+
+This makes the controller chain observable and debuggable for both simulation
+and physical runs.
+
+\section{Julia bridge details}
+
+The bridge maintains persistent context for receding-horizon progression and
+provides simple commands (e.g., \texttt{PING}, \texttt{STEP}, \texttt{RESET}).
+Internally it builds and solves a constrained multi-player planning problem with
+road, speed, and collision constraints plus goal-seeking objectives.
+
+\section{Deployment workflow}
+
+The repository includes scripts/UI for:
+
+\begin{itemize}
+    \item container build and launch,
+    \item code transfer to one or multiple robots,
+    \item starting/stopping manager and adapters,
+    \item telemetry inspection and map-level visualization.
+\end{itemize}
+
+\section{Validation path}
+
+Validation is layered:
+
+\begin{enumerate}
+    \item unit-level controller tests,
+    \item local simulation checks,
+    \item ROS container smoke tests,
+    \item real robot runs.
+\end{enumerate}
+
+This sequence reduces integration risk and supports repeatable debugging.
+
+\section{Current maturity}
+
+The system is functional and can run end-to-end. Remaining work for final thesis
+results is focused on broader scenario coverage and quantitative robustness
+metrics.
+
+\section{Positioning}
+
+This work extends simulation-first GOOP literature by providing a concrete
+systems bridge to an embodied platform \cite{duckietown:2017,delasheras:2025}.
