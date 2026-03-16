@@ -27,6 +27,9 @@ round-pad=false]{siunitx}[>v3]
 \RequirePackage[autostyle=true]{csquotes}
 \usetikzlibrary{svg.path}
 \hypersetup{hidelinks,bookmarksnumbered=true}
+% In some TeX Live/bookmark combinations, \BKM@entry can appear in .aux
+% before bookmark defines it on a rerun. Guard against that to keep latexmk stable.
+\providecommand\BKM@entry[2]{}
 
 % Les opcions de la classe
 \newif\if@creativecommons  \@creativecommonstrue
