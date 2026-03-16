@@ -61,10 +61,10 @@ You can run `make redo` to generate a pdf even if one has already been created.
 ## Download PDF from GitHub
 
 On every push to `main`, GitHub Actions runs the `Build Thesis PDF` workflow and
-uploads a timestamped PDF artifact.
+uploads a timestamped PDF as a direct (non-zipped) artifact.
 
 To download it:
 
 1. Go to the **Actions** tab in this repository.
 2. Open a recent `Build Thesis PDF` run.
-3. Download the `thesis-<utc-timestamp>-<commit-sha>` artifact from the run summary.
+3. Download the `thesis-<utc-timestamp>-<commit-sha>.pdf` file from the run summary.

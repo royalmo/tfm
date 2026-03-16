@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Compile thesis
         uses: xu-cheng/latex-action@v3
@@ -27,16 +27,14 @@ jobs:
         id: meta
         run: |
           TS="$(date -u +'%Y%m%d-%H%M%S')"
-          BASE="thesis-${TS}-${GITHUB_SHA}"
-          OUT="${BASE}.pdf"
+          OUT="thesis-${TS}-${GITHUB_SHA}.pdf"
           mv thesis.pdf "${OUT}"
-          echo "artifact_name=${BASE}" >> "${GITHUB_OUTPUT}"
           echo "output_file=${OUT}" >> "${GITHUB_OUTPUT}"
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: ${{ steps.meta.outputs.artifact_name }}
           path: ${{ steps.meta.outputs.output_file }}
+          archive: false
           if-no-files-found: error
           retention-days: 30
