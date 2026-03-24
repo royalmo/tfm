@@ -7,8 +7,8 @@
 
 \addbibresource{misc/thesis.bib}
 
-\title{Scalable Games of Ordered Preference for Interactive Autonomous Systems}
-\subtitle{From approximate receding-horizon solutions to Duckietown deployment and inverse preference-order estimation}
+\title{Estimating games of ordered preference}
+\subtitle{Scalable preference-order estimation for Interactive Autonomous Systems}
 
 \author[m]{Eric Roy-Almonacid}
 \advisor[M]{Georgios Bakirtzis and Aleix Llusa Serra}
@@ -19,7 +19,24 @@
 \topics{Autonomous Driving, Game-Theoretic Planning}
 
 \begin{acknowledgments}
-TODO
+I would like to thank my advisor, Georgios Bakirtzis, for introducing me into
+the research world and allowing me to attend a conference and a summer school.
+I also want to thank Pau de las Heras Molins for allowing me to work together
+in this exciting (but also intense) journey.
+This thesis would've never seen the light without you both.
+
+Moreover, this project wouldn't have seen the light if it wasn't for the
+wonderful team that helped Pau and I submit our first paper, allowed us to
+participate in their other projects, and gave feedback on our future works:
+David Fridovich-Keil, Lasse Peters, Dong Ho Lee, and Georgios Bakirtzis.
+
+I wish to thank too the board of the UPC-MERIT project and EPSEM's personnel to
+partially fund my attendance to the conference and summer school. 
+This work is partially supported by the E.U. Digital Europe Programme under grant
+DIGITAL-101083531-MERIT.
+
+Finally, I want to thank my family and friends for supporting my career and for
+understanding my lack of social life these past months.
 \end{acknowledgments}
 
 \begin{resum}
@@ -27,7 +44,19 @@ TODO
 \end{resum}
 
 \begin{abstract}
-TODO
+Autonomous vehicles must balance ranked objectives, such as minimizing travel
+time, ensuring safety, and coordinating with traffic.
+Games of ordered preference effectively model these interactions but become
+computationally intractable as the time horizon, number of players, or number
+of preference levels increase.
+Moreover, solving these games requires knowing the preferences of other agents.
+% While receding horizon frameworks mitigate long-horizon intractability by solving sequential shorter games,
+% often warm-started, they do not resolve the complexity growth inherent in existing methods for solving games of ordered preference.
+This thesis introduces a solution strategy that avoids excessive complexity growth by approximating solutions using
+lexicographic iterated best response in receding horizon, which uses past information to accelerate convergence.
+Some methods are proposed to infer the preference order of other agents based on past observations.
+The effectiveness of the proposed algorithms are demonstrated through simulated traffic scenarios, where approximate-optimal solutions for receding horizon games of ordered preference are computed, which converge towards generalized Nash equilibria.
+A test environment using Duckietown's environment.
 \end{abstract}
 
 \begin{document}
