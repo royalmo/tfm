@@ -1,2 +1,180 @@
 \chapter{Games of ordered preference}
 
+In this section, we review key concepts
+in trajectory games, lexicographic minimization,
+and games of ordered preference.
+
+\section{Notation}
+
+For any non-negative number \(n\), we define the set
+of integers \([n] \coloneq \{1, 2, \dots, n\}\).
+We use boldface to represent a time-indexed vector with length
+of a finite-time horizon game \(\mathbf{z} \coloneq \{z_0, z_1, \dots, z_{T_g-1}\}\).
+We time index this vector between \(t_0 \in \mathbb{N}\) and \(t_1 \in \mathbb{N}\)
+as the vector \(\mathbf{z}_{t_0:t_1} \coloneq \{z_{t_0}, z_{t_0+1}, \dots, z_{t_1}\}\).
+We use superscripts as in \(\square^i\) to to denote the agent \(i\in[N]\).
+Negation is used to include all agents but one,
+\(\square^{-i} \coloneq \square \setminus \square^i\).
+
+\section{Trajectory games}
+\label{sec:trajgames}
+
+Trajectory games are non-cooperative, multiagent,
+general-sum constrained dynamic games.
+Solutions to trajectory games amount to finding
+generalized Nash equilibrium (GNE) in which all agents
+adopt optimal discrete-time trajectories from which
+none can unilaterally deviate without incurring an increase in cost.
+In a trajectory game the state and action spaces for each agent \(i \in [N]\) are
+defined as \(\mathcal{X}^i \subseteq \mathbb{R}^n\)
+and \(\mathcal{U}^i \subseteq \mathbb{R}^m\) respectively,
+with states usually encoding the position
+of agents in the environment
+and actions encoding their control inputs.
+We assume that states and actions can be split by agent.
+At discrete-time step \(t\), the game decision
+of each agent, \(z_t^i = [x_t^i, u_t^i]\)
+is composed by the \(i\text{th}\) agents' current state, \(x_t^i \in \mathcal{X}^i\),
+and control input to be applied, \(u_t^i \in \mathcal{U}^i\), with the resulting
+decision space being \(\mathcal{Z}^i \subseteq \mathcal{X}^i \times \mathcal{U}^i\).
+We define the trajectory of each agent
+as a sequence of decisions \(\mathbf{z}^i = \{z_0^i, \dots, z_{T_g-1}^i\}\)
+over the time horizon of the game \(T_g\).
+
+An individual cost function \(J^i \colon \mathcal{Z}^{i} \times \mathcal{Z}^{-i}  \to \mathbb{R}\)
+encodes agent objectives over a trajectory,
+as well as a set of private equality, \(g^i\),
+and inequality, \(h^i\), constraints, with \(g^i \colon \mathcal{Z}^{i} \to \mathbb{R}\)
+and \(h^i \colon \mathcal{Z}^{i} \to \mathbb{R}\).
+Agents must also satisfy a set of shared equality, \(g^s\),
+and inequality, \(h^s\) constraints,
+that consider the global system state and for which all agents are equally responsible,
+with \(g^s \colon \mathcal{Z}^{i} \times \mathcal{Z}^{-i} \to \mathbb{R}\)
+and \(h^s \colon \mathcal{Z}^{i} \times \mathcal{Z}^{-i} \to \mathbb{R}\).
+Solutions consist
+of joint trajectories
+for all the agents, \(\mathbf{z}\).
+
+
+We can package the above as a generalized Nash equilibrium problem (GNEP) \cite{liu:2023}.
+For each agent \(i\), the open loop, complete information GNEP is defined as
+\begin{align}
+\begin{split}
+\minimize_{\mathbf{z}^i} \quad & J^i\left(\mathbf{z}^i, \mathbf{z}^{-i}; \theta^i \right) \\
+\text{subject to} \quad & \eqnmarkbox[olive]{dynamics}{x_{t+1}^i=f^i\left(x_t^i, u_t^i\right)\; \text{for all} \; t \in[T_g-1]} \\
+& \\ % Space for the annotation
+& \eqnmarkbox[gray]{initial}{x_1^i=\hat{x}_1^i} \\
+& g^i(\mathbf{z}) = 0 \\
+& h^i(\mathbf{z}) \geq 0 \\
+& \eqnmarkbox[brown]{shared1}{g^s\left(\mathbf{z}, \mathbf{z}^{-i}\right) = 0\!\:\:} \\[-.5em]
+& \eqnmarkbox[brown]{shared2}{h^s\left(\mathbf{z}, \mathbf{z}^{-i}\right) \geq 0.}
+\end{split}
+\label{eq:trajgame}
+\end{align}
+\annotate[yshift=.5em]{above,right}{dynamics}{dynamics}
+\annotate[xshift=1em,yshift=.5em]{right}{initial}{initial state}
+\annotate[yshift=-.5em]{below}{shared2}{shared constraints\\e.g., collision avoidance}
+
+\vspace{1.7em}\noindent
+The objective function, additionally parametrized by \(\theta^i\), and constraints
+take as arguments the trajectory \(\mathbf{z}\) of all agents,
+differentiating the \(i\text{th}\) agent trajectory \(\mathbf{z}^i\) from
+the others \(\mathbf{z}^{-i}\).
+
+\section{Lexicographic minimization}
+\label{sec:lexmin}
+
+For each \(k \in [K]\) let \(J_k \colon \mathbb{R}^n \to \mathbb{R}\)
+be the \(k\text{th}\) objective function
+of the decision variables residing
+within a feasible set \(\mathbf{z} \in \mathcal{Z}\).
+We define a total order \(\succcurlyeq_J\) on decision variables as follows:
+for any \(\mathbf{z}, \mathbf{z}' \in \mathcal{Z}\),
+we say that \(\mathbf{z} \succcurlyeq_J \mathbf{z}'\)
+if and only if \(\mathbf{z} = \mathbf{z}'\)
+or \(J_k(\mathbf{z}) < J_k(\mathbf{z}')\)
+for the smallest \(k\) such that \(J_k(\mathbf{z}) \neq J_k(\mathbf{z}')\).
+In other words, \(J_1\) holds the highest priority and \(J_K\) the lowest.
+
+A lexicographic minimum of a feasible set \(\mathcal{Z} \in \mathbb{R}^K\)
+is a decision variable \(\mathbf{z}^* \in \mathcal{Z}\)
+for which \(\mathbf{z} \preccurlyeq_J \mathbf{z}^*\) for all \(\mathbf{z} \in \mathcal{Z}\).
+Computing all lexicographic minima amounts
+to a nested optimization problem.
+The total order \(\succcurlyeq_J\) encodes a strict hierarchy, meaning
+that given any two decision variables \(\mathbf{z}_h, \mathbf{z}_l\),
+with \(h < l\), there exists a clear preference
+for one over the other, \(\mathbf{z}_h \succcurlyeq_J \mathbf{z}_l\)
+(we say \(\mathbf{z}_h\) has higher priority than \(\mathbf{z}_l\)),
+and no two priorities are
+at the same level of importance.
+
+\section{Games of ordered preference}
+\label{sec:goop}
+
+In a game of ordered preference agents pursue multiple,
+hierarchically ranked objectives.
+Unlike other games, where agents trade off objectives,
+here agents resolve conflicts through lexicographic minimization,
+strictly prioritizing goals. 
+
+At each preference level \(k \in [K^i]\), agent \(i\) selects a trajectory \(\mathbf{z}_k^i\)
+from a feasible set that is constrained by the lower (more prioritized) preference levels.
+Agents know the final trajectories
+of the other agents, \(\mathbf{z}^{-i}\),
+when optimizing at level \(k\).
+The game of ordered preference is equivalent
+to a lexicographic minimization problem that computes a GNE,
+where no agent can improve a higher-priority objective without
+violating constraints or compromising lower-priority goals.
+The solution to a game of ordered preference is found by jointly solving the following lexicographic minimization problem for each agent \(i\) across the \(K^i\) priority levels,
+\begin{align}
+\begin{split}
+\minimize_{\mathbf{z}^i_{K^i}}   &\; J^i_{K^i}\left(\mathbf{z}^i_{K^i}, \mathbf{z}^{-i}; \theta^i \right) \\
+\text{subject to} &\; \mathbf{z}^i_{K^i} \in \argmin_{\mathbf{z}^i_{K^i-1}}{J_{K^i-1}^i\left(\mathbf{z}^i_{K^i-1}, \mathbf{z}^{-i}; \theta^i\right)} \\[1em]
+                  & \qquad \qquad \text{\rotatebox[origin=c]{150}{$\ddots$}} \\
+                  &\; \text{subject to }\; \mathbf{z}^i_2 \in \argmin_{\mathbf{z}^i_1} \eqnmarkbox[olive]{p1}{J^i_1\left(\mathbf{z}^i_1, \mathbf{z}^{-i}; \theta^i \right)}\\
+                  &\qquad \text{subject to } \mathbf{z}_1^i \in \mathbb{R}^{n}\\[1em]
+                  &\qquad \qquad \text{such that } \eqnmarkbox[gray]{pc1}{g^i{\left(\mathbf{z}^i, \mathbf{z}^{-i}\right)} = 0,} \text{\;and}\\[-.5em]
+                  & \phantom{\qquad \qquad \text{such that }}  \eqnmarkbox[gray]{pc2}{h^i{\left(\mathbf{z}^i, \mathbf{z}^{-i}\right)} \geq 0\hspace{.215em}}\\
+                  &\; \text{such that } \eqnmarkbox[brown]{sc1}{g^s\left(\mathbf{z}\right) = 0,\hspace{0.065em}} \text{\;and}\\[-.5em]
+                  &\; \phantom{\text{such that }} \eqnmarkbox[brown]{sc2}{h^s\left(\mathbf{z}\right) \geq 0.}
+\label{eq:trajgoop}
+\end{split}
+\end{align}
+\annotate[yshift=.5em]{above}{pc1}{private constraints\\i.e., feasibility region}
+\annotate[yshift=-.5em]{below}{sc2}{shared constraints\\e.g., collision avoidance}
+\annotate[yshift=.5em]{above,left}{p1}{principal preference\\e.g., speed limit}
+
+\vspace{1.7em}\noindent
+
+The optimal solution for each agent,
+that is, the actual strategy that they will want to follow,
+is the solution computed for the first level 
+of the lexicographic minimization problem, \(\mathbf{z}_{K^i}^i\) in \cref{eq:trajgoop},
+which embeds all the feasible set defining constraints
+of inner levels.
+For notational simplicity, we refer
+to the solution
+of the game
+for each agent \(i\)
+as \(\mathbf{z}^i \coloneq \mathbf{z}_{K^i}^i\).
+
+In a trajectory game, the set of private constraints of an agent that restrict
+their original feasibility regions typically include their dynamics and initial state.
+The private constraints need to take into account the
+preference structure of the other agents, making
+\(g^i \colon \mathcal{Z}^{i} \to \mathbb{R}\)
+and \(h^i \colon \mathcal{Z}^{i} \to \mathbb{R}\).
+Additionally, a common shared constraint for these type of games
+is collision avoidance (\cref{sec:trajgames}).
+This enables
+a more expressive definition of an agent's objectives, including those
+that have utmost importance (such as safety constraints or following the speed limit)
+and should only ever be suboptimal in the presence of a hard constraint.
+For example, an autonomous vehicle should always prioritize not breaking
+the speed limit (higher priority objective) even at the cost
+of reaching their goal (lower priority objective) at a later time,
+only ever speeding past it to avoid a collision (hard constraint).
+
+It is often desirable to flatten the hierarchy of nested subproblems in \cref{eq:trajgoop} into a single level. For each agent, beginning with their innermost problem, we derive the Karush-Kuhn-Tucker (KKT) conditions and incorporate the resulting dual variables as induced primals in the outer problems. This effectively constrains the feasible set, ensuring that solutions conform to the lexicographic order of preferences. The resulting formulation is a mathematical program with complementarity constraints for each agent, which can be regularized by a relaxation scheme that expands the feasible set to solve the mixed complementarity problem (MCP) \cite{lee:2025}.

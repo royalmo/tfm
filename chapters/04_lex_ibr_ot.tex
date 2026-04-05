@@ -1,3 +1,532 @@
 \chapter{Efficiently finding approximate solutions to games of ordered preference}
 
+In this section, we formulate games of ordered preference into a receding horizon setting
+and produce algorithms that exploit lexicographic IBR over time for efficient computation.
 
+\section{Receding horizon games of ordered preference}
+\label{sec:rhgoop}
+
+Games of ordered preference introduce considerable complexity due
+to the nested structure of the optimization problem they generate.
+Even when the hierarchy is reduced
+to single-level problems, the dimensionality
+of the decision variables increases substantially.
+Solving trajectory games framed
+in terms of dynamical systems within the context
+of games of ordered preference is even more challenging due
+to the higher dimensionality needed to represent the dynamics, along with spatiotemporal constraints
+and time-indexed objectives, particularly when considering long, fixed-time horizons (\cref{sec:trajgames}).
+The challenge of high dimensionality restricts their use
+to instances with short, fixed-time horizons.
+This limitation in turn diminishes agents' ability
+to adapt to medium- and long-term environmental changes.
+
+\begin{figure*}[!t]
+    \centering
+\vspace{.5em}
+    \begin{subfigure}[t]{0.38\linewidth}
+        \def\svgwidth{\linewidth}
+        \subimport{figures/itsc/}{game_graph_1.pdf_tex}
+        \caption{First decision-making step.}
+        \label{fig:game_graph_1}
+    \end{subfigure}
+    \hspace{\fill}
+    \begin{subfigure}[t]{0.60\linewidth}
+        \def\svgwidth{\linewidth}
+        \subimport{figures/itsc/}{game_graph_2.pdf_tex}
+        \caption{Second decision-making step.}
+        \label{fig:game_graph_2}
+    \end{subfigure}
+    
+    \caption{
+        In a trajectory game, each agent's strategy defines an optimal
+        trajectory governed by a continuous state that evolves through actions
+        selected from a continuous control input space at discrete time
+        intervals. Agents compute a receding horizon to dynamically adapt their
+        trajectories in response to environmental changes, periodically updating
+        their strategies every $T_l$ time steps. At each decision stage, agents
+        solve a game-theoretic optimization problem over a finite time horizon
+        $T$, generating optimal trajectories (dashed lines). From these
+        trajectories, agents execute only the first $T_l$ control inputs
+        (solid lines) before resolving the game with updated environmental
+        information.}
+    \label{fig:game_graph}
+\end{figure*}
+
+A receding horizon game of ordered preference mitigates this problem
+by partitioning the solution space into manageable segments (\cref{fig:game_graph}).
+In a receding horizon game
+with length of a finite-time horizon, \(T_g\), agents periodically re-optimize their strategies.
+At each decision-making stage, however, they focus on a reduced time horizon, \(T \ll T_g\),
+repeatedly solving optimization subproblems
+with the latest state observations serving
+as the initial conditions \cite{christophersen:2007}.
+At each decision-making stage, the agents extract and execute only the first \(T_l\) decisions
+of the newly computed optimal joint strategy,
+where \(0 < T_l \leq T\) is called
+the \emph{turn length} \cite{peters:2025}.
+These decision-making stages occur every \(T_l\) time steps,
+continuing until the end of the game at time \(T_g\).
+
+A receding horizon variation of a game
+of ordered preference involves each rational agent \(i \in [N]\)
+finding an optimal strategy
+that lexicographically minimizes their ordered cost functions \(J^i\)
+over the game time horizon \(t \in \{0, \dots, T_g-1\}\).
+The optimal strategy along the entire game horizon \(T_g\),
+which we denote as \(\mathbf{z}^{i,*}\), is incrementally built
+by aggregating the executed steps of the partial solutions
+obtained at each decision-making stage.
+
+At each decision-making stage,
+occurring every \(T_l\) time steps, a game
+of ordered preferences is solved
+over a reduced time horizon \(T\).
+Each agent minimizes the partial cost function
+$$\ell^i\left(\mathbf{z}^i_{t:t+T-1}, \mathbf{z}^{-i}_{t:t+T-1}; \theta^i\right)\text{.}$$
+The partial cost \(\ell^i\) for each agent \(i\), with \(\ell^i \colon \mathcal{Z}^{i} \to \mathbb{R}\),
+is the cost of executing the next \(T\) decisions \(\mathbf{z}^i_{t:t+T-1}\)
+given the other agent's decisions \(\mathbf{z}^{-i}_{t:t+T-1}\).
+It differs from the objective function \(J^i\) in \cref{eq:trajgoop} in that
+the latter accounts for the entire game horizon \(T_g\), while \(\ell^i\) gives the cost for a
+single reduced horizon solution for agent \(i\)
+computed at time step \(t\),
+\begin{equation}\label{eq:ji}
+J^i\left(\mathbf{z}^i, \mathbf{z}^{-i}; \theta^i\right) = \sum_{t = 0}^{T_g-1} \ell^i\left(\mathbf{z}^i_{t:t+T-1}, \mathbf{z}^{-i}_{t:t+T-1}; \theta^i\right).
+\end{equation}
+We repeat \cref{eq:ji} at times \(t = m \cdot T_l\) for all positive integers \(m\) such that \(m \cdot T_l < T_g\).
+
+The solution of a single decision-making stage at time step \(t\)
+is a joint optimal strategy \(\mathbf{z}^*_{t:t+T-1}\).
+Agents computing a receding horizon will find
+at once their optimal strategy for the next \(T\) time steps,
+\begin{equation*}
+\mathbf{z}^{i,*}_{t:t+T-1} = \argmin_{\mathbf{z}^{i}_{t:t+T-1}} \ell^i \left(\mathbf{z}^i_{t:t+T-1}, \mathbf{z}^{-i,*}_{t:t+T-1}; \theta^i \right).
+\end{equation*}
+
+The optimal solution for each agent \(i\) at time step \(t\) corresponds
+to the solution of the lowest priority level in~\cref{eq:trajgoop}.
+After each decision-making stage, only the first \(T_l\) decisions
+of the solution for all agents, \(\mathbf{z}^{*}_{t:t+T_l-1}\),
+are aggregated into the final solution \(\mathbf{z}^*_{0:T_g-1}\),
+with the associated control inputs
+executed by the agents to evolve their states.
+At step \(t+T_l\), a new decision-making stage takes place,
+which solves the game again for \(t+T_l+T\),
+using initial state \(x^i_{t+T_l}\).
+This computation is repeated until the end of the game
+is reached at time \(T_g\).
+The algorithmic interpretation of this system involves
+a measurement step at time \(t\) where the global state \(\mathbf{x}_t\) is observed
+after evolving the system for \(T_l\) time steps following the previous decision-making
+stage (\cref{alg:rhgoop}).
+
+
+When comparing receding horizon formulations of games
+against the corresponding fixed-time horizon ones, the benefits are two fold.
+First, by solving for only \(T \ll T_g\) time steps at a time,
+a receding horizon approach circumvents the computational
+complexity associated with accounting for the entire solution at once.
+Second, deferring the resolution of the final steps allows for adaptive
+decision making in response to evolving environmental conditions,
+allowing agents to reconsider their strategies over time (\cref{fig:game_graph}).
+
+
+\section{Lexicographic IBR over time}
+
+Games of ordered preference
+incur a significant increase
+in the problem's dimensions for each preference level.
+The significant increase arises from the accumulation
+of extra equality and inequality constraints and induced primals
+derived from the KKT conditions at each level
+during the flattening of the nested optimization problem \cite{lee:2025}.
+The flattening of multiple preference levels, while necessary to solve games
+of ordered preference, can quickly grow the problem dimensions
+to become computationally intractable.
+One way to mitigate the problem of high dimensionality
+is to partition the coupled multi-player game of ordered preference
+into smaller single-player subproblems
+which can be solved with extensively used algorithms such as IBR.
+
+\begin{algorithm}[!t]
+\KwData{MCP for the game of ordered preference, game~horizon $T_g$, receding~horizon $T$, turn~length $T_l$, and initial states $\mathbf{x}_0$}
+\KwResult{Optimal joint strategies $\mathbf{z}^{*}$}
+\medskip
+Start at $t = 0$ with initial states $\mathbf{x}_0$ for each agent~$i$\;
+\While{$t < T_g$}{
+    Measure global state $\mathbf{x}_{t}$ at time $t$\;
+    Solve MCP at $\mathbf{x}_t$ with time horizon $T$\;
+    Evolve state for time $T_l$ using $\mathbf{z}_{t:t+T_l-1}^*$\;
+    Recede horizon: $t \gets t + T_l$\;
+}
+$\mathbf{z}^{*} \gets \mathbf{z}_{0:T_g-1}^{i,*}$ for each agent $i$\;
+\caption{Receding horizon for games of ordered preference.}
+\label{alg:rhgoop}
+\end{algorithm}
+
+In the standard formulation of IBR, multiple agents repeatedly take turns to
+compute their best response considering other players' strategies.
+Under certain assumption that are true for games of ordered preference
+IBR converges to a Nash equilibrium \cite{fridovich-keil:2024}.
+IBR in the receding horizon setting
+uses information about past decisions of other agents
+to better predict their future best responses, termed ``IBR over time.''
+
+In lexicographic IBR over time, the multiagent problem is split in \(N\)
+single-player games, with each player performing lexicographic
+optimization of their preferences while considering other players'
+strategies as fixed.
+The aggregate solution of the single-player games
+is an approximation of the GNE
+described in the multiagent formulation.
+Lexicographic IBR over time differs from IBR by starting with a more accurate initial guess of the
+trajectories of other agents and stopping at a fixed number of iterations.
+In particular, IBR over time improves standard IBR efficiency
+by warmstarting agents' best responses, which reduces the number of iterations needed
+to converge to an equilibrium.
+
+Approximate solutions are acceptable when they are close to the optimum.
+Lexicographic IBR over time produces approximate-optimal solutions, provided there are good predictions
+of other agents' strategies and an acceptable number of iterations.
+An effective strategy for generating good predictions is
+to use the trajectories of other agents computed
+in the previous decision-making stage.
+Further refinement occurs in additional IBR iterations, where each agent sequentially considers the running best responses
+of others until convergence to the GNE is achieved or a maximum number of iterations (\(L\) in \cref{alg:ibr}) is reached.
+
+The complete predictions for the first iteration of IBR at a decision-making stage
+are obtained by evolving the current measured state
+using the dynamics with the action sequences,
+
+\vspace{1em}
+$$
+z^i_{t+1} = \left[x^i_{t+1}, u^i_{t+1}\right] \approx \left[\eqnmarkbox[olive]{dyn}{f^i\big(x^i_t, u^i_t\big)}, \eqnmarkbox[gray]{ut}{u^i_t}\right].
+$$
+\annotate[yshift=.5em]{above,left}{ut}{preceding action}
+\annotate[yshift=-.5em]{below}{dyn}{dynamics}
+\vspace{.75em}
+
+\noindent
+The action sequences are obtained by shifting those of previously computed trajectories
+and padding them with additional actions to fill the time horizon \(T\) (\cref{fig:time-padding}).
+
+\begin{figure}[!t]
+\def\svgwidth{\linewidth}
+\subimport{figures/itsc/}{time-padding.pdf_tex}
+\caption{
+    When solving using IBR, the predictions of the other agents' trajectories
+    are based on the solutions obtained at the last decision-making stage.
+    The previous solutions are shifted in time and then padded with additional action,
+    which can be a null action $u_\varnothing^i$ or the same action as the previous step $u_{t-1}^i$.
+    }
+\label{fig:time-padding}
+\end{figure}
+
+In IBR, the lexicographic minimization of each player's objectives
+can be achieved by successively solving single-player optimization problems.
+For each each preference level \(k\) of player \(i\), we solve a minimization problem
+with cost function \(\ell^i_k\) as its objective. In this setting, the other
+player's trajectories become another parameter of the game, included in \(\theta^i\).
+The optimal cost value computed at any level
+\(y_k^{i,*} = \ell^i_k(\mathbf{z}^i_{k}; \theta^i)\) is recorded.
+Then, in each subsequent outer level, we add additional inequality constraints
+to preserve the optimality with respect to
+previously optimized inner objectives \cite{kochenderfer:2019}.
+For any level \(k\), the added constraints are
+$$\ell^i_j\left(\mathbf{z}^i_{k}; \theta^i\right) \leq y_j^{i,*}$$
+for each previous level \(1 \leq j < k\).
+Given that the optimization method used is not optimal
+since it is based on iterated approximations,
+by using inequality constraints we ensure that if in subsequent optimizations
+better solutions for previous levels' objectives are encountered they won't be rejected.
+
+The IBR over time solution, described in \cref{alg:ibr}, acts as a replacement
+of the MCP solving step in \cref{alg:rhgoop}
+in the single-player formulation.
+
+In contrast to the single, coupled optimization problem solved
+for the game of ordered preference, IBR over time solves
+a total of \(\sum_{i=1}^{N} \abs{K^i}\) problems at each decision-making stage,
+where \(K^i\) represents the number of preference levels for agent \(i\).
+However, the reduced dimensionality of the individual problems results
+in significantly faster computation times.
+Moreover, the IBR over time solution can be computed in parallel for each agent \(i\),
+rather than sequentially.
+This parallelization can further enhance processing efficiency, particularly in games with many agents.
+
+\section{Experiments}
+
+In this section we evaluate the performance of IBR over time
+for solving games of ordered preference. 
+We design experiments to (1) examine how different preference relations
+yield qualitatively different solutions for the same scenario
+and (2) quantitatively compare the efficiency of IBR over time
+against the standard formulation of games of ordered preference
+in receding horizon.
+
+\begin{algorithm}[!t]
+\KwData{MCP for the game of ordered preference, current~time $t$,
+    preceding trajectories $\mathbf{z}^{i}_{t:t+T-T_l-1}$,
+    time~horizon $T$, maximum iterations $L$, and~convergence tolerance $\epsilon$}
+\KwResult{Approximate-optimal joint strategies $\mathbf{z}^{*}_{t:t+T-1}$}
+\medskip
+$\mathbf{z}_{0:T-1} \gets$ Shift and pad preceding trajectories\;
+Best responses $\gets \mathbf{z}_{0:T-1}$\;
+\For{$1$ \KwTo $L$}{
+    \For{$i = 1$ \KwTo $N$}{
+        Parameters $\theta^i$ $\gets$ best response of agents $-i$\;
+        $\mathbf{z}^{i}_{0:T-1} \gets \argmin_{\mathbf{z}^i_{0:T-1}} \ell^i(\mathbf{z}^{i}_{0:T-1}; \theta^i)$\;
+        Update best response of agent $i$\;
+    }
+    \If{$\text{solution improvement} < \epsilon$}{
+        \textsc{break}\;
+    }
+}
+% \Return{$\mathbf{z}^{*}_{t:t+T-1}\coloneq\mathbf{z}_{0:T-1}$}
+\caption{A single IBR solution in games of ordered preference.}
+\label{alg:ibr}
+\end{algorithm}
+
+\section{Implementation details}
+
+We implement the code
+in Julia \cite{julia}, build upon the code
+of Lee et al. \cite{lee:2025},
+and make extensive use of TrajectoryGamesBase.jl \cite{peters:2025}
+to instantiate and solve games
+of ordered preference
+in the receding horizon setting.
+The benchmarks use the package ParametricMCPs.jl \cite{peters:2024},
+which is a wrapper around the PATH solver \cite{dirkse:1995}.
+We package the code
+for running the following experiments as LEXIBROverTime.jl \cite{code}.
+
+All benchmarks are run on a single core
+of a machine with no additional load.
+
+\section{Qualitative evaluation of approximate solutions}
+
+\noindent
+\textsc{evaluation scenario} \quad
+To qualitatively assess
+how different preference relations influence the solution
+of a game of ordered preference, given identical parameters,
+we consider a road navigation problem involving three players:
+two cars driving in opposite lanes
+of a road and an ambulance attempting to rush past them
+in response to an emergency.
+We present two simulation instances
+with the same parameters (road layout, initial state, dynamics, constraints, etc.), but with different preference relations (\cref{fig:road_scenario}).
+The game is solved using IBR over time with a single IBR iteration (\(L=1\))
+and the same time horizon, turn length,
+and simulation times for both scenarios.
+
+\smallskip \noindent
+\textsc{main result} \Circled{\oldstylenums 1} -- \textsc{ibr over time distinguishes different preference relations} \quad
+Trajectories of agents
+with different preference relations vary (\cref{fig:road_scenario}).
+In the highway scenario, the green car slightly veers out
+of its lane to allow the ambulance to pass,
+while the blue car temporarily leaves the road
+to avoid a potential collision.
+In contrast, in the urban scenario, the green car remains
+at the edge of its lane,
+and the blue car executes a sharp turn towards the center
+of the road to avoid pedestrians,
+while the ambulance overtakes in the opposite lane.
+This demonstrates how IBR over time identifies solutions
+that respect the preference hierarchy
+of the agents, thereby replicating the outcomes derived
+from the standard formulation.
+
+\begin{table}[!t]
+\centering
+\caption{Performance comparison between baseline
+         and IBR over time with different iteration limits $L$
+         and number of preference levels $K$.
+         Times and $L_1$ distances are averaged across runs.
+         }
+\label{tab:results}
+\begin{tabular}{@{}lrrrr@{}}
+& \multicolumn{2}{c}{$K=2$} & \multicolumn{2}{c}{$K=3$} \\
+\cmidrule(r){2-3}\cmidrule(l){4-5}
+Method   & $t_\text{solve}$     & $L_1$ distance & $t_\text{solve}$     & $L_1$ distance \\ \midrule
+Baseline & $44.51 \si{\second}$ & --               & $2676 \si{\second}$  & --               \\ % TODO
+$L=1$    & $0.36 \si{\second}$  & $3.28\times 10^{-4}$         & $0.32 \si{\second}$  & $5.45\times 10^{-4}$         \\
+$L=2$    & $0.59 \si{\second}$  & $1.22 \times 10^{-5}$         & $0.63 \si{\second}$  & $6.56\times 10^{-5}$         \\
+$L=3$    & $0.85 \si{\second}$  & $4.64\times 10^{-6}$         & $0.75 \si{\second}$   & $5.66\times 10^{-5}$         \\
+$L=5$    & $1.39 \si{\second}$  & $1.78\times 10^{-6}$         & $1.20 \si{\second}$  & $4.96\times 10^{-5}$         \\
+$L=10$   & $2.67 \si{\second}$  & $1.71\times 10^{-6}$         & $2.32 \si{\second}$  & $3.03\times 10^{-5}$         \\
+$L=20$   & $5.40 \si{\second}$  & $1.28\times 10^{-6}$        & $4.55 \si{\second}$  & $8.51\times 10^{-5}$         \\
+$L=1000$ & $269.4 \si{\second}$ & $2.45\times 10^{-6}$          & $273.27 \si{\second}$ & $4.14\times 10^{-5}$         \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{figure*}[!t]
+\centering
+    \begin{subfigure}[t]{0.49\linewidth}
+        \def\svgwidth{\linewidth}
+        \subimport{figures/itsc/}{field_scenario.pdf_tex}
+        \caption{Highway.}
+        \label{fig:field_scenario}
+    \end{subfigure}
+    \hspace{\fill}
+    \begin{subfigure}[t]{0.49\linewidth}
+        \def\svgwidth{\linewidth}
+        \subimport{figures/itsc/}{city_scenario.pdf_tex}
+        \caption{City.}
+        \label{fig:city_scenario}
+    \end{subfigure}
+\caption{
+    Different preference relations model varying contexts, resulting in qualitatively different agent behaviors.
+    In a highway scenario, vehicles prefer leaving their lane to avoid braking hard because there are no pedestrians,
+    while in an urban scenario they prefer to stay within the road to not risk hitting pedestrians.
+    Dashed lines show each agent's trajectory as predicted by other agents.
+    Solid lines represent their actual computed trajectories.
+    }
+\label{fig:road_scenario}
+\end{figure*}
+
+\section{Efficiency of lexicographic IBR over time}
+
+\noindent
+\textsc{evaluation scenario} \quad
+To assess the efficiency of IBR over time
+we consider a simplified variant of the previous problem:
+two cars driving along parallel lanes
+of a road in the same direction,
+with an ambulance attempting to overtake them.
+The fact that all vehicles are traveling
+in the same direction reduces the risk of collision, resulting
+in less restrictive optimization problems
+that can typically be solved
+using both IBR over time and the baseline method.
+We conduct a Monte Carlo study with \(20\) variations
+of the scenario, generated by adding random permutations sampled
+from a uniform distribution centered
+around the initial states (position and speed) of the agents.
+The experiments are run with two different numbers
+of preference levels \(K\), common to all players,
+in order to account for the increased complexity
+of the optimization problems associated
+with a higher number of priority levels.
+
+\smallskip \noindent
+\textsc{baseline} \quad
+For the baseline, we use an adaptation
+of the solver for games of ordered preference
+in their standard formulation \cite{lee:2025},
+which operates in the receding horizon setting.
+We use the same hyperparameters in both methods,
+including the relaxation iterations specified by Lee et al. \cite{lee:2025}.
+
+\smallskip \noindent
+\textsc{evaluation metrics} \quad
+The primary evaluation metrics
+for performance comparison are the average time required
+to compile the problems \(t_\text{compile}\) and the average time taken
+to solve each of them \(t_\text{solve}\).
+The compile time is a one-time overhead not included in the solution time.
+For comparison, the solution times for IBR
+over time are expressed as a percentage
+of the baseline solution time.
+Since there might be a continuum of equilibria, that is, multiple optimal solutions, we will evaluate the quality of the solutions by
+computing the \(L_1\) distance between the solution trajectory and what would be the solution at the next IBR iteration \(L+1\).
+
+\smallskip \noindent
+\textsc{main result} \Circled{\oldstylenums 2} -- \textsc{ibr over time efficiently solves games of ordered preference} \quad
+The results demonstrate that IBR outperforms the baseline
+in both problem compilation and solution times,
+with a substantial margin, even
+as the number of iterations \(L\) increases (\cref{tab:results}).
+The differences in solution times become more pronounced
+as the number of preference levels increases,
+with the baseline showing a much larger degradation in performance.
+The average solution time for IBR is directly proportional
+to the number of IBR iterations. A maximum number
+of iterations can be adjusted to balance the optimality
+of solutions with computational constraints.
+The problem compilation time is not included in the results,
+summarized in \cref{tab:results},
+given that its value does not depend on the number of iterations \(L\).
+The average baseline compilation times \(t_\text{compile}\) are \(1.50\si{\second}\) and \(9.37\si{\second}\) for preference levels \(K = 2\) and \(K = 3\) respectively.
+For the same preference levels, IBR over time produces average compilation times
+that are significantly lower, \(0.75\si{\second}\) and
+\(1.10\si{\second}\),
+primarily due to the reduced size of the problems
+and increased solver efficiency.
+The compilation of all subproblems in IBR over time takes
+less total time than the compilation of a single problem in the baseline.
+Shorter compilation times enable faster transitions
+between preference relations,
+which are embedded in the problem's structure.
+Additionally, the \(L_1\) distance of the solution at iteration \(L\) with respect to
+the next iteration \(L+1\) decreases rapidly
+within a few iterations, indicating that the trajectories stabilize and become approximate-optimal.
+The final average \(L_1\) distance does not reach zero (\cref{tab:results}).
+This phenomenon arises because IBR does not converge to a stable equilibrium
+for some problems.
+The limit, \(L\), ensures the algorithm terminates in those cases.
+
+\section{Discussion}
+
+The experimental results demonstrate
+that it is possible to efficiently find approximate solutions
+to games of ordered preference (answering question \ref{Q1}).
+Lexicographic IBR over time enables tractable computation
+of single-player versions of games
+of ordered preference while still respecting the agents' preference hierarchy.
+Although the solutions are not guaranteed
+to be optimal compared to the standard formulation, the number of IBR iterations can be adjusted
+to reduce the gap to the optimal solution, provided time and computational resources are not constrained.
+However, practical results indicate that even with a single IBR iteration, using previously computed trajectories as a base for predicting the other agents' trajectories provides a reasonable approximation.
+
+The benchmarks demonstrate
+that IBR over time reduces solution times
+for games of ordered preference compared to existing methods, especially
+as the number of preference levels increases.
+This improved computational tractability enables solving larger problems
+with more preferences and longer time horizons---both crucial factors
+for developing agents capable
+of complex behaviors and effective adaptation
+to short- and long-term environmental changes.
+However, the lexicographic structure of games of ordered preference can lead
+to dominant strategies, where agents primarily optimize
+for higher-priority objectives.
+This tendency toward dominant strategies can be mitigated through careful modeling
+of agents' preferences, ensuring
+that the feasible regions defined
+by successive preference levels still allow
+for exploring lower-priority objectives.
+The results also show that the solution stabilizes, that is, the solution changes less with respect to the previous iteration \(L-1\), as
+number of iterations \(L\) grows. This stability of solutions means that with just a few iterations we can achieve
+approximated-optimal solutions.
+
+\section{Conclusion}
+
+Autonomous vehicles are objective decision makers,
+yet the quality of those decisions must be measured against the subjective,
+context-aware choices of human drivers.
+Preference relations model prioritized metrics
+in multi-objective optimization,
+which capture the subjective decision making of human drivers.
+Accounting for the context-varying preferences and intentions
+of all vehicles in the road
+is a necessary condition for intelligent traffic management.
+Games of ordered preference have demonstrated compelling support
+for addressing this requirement.
+However, the computational cost of considering preference hierarchies
+has limited their inclusion in real-time systems' design.
+Beyond real-time trajectory optimization, autonomous navigation
+also demands that agents are able to react to the changing environments.
+Our proposed algorithm, lexicographic IBR over time,
+produces approximate-optimal solutions
+to games of ordered preference in receding horizon
+fast enough to potentially be practical.
+Lexicographic IBR over time equips autonomous agents
+in complex traffic scenarios with the ability
+to adapt to the environment
+in real time while ranking their preferences and considering those of others.

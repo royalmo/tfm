@@ -5,10 +5,35 @@
 \usepackage{booktabs}
 \usepackage{array}
 
+%% ADDED FOR ITSC IMPORT
+\usepackage{import}
+\usepackage[capitalise]{cleveref}
+\usepackage[noend,noline,plainruled]{algorithm2e}
+\usepackage{annotate-equations}
+\usepackage{circledsteps}
+\usepackage{mathtools}
+\usepackage{transparent}
+
+\DontPrintSemicolon
+\SetAlgoCaptionSeparator{.}
+\SetAlCapNameFnt{\footnotesize}
+\SetAlCapFnt{\mdseries \footnotesize}
+\SetAlCapSkip{0.5em}
+\SetAlgoInsideSkip{medskip}
+\SetKwSty{textsc}
+\SetKwInput{KwData}{\mdseries\textsc{data}}
+\SetKwInput{KwResult}{\mdseries\textsc{result}}
+
+\tikzset{annotate equations/arrow/.style={-, shorten <=2pt}}
+\DeclareMathOperator*{\minimize}{minimize}
+\newcommand{\argmin}{\mathop{\textrm{argmin}}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+%% END ADDED FOR ITSC IMPORT
+
 \addbibresource{misc/thesis.bib}
 
-\title{Estimating games of ordered preference}
-\subtitle{Scalable preference-order estimation for Interactive Autonomous Systems}
+\title{Estimating games \\of ordered preference}
+\subtitle{Scalable preference-order estimation \\for Interactive Autonomous Systems}
 
 \author[m]{Eric Roy-Almonacid}
 \advisor{Georgios Bakirtzis}
