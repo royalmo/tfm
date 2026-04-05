@@ -21,6 +21,11 @@ jobs:
         with:
           docker_image: ghcr.io/xu-cheng/texlive-full:latest
           root_file: thesis.tex
+          extra_system_packages: inkscape
+          pre_compile: |
+            for f in figures/**/*.svg; do
+              inkscape "$f" --export-type=pdf --export-latex
+            done
           args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
       - name: Create timestamped filename

@@ -4,12 +4,17 @@
 
 IMAGE_FILES := $(shell find images -type f 2>/dev/null)
 MISC_FILES := $(shell find misc -type f 2>/dev/null)
+FIGURE_SVG_FILES := $(shell find figures -type f -name '*.svg' 2>/dev/null)
+FIGURE_PDF_TEX_FILES := $(FIGURE_SVG_FILES:.svg=.pdf_tex)
 
 default: thesis.pdf clean
 
 redo: trigger-pdf-redo thesis.pdf clean
 
-thesis.pdf: thesis.tex chapters/*.tex include/* $(IMAGE_FILES) $(MISC_FILES)
+%.pdf_tex: %.svg
+	inkscape $< --export-type=pdf --export-latex
+
+thesis.pdf: thesis.tex chapters/*.tex include/* $(IMAGE_FILES) $(MISC_FILES) $(FIGURE_PDF_TEX_FILES)
 	pdflatex thesis.tex
 	biber thesis
 	pdflatex thesis.tex
