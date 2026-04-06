@@ -1,2 +1,46 @@
 \chapter{Preference order estimation for games of ordered preference}
 
+% Copied from RAL
+
+In this section, we formulate inverse games of ordered preference and produce algorithms that exploit X for efficient computation.
+
+\section{blah}
+
+Current methods of solving games of ordered preference assume a full state observation $y$ and that other agents' cost functions and preference relations are known.
+
+An inverse game of ordered preference 
+
+game parameters = 
+
+% 1. An attempt would be to try all permutations and solve the game, and pick the order that best fits the observations. However I think we could do better (and moreover this would require solving A LOT of GOOPs). Given that if a high-priority objective is not optimized, we don't care about the low-priority ones (because of lexicographic nature), we may not always need to try (or care) about all kinds of permutations, and may be able to skip some. However, this sounds still inefficient to me.
+% 2. Since we get game states, we can pick the states and just calculate the cost that agent i had to pay to perform this *under different preference orders*, and choose the order with minimal cost. This is much faster to calculate, should still give something correct (since we're minimizing costs), calculating it might introduce new difficulties (since it's lexmin) and the result accuracy might not be the best (e.g. a order might be 'cheaper' but not the right one).
+
+% maybe there is a way to think about this problem as a mixed integer program, where the standard relaxation of the integer variables would correspond to the scalarized objective 
+% like I think what Lasse is suggesting may be understandable as a greedy approx to this MI program 
+
+% Lasse: only do 1st, then second, instead of trying all permutations.
+% but still inefficient AF.
+
+% Only stationarity
+
+% Maybe look at KKT residuals for different candidate systems instead?
+
+\section{Experiments}
+
+Cite Julia \cite{julia} and our own codebase \cite{code}. We will want to cite the zenodo entry from this paper.
+Gym Duckietown can be useful to cite if we use it \cite{gym_duckietown}.
+Cite PythonCall.jl maybe? \cite{PythonCall.jl}
+
+\section{Conclusion}
+
+% Meaningful statement of what follows from the work; no "summary" or future work.
+
+Games of ordered preference have succeeded in modelling preference
+relations of autonomous systems in many driving environments. However,
+having to know beforehand the parameters of other agents was preventing
+the usage of this framework in scenarios where not every agent might
+use this formulation, like humans who make subjective, context-aware
+choices. Modelling every agent's objectives as preference relations
+enables not only to find optimal trajectories using lexicographical IBR
+over time, but also to take into account more information about others.
+Combined with existing tools, [method name] can accurately infer and solve a game of ordered preferences without having to share information with other agents, allowing the use of the methodology in real-world scenarios.

@@ -81,3 +81,43 @@
 % of ordered preference are an effective tool
 % for analyzing interactive preferences in transportation systems.
 % \end{enumerate}
+
+
+% RAL
+
+Conflicting objectives are present when having to make a decision. Autonomous agents need to make a choice of what objective should be prioritized. In urban driving scenarios, agents may prefer staying on the lane over staying under the speed limit to avoid hitting pedestrians, while the opposite may be preferred in the countryside.
+Games of ordered preference model such scenarios in X way.
+
+Non-cooperative games are often characterized by the lack of information
+shared between different agents. In driving scenarios, goal destinations are rarely
+broadcasted, enforcing an autonomous agent to make estimations on the
+other agents' objectives.
+
+While many works succeed in inferring some of the objectives, such as goal
+position, there are no formal methods of estimating the preference order of other agents.
+
+% \begin{figure}[!t]
+% \def\svgwidth{\linewidth}
+% \subimport{figures/}{scenario.pdf_tex}
+% \caption{The order of the game objectives determines the behavior of an
+% agent. To this end, estimating that order from partial state 
+% observations allows the usage of games of ordered preference in
+% environments where there is little to no communications between agents,
+% such as traffic scenarios with humans involved.}
+% \label{fig:scenario}
+% %\vspace{-1em}
+% \end{figure}
+
+
+% To study this area, this paper asks:
+% \begin{enumerate}[itemsep=0pt,topsep=0pt,label=\textlangle ?\textrangle]
+%     \item \emph{%
+%         Can we efficiently infer other agents' preference relations in
+%         games of ordered preference?}\label{Q1}
+% \end{enumerate}
+
+% To make progress on this question, we
+% 1. design a method that estimates preference relations in games of ordered
+%    preference; and
+% 2. test the previous tool on small-scale robots (cref:fig:scenario), demonstrating
+%    the utility of preference estimation.

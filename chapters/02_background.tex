@@ -43,3 +43,29 @@ horizon in game-theoretic planning has been studied in the classical formulation
 \cite{veer:2023} and in variants---where objects are divided into immediate
 and mid-term metrics \cite{fisac:2019}. These approaches do not consider the
 problem of preferences in agent interactions.
+
+% RAL
+
+
+Prior work, closely related to this paper, can be categorized on \emph{preference relations}, \emph{game state estimation}, and \emph{sim-to-real}.
+
+\smallskip \noindent
+\textsc{preference relations} \quad Posetal games \cite{zanardi:2022} model games with prioritized metrics, but in comparison to games of ordered preference \cite{lee:2025}, they use preference hierarchies instead of lexicographic optimization. The scalability for games of ordered preferences has been recently studied \cite{heras:2025}, but all these formulations require the knowledge of other players' preferences.
+
+\smallskip \noindent
+\textsc{game state estimation} \quad 
+Perception has received a lot of attention since it enables the usage of game-theoretical methods in real scenarios \cite{schwarting:2018}.
+Game theory helps building a model from partial observations \cite{liniger:2020} and approximates optimal trajectories that comply with safety constraints \cite{fridovichkeil:2020}.
+Goal positions can be predicted using minimum likelihood estimators \cite{liu:2023}, or by solving inverse games \cite{li:2023}, although variational auto-encoders can be used to train models that perform better overall \cite{liu:2024}. Receding horizon is commonly employed in dynamic games to take advantage of
+previous observations over time \cite{peters:2023}.
+Given the difficulty of predicting other's behavior, contingency planning has proven useful in many situations \cite{peters:2024}.
+The inverse game problem is also a common approach for Markov gamesn reinforcement learning, and Stackelberg games \cite{chen:2023,lian:2024,ward:2025}.
+In this work we use inverse games to infer the preference order.
+
+\smallskip \noindent
+\textsc{sim-to-real} \quad The Duckietown project proposes a common environment to learn and perform experiments on autonomous vehicles \cite{duckietown:2017}. Their low cost makes it accessible to perform real tests, thus reducing the sim-to-real gap. Many works use camera and odometry input to follow the road and detect immediate obstacles, turns and intersections \cite{castro:2019}.
+External inputs such as camera tracking complement the robot's sensors and allow for more complex behaviors, such or obstacle
+avoidance \cite{candela:2022}.
+Duckiebots are also used outside the standardized city model and are able to navigate through sidewalks or other real-world situations using reinforcement learning techniques \cite{kahn:2021}.
+In this work we make robots interact with each other in intersection scenarios.
+Apart from Duckietown, the CARLA simulator is vastly used to test complex environments \cite{carla:2017}, and projects like f1/10 \cite{f110:2019} also provide cyber-physical systems to perform experiments.
