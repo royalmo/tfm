@@ -1,2 +1,45 @@
 \chapter{Background}
 
+% Related work from ITSC
+
+We have been primarily motivated
+to study games of ordered preference
+by Zanardi et al. \cite{zanardi:2022} and Lee et al. \cite{lee:2025}.
+We explicitly build on this research
+to compute for a receding horizon,
+rather than a finite-time horizon,
+to improve the scalability of these games.
+We have additionally found insights in receding horizon games
+\cite{hall:2022,hall:2024}, although the formulation is not directly applicable
+to the problem of preference ordering.
+
+Prior work, closely related to the formulation
+of games of ordered preference in this paper,
+is on \emph{prioritized metrics} 
+and \emph{game-theoretic planning}.
+
+\smallskip \noindent
+\textsc{prioritized metrics} \quad 
+Posetal games \cite{zanardi:2022} formalize games
+with prioritized metrics
+through partial orders over system designs \cite{censi:2019}, using symbolic structures to encode constraint and preference hierarchies \cite{wongpiromsarn:2021}.
+While posetal games focus
+on discrete decision spaces, we adopt lexicographic optimization \cite{penlington:2024},
+that extends prioritized metrics to continuous action spaces \cite{lee:2025}.
+However, the lexicographic nested problem structure introduces computational challenges: lower-priority objectives are optimized only after higher-priority ones are satisfied, creating a hierarchy of interdependent subproblems. To mitigate this computational intractability, prior work transcribes the lexicographic hierarchy into mathematical programs with complementarity constraints \cite{nurkanovic:2024}, with the addition of relaxation schemes \cite{lee:2025}.
+Yet, coupled constraints cause scalability to remain limited.
+By framing the problem
+within a receding horizon setting, we exploit the temporal decoupling inherent
+to IBR algorithms, which are known to be computational tractable.
+
+\smallskip \noindent
+\textsc{game-theoretic planning}\quad Game-theoretic traffic
+management is needed to analyze the interactive nature of preferences between
+autonomous agents \cite{qin:2024}. Efficient solution strategies exist
+for game-theoretic planning \cite{laine:2021,williams:2023,mehr:2023,zhu:2023}, but solving games that involve nested optimization problems typically requires approximate solutions, similar to those used in solving trajectory games with continuous action spaces \cite{jond:2022,peters:2022,liu:2023}.
+Moreover, predictions of other agents' intentions combined with planning
+increase the accuracy of approximate solutions \cite{li:2022,zhang:2023}. Receding
+horizon in game-theoretic planning has been studied in the classical formulation
+\cite{veer:2023} and in variants---where objects are divided into immediate
+and mid-term metrics \cite{fisac:2019}. These approaches do not consider the
+problem of preferences in agent interactions.

@@ -21,19 +21,23 @@ to instances with short, fixed-time horizons.
 This limitation in turn diminishes agents' ability
 to adapt to medium- and long-term environmental changes.
 
-\begin{figure*}[!t]
+\begin{figure*}
     \centering
 \vspace{.5em}
     \begin{subfigure}[t]{0.38\linewidth}
+        {\fontsize{9.9}{11.9}\selectfont
         \def\svgwidth{\linewidth}
         \subimport{figures/itsc/}{game_graph_1.pdf_tex}
+        }
         \caption{First decision-making step.}
         \label{fig:game_graph_1}
     \end{subfigure}
     \hspace{\fill}
     \begin{subfigure}[t]{0.60\linewidth}
+        {\fontsize{9.9}{11.9}\selectfont
         \def\svgwidth{\linewidth}
         \subimport{figures/itsc/}{game_graph_2.pdf_tex}
+        }
         \caption{Second decision-making step.}
         \label{fig:game_graph_2}
     \end{subfigure}
@@ -104,6 +108,22 @@ at once their optimal strategy for the next \(T\) time steps,
 \mathbf{z}^{i,*}_{t:t+T-1} = \argmin_{\mathbf{z}^{i}_{t:t+T-1}} \ell^i \left(\mathbf{z}^i_{t:t+T-1}, \mathbf{z}^{-i,*}_{t:t+T-1}; \theta^i \right).
 \end{equation*}
 
+\begin{algorithm}
+\KwData{MCP for the game of ordered preference, game~horizon $T_g$, receding~horizon $T$, turn~length $T_l$, and initial states $\mathbf{x}_0$}
+\KwResult{Optimal joint strategies $\mathbf{z}^{*}$}
+\medskip
+Start at $t = 0$ with initial states $\mathbf{x}_0$ for each agent~$i$\;
+\While{$t < T_g$}{
+    Measure global state $\mathbf{x}_{t}$ at time $t$\;
+    Solve MCP at $\mathbf{x}_t$ with time horizon $T$\;
+    Evolve state for time $T_l$ using $\mathbf{z}_{t:t+T_l-1}^*$\;
+    Recede horizon: $t \gets t + T_l$\;
+}
+$\mathbf{z}^{*} \gets \mathbf{z}_{0:T_g-1}^{i,*}$ for each agent $i$\;
+\caption{Receding horizon for games of ordered preference.}
+\label{alg:rhgoop}
+\end{algorithm}
+
 The optimal solution for each agent \(i\) at time step \(t\) corresponds
 to the solution of the lowest priority level in~\cref{eq:trajgoop}.
 After each decision-making stage, only the first \(T_l\) decisions
@@ -149,22 +169,6 @@ is to partition the coupled multi-player game of ordered preference
 into smaller single-player subproblems
 which can be solved with extensively used algorithms such as IBR.
 
-\begin{algorithm}[!t]
-\KwData{MCP for the game of ordered preference, game~horizon $T_g$, receding~horizon $T$, turn~length $T_l$, and initial states $\mathbf{x}_0$}
-\KwResult{Optimal joint strategies $\mathbf{z}^{*}$}
-\medskip
-Start at $t = 0$ with initial states $\mathbf{x}_0$ for each agent~$i$\;
-\While{$t < T_g$}{
-    Measure global state $\mathbf{x}_{t}$ at time $t$\;
-    Solve MCP at $\mathbf{x}_t$ with time horizon $T$\;
-    Evolve state for time $T_l$ using $\mathbf{z}_{t:t+T_l-1}^*$\;
-    Recede horizon: $t \gets t + T_l$\;
-}
-$\mathbf{z}^{*} \gets \mathbf{z}_{0:T_g-1}^{i,*}$ for each agent $i$\;
-\caption{Receding horizon for games of ordered preference.}
-\label{alg:rhgoop}
-\end{algorithm}
-
 In the standard formulation of IBR, multiple agents repeatedly take turns to
 compute their best response considering other players' strategies.
 Under certain assumption that are true for games of ordered preference
@@ -185,6 +189,29 @@ trajectories of other agents and stopping at a fixed number of iterations.
 In particular, IBR over time improves standard IBR efficiency
 by warmstarting agents' best responses, which reduces the number of iterations needed
 to converge to an equilibrium.
+
+\begin{algorithm}
+\KwData{MCP for the game of ordered preference, current~time $t$,
+    preceding trajectories $\mathbf{z}^{i}_{t:t+T-T_l-1}$,
+    time~horizon $T$, maximum iterations $L$, and~convergence tolerance $\epsilon$}
+\KwResult{Approximate-optimal joint strategies $\mathbf{z}^{*}_{t:t+T-1}$}
+\medskip
+$\mathbf{z}_{0:T-1} \gets$ Shift and pad preceding trajectories\;
+Best responses $\gets \mathbf{z}_{0:T-1}$\;
+\For{$1$ \KwTo $L$}{
+    \For{$i = 1$ \KwTo $N$}{
+        Parameters $\theta^i$ $\gets$ best response of agents $-i$\;
+        $\mathbf{z}^{i}_{0:T-1} \gets \argmin_{\mathbf{z}^i_{0:T-1}} \ell^i(\mathbf{z}^{i}_{0:T-1}; \theta^i)$\;
+        Update best response of agent $i$\;
+    }
+    \If{$\text{solution improvement} < \epsilon$}{
+        \textsc{break}\;
+    }
+}
+% \Return{$\mathbf{z}^{*}_{t:t+T-1}\coloneq\mathbf{z}_{0:T-1}$}
+\caption{A single IBR solution in games of ordered preference.}
+\label{alg:ibr}
+\end{algorithm}
 
 Approximate solutions are acceptable when they are close to the optimum.
 Lexicographic IBR over time produces approximate-optimal solutions, provided there are good predictions
@@ -211,18 +238,6 @@ $$
 The action sequences are obtained by shifting those of previously computed trajectories
 and padding them with additional actions to fill the time horizon \(T\) (\cref{fig:time-padding}).
 
-\begin{figure}[!t]
-\def\svgwidth{\linewidth}
-\subimport{figures/itsc/}{time-padding.pdf_tex}
-\caption{
-    When solving using IBR, the predictions of the other agents' trajectories
-    are based on the solutions obtained at the last decision-making stage.
-    The previous solutions are shifted in time and then padded with additional action,
-    which can be a null action $u_\varnothing^i$ or the same action as the previous step $u_{t-1}^i$.
-    }
-\label{fig:time-padding}
-\end{figure}
-
 In IBR, the lexicographic minimization of each player's objectives
 can be achieved by successively solving single-player optimization problems.
 For each each preference level \(k\) of player \(i\), we solve a minimization problem
@@ -245,6 +260,19 @@ The IBR over time solution, described in \cref{alg:ibr}, acts as a replacement
 of the MCP solving step in \cref{alg:rhgoop}
 in the single-player formulation.
 
+\begin{figure}
+    \centering
+\def\svgwidth{0.6\linewidth}
+\subimport{figures/itsc/}{time-padding.pdf_tex}
+\caption{
+    When solving using IBR, the predictions of the other agents' trajectories
+    are based on the solutions obtained at the last decision-making stage.
+    The previous solutions are shifted in time and then padded with additional action,
+    which can be a null action $u_\varnothing^i$ or the same action as the previous step $u_{t-1}^i$.
+    }
+\label{fig:time-padding}
+\end{figure}
+
 In contrast to the single, coupled optimization problem solved
 for the game of ordered preference, IBR over time solves
 a total of \(\sum_{i=1}^{N} \abs{K^i}\) problems at each decision-making stage,
@@ -265,30 +293,7 @@ and (2) quantitatively compare the efficiency of IBR over time
 against the standard formulation of games of ordered preference
 in receding horizon.
 
-\begin{algorithm}[!t]
-\KwData{MCP for the game of ordered preference, current~time $t$,
-    preceding trajectories $\mathbf{z}^{i}_{t:t+T-T_l-1}$,
-    time~horizon $T$, maximum iterations $L$, and~convergence tolerance $\epsilon$}
-\KwResult{Approximate-optimal joint strategies $\mathbf{z}^{*}_{t:t+T-1}$}
-\medskip
-$\mathbf{z}_{0:T-1} \gets$ Shift and pad preceding trajectories\;
-Best responses $\gets \mathbf{z}_{0:T-1}$\;
-\For{$1$ \KwTo $L$}{
-    \For{$i = 1$ \KwTo $N$}{
-        Parameters $\theta^i$ $\gets$ best response of agents $-i$\;
-        $\mathbf{z}^{i}_{0:T-1} \gets \argmin_{\mathbf{z}^i_{0:T-1}} \ell^i(\mathbf{z}^{i}_{0:T-1}; \theta^i)$\;
-        Update best response of agent $i$\;
-    }
-    \If{$\text{solution improvement} < \epsilon$}{
-        \textsc{break}\;
-    }
-}
-% \Return{$\mathbf{z}^{*}_{t:t+T-1}\coloneq\mathbf{z}_{0:T-1}$}
-\caption{A single IBR solution in games of ordered preference.}
-\label{alg:ibr}
-\end{algorithm}
-
-\section{Implementation details}
+\subsection{Implementation details}
 
 We implement the code
 in Julia \cite{julia}, build upon the code
@@ -305,7 +310,34 @@ for running the following experiments as LEXIBROverTime.jl \cite{code}.
 All benchmarks are run on a single core
 of a machine with no additional load.
 
-\section{Qualitative evaluation of approximate solutions}
+\subsection{Qualitative evaluation of approximate solutions}
+
+\begin{figure*}[!t]
+\centering
+    \begin{subfigure}[t]{0.56\linewidth}
+        \def\svgwidth{\linewidth}
+        \subimport{figures/itsc/}{field_scenario.pdf_tex}
+        \caption{Highway.}
+        \label{fig:field_scenario}
+    \end{subfigure}
+
+    \medskip
+
+    \begin{subfigure}[t]{0.56\linewidth}
+        \def\svgwidth{\linewidth}
+        \subimport{figures/itsc/}{city_scenario.pdf_tex}
+        \caption{City.}
+        \label{fig:city_scenario}
+    \end{subfigure}
+\caption{
+    Different preference relations model varying contexts, resulting in qualitatively different agent behaviors.
+    In a highway scenario, vehicles prefer leaving their lane to avoid braking hard because there are no pedestrians,
+    while in an urban scenario they prefer to stay within the road to not risk hitting pedestrians.
+    Dashed lines show each agent's trajectory as predicted by other agents.
+    Solid lines represent their actual computed trajectories.
+    }
+\label{fig:road_scenario}
+\end{figure*}
 
 \noindent
 \textsc{evaluation scenario} \quad
@@ -340,57 +372,7 @@ that respect the preference hierarchy
 of the agents, thereby replicating the outcomes derived
 from the standard formulation.
 
-\begin{table}[!t]
-\centering
-\caption{Performance comparison between baseline
-         and IBR over time with different iteration limits $L$
-         and number of preference levels $K$.
-         Times and $L_1$ distances are averaged across runs.
-         }
-\label{tab:results}
-\begin{tabular}{@{}lrrrr@{}}
-& \multicolumn{2}{c}{$K=2$} & \multicolumn{2}{c}{$K=3$} \\
-\cmidrule(r){2-3}\cmidrule(l){4-5}
-Method   & $t_\text{solve}$     & $L_1$ distance & $t_\text{solve}$     & $L_1$ distance \\ \midrule
-Baseline & $44.51 \si{\second}$ & --               & $2676 \si{\second}$  & --               \\ % TODO
-$L=1$    & $0.36 \si{\second}$  & $3.28\times 10^{-4}$         & $0.32 \si{\second}$  & $5.45\times 10^{-4}$         \\
-$L=2$    & $0.59 \si{\second}$  & $1.22 \times 10^{-5}$         & $0.63 \si{\second}$  & $6.56\times 10^{-5}$         \\
-$L=3$    & $0.85 \si{\second}$  & $4.64\times 10^{-6}$         & $0.75 \si{\second}$   & $5.66\times 10^{-5}$         \\
-$L=5$    & $1.39 \si{\second}$  & $1.78\times 10^{-6}$         & $1.20 \si{\second}$  & $4.96\times 10^{-5}$         \\
-$L=10$   & $2.67 \si{\second}$  & $1.71\times 10^{-6}$         & $2.32 \si{\second}$  & $3.03\times 10^{-5}$         \\
-$L=20$   & $5.40 \si{\second}$  & $1.28\times 10^{-6}$        & $4.55 \si{\second}$  & $8.51\times 10^{-5}$         \\
-$L=1000$ & $269.4 \si{\second}$ & $2.45\times 10^{-6}$          & $273.27 \si{\second}$ & $4.14\times 10^{-5}$         \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-
-\begin{figure*}[!t]
-\centering
-    \begin{subfigure}[t]{0.49\linewidth}
-        \def\svgwidth{\linewidth}
-        \subimport{figures/itsc/}{field_scenario.pdf_tex}
-        \caption{Highway.}
-        \label{fig:field_scenario}
-    \end{subfigure}
-    \hspace{\fill}
-    \begin{subfigure}[t]{0.49\linewidth}
-        \def\svgwidth{\linewidth}
-        \subimport{figures/itsc/}{city_scenario.pdf_tex}
-        \caption{City.}
-        \label{fig:city_scenario}
-    \end{subfigure}
-\caption{
-    Different preference relations model varying contexts, resulting in qualitatively different agent behaviors.
-    In a highway scenario, vehicles prefer leaving their lane to avoid braking hard because there are no pedestrians,
-    while in an urban scenario they prefer to stay within the road to not risk hitting pedestrians.
-    Dashed lines show each agent's trajectory as predicted by other agents.
-    Solid lines represent their actual computed trajectories.
-    }
-\label{fig:road_scenario}
-\end{figure*}
-
-\section{Efficiency of lexicographic IBR over time}
+\subsection{Efficiency of lexicographic IBR over time}
 
 \noindent
 \textsc{evaluation scenario} \quad
@@ -436,6 +418,30 @@ of the baseline solution time.
 Since there might be a continuum of equilibria, that is, multiple optimal solutions, we will evaluate the quality of the solutions by
 computing the \(L_1\) distance between the solution trajectory and what would be the solution at the next IBR iteration \(L+1\).
 
+\begin{table}
+\centering
+\caption{Performance comparison between baseline
+         and IBR over time with different iteration limits $L$
+         and number of preference levels $K$.
+         Times and $L_1$ distances are averaged across runs.
+         }
+\label{tab:results}
+\begin{tabular}{@{}lrrrr@{}}
+& \multicolumn{2}{c}{$K=2$} & \multicolumn{2}{c}{$K=3$} \\
+\cmidrule(r){2-3}\cmidrule(l){4-5}
+Method   & $t_\text{solve}$     & $L_1$ distance & $t_\text{solve}$     & $L_1$ distance \\ \midrule
+Baseline & $44.51 \si{\second}$ & --               & $2676 \si{\second}$  & --               \\ % TODO
+$L=1$    & $0.36 \si{\second}$  & $3.28\times 10^{-4}$         & $0.32 \si{\second}$  & $5.45\times 10^{-4}$         \\
+$L=2$    & $0.59 \si{\second}$  & $1.22 \times 10^{-5}$         & $0.63 \si{\second}$  & $6.56\times 10^{-5}$         \\
+$L=3$    & $0.85 \si{\second}$  & $4.64\times 10^{-6}$         & $0.75 \si{\second}$   & $5.66\times 10^{-5}$         \\
+$L=5$    & $1.39 \si{\second}$  & $1.78\times 10^{-6}$         & $1.20 \si{\second}$  & $4.96\times 10^{-5}$         \\
+$L=10$   & $2.67 \si{\second}$  & $1.71\times 10^{-6}$         & $2.32 \si{\second}$  & $3.03\times 10^{-5}$         \\
+$L=20$   & $5.40 \si{\second}$  & $1.28\times 10^{-6}$        & $4.55 \si{\second}$  & $8.51\times 10^{-5}$         \\
+$L=1000$ & $269.4 \si{\second}$ & $2.45\times 10^{-6}$          & $273.27 \si{\second}$ & $4.14\times 10^{-5}$         \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \smallskip \noindent
 \textsc{main result} \Circled{\oldstylenums 2} -- \textsc{ibr over time efficiently solves games of ordered preference} \quad
 The results demonstrate that IBR outperforms the baseline
@@ -475,7 +481,7 @@ The limit, \(L\), ensures the algorithm terminates in those cases.
 
 The experimental results demonstrate
 that it is possible to efficiently find approximate solutions
-to games of ordered preference (answering question \ref{Q1}).
+to games of ordered preference. % (answering question \ref{Q1}).
 Lexicographic IBR over time enables tractable computation
 of single-player versions of games
 of ordered preference while still respecting the agents' preference hierarchy.
@@ -504,29 +510,3 @@ for exploring lower-priority objectives.
 The results also show that the solution stabilizes, that is, the solution changes less with respect to the previous iteration \(L-1\), as
 number of iterations \(L\) grows. This stability of solutions means that with just a few iterations we can achieve
 approximated-optimal solutions.
-
-\section{Conclusion}
-
-Autonomous vehicles are objective decision makers,
-yet the quality of those decisions must be measured against the subjective,
-context-aware choices of human drivers.
-Preference relations model prioritized metrics
-in multi-objective optimization,
-which capture the subjective decision making of human drivers.
-Accounting for the context-varying preferences and intentions
-of all vehicles in the road
-is a necessary condition for intelligent traffic management.
-Games of ordered preference have demonstrated compelling support
-for addressing this requirement.
-However, the computational cost of considering preference hierarchies
-has limited their inclusion in real-time systems' design.
-Beyond real-time trajectory optimization, autonomous navigation
-also demands that agents are able to react to the changing environments.
-Our proposed algorithm, lexicographic IBR over time,
-produces approximate-optimal solutions
-to games of ordered preference in receding horizon
-fast enough to potentially be practical.
-Lexicographic IBR over time equips autonomous agents
-in complex traffic scenarios with the ability
-to adapt to the environment
-in real time while ranking their preferences and considering those of others.

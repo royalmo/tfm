@@ -1,3 +1,83 @@
 \chapter{Introduction}
 
+%% ITSC Introduction
 
+% Complex agent decisions are often characterized by conflicting objectives.
+% An autonomous vehicle, for example, must avoid collisions while also staying
+% on the road, reaching a goal position,
+% and obeying the speed limit.
+% This problem is even
+% harder when objectives of multiple agents conflict.
+% Agents must determine which strategies are preferable,
+% for example, going off-road
+% to prevent a crash with another vehicle.
+% Such decisions reflect an underlying comparative evaluation
+% that ranks possible trajectories according
+% to subjective preferences.
+% We study the problem
+% of comparative evaluations
+% in transportation systems 
+% from the lens of \emph{preference relations}
+% that codify prioritized metrics; metrics
+% that human drivers implicitly follow on the road.
+
+% A preference is a ``total subjective comparative evaluation'' \cite{hausman:2011}.
+% In the context
+% of an autonomous vehicle, a total subjective comparative evaluation is a rule
+% that, given two trajectories, decides which
+% of the two is preferred from the perspective
+% of the controller.
+% For multiagent systems too,
+% preferences model the multiobjective
+% and often conflicting requirements
+% that the system must adhere to
+% for producing good behavior
+% as subjective comparative evaluations (\cref{fig:scenario}).
+
+% \begin{figure}[!t]
+% \def\svgwidth{\linewidth}
+% \subimport{figures/}{scenario.pdf_tex}
+% \caption{Agents operate under shared constraints, but are incentivized by different preferences
+% (adapted from Zanardi et al.~\protect\cite{zanardi:2022}, Mendes Filho et al.~\protect\cite{filho:2017}, and Lee et al.~\protect\cite{lee:2025}). On the road, situations arise where a vehicle has to coordinate with other vehicles and must relax a low-priority metric to preserve more important metrics, such as giving way to an ambulance.}
+% \label{fig:scenario}
+% %\vspace{-1em}
+% \end{figure}
+
+% One way to express the tension between prioritized metrics
+% of multiple agents is to express them
+% as lexicographic optimization problems
+% in a game of ordered preference \cite{lee:2025}.
+% Games of ordered preference are multi-player games
+% with prohibitive computational cost.
+% Solving these games with a receding horizon alleviates this cost
+% through shorter time horizons and the introduction of feedback.
+% However, the receding horizon setting does not address the rapid dimensional increase caused
+% by adding players or preference levels.
+% Iterated best response~(IBR) efficiently solves multi-player games
+% by decomposing them into single-player problems,
+% where each player optimizes assuming fixed opponent strategies.
+% IBR convergence can be slow due
+% to the need to explore large opponent decision spaces.
+% We propose ``lexicographic IBR over time,''
+% an extension of IBR that incorporates past information,
+% available in receding horizon,
+% to make predictions about future opponent decisions
+% that accelerate convergence
+% to generalized Nash equilibria
+% for games of ordered preference.
+
+% To study this area, this paper asks:
+% \begin{enumerate}[itemsep=0pt,topsep=0pt,label=\textlangle ?\textrangle]
+%     \item \emph{%
+%         Can we efficiently compute approximate-optimal trajectories
+%         for games of ordered preference?}\label{Q1}
+% \end{enumerate}
+
+% To make progress on this question, we
+% \begin{enumerate}
+% \item find that lexicographic IBR over time approximates optimal solutions
+% for games of ordered preference; and
+% \item design experiments demonstrating that games
+% of ordered preference are an effective tool
+% for analyzing interactive preferences in transportation systems.
+% \end{enumerate}
