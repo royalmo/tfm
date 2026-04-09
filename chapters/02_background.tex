@@ -1,7 +1,6 @@
 \chapter{Background}
 
-% Related work from ITSC
-
+In this chapter we review the prior work related to this thesis.
 We have been primarily motivated
 to study games of ordered preference
 by Zanardi et al. \cite{zanardi:2022} and Lee et al. \cite{lee:2025}.
@@ -14,12 +13,14 @@ We have additionally found insights in receding horizon games
 to the problem of preference ordering.
 
 Prior work, closely related to the formulation
-of games of ordered preference in this paper,
-is on \emph{prioritized metrics} 
-and \emph{game-theoretic planning}.
+of games of ordered preference in this thesis,
+is on \emph{prioritized metrics} (\cref{sec:prioritized-metrics}) 
+and \emph{game-theoretic planning} (\cref{sec:game-theoretic-planning}).
+In parallel, we also review prior work on \emph{game state estimation} (\cref{sec:game-state-estimation}),
+and \emph{sim-to-real} (\cref{sec:sim-to-real}).
 
-\smallskip \noindent
-\textsc{prioritized metrics} \quad 
+\section{Prioritized metrics}
+\label{sec:prioritized-metrics}
 Posetal games \cite{zanardi:2022} formalize games
 with prioritized metrics
 through partial orders over system designs \cite{censi:2019}, using symbolic structures to encode constraint and preference hierarchies \cite{wongpiromsarn:2021}.
@@ -32,8 +33,9 @@ By framing the problem
 within a receding horizon setting, we exploit the temporal decoupling inherent
 to IBR algorithms, which are known to be computational tractable.
 
-\smallskip \noindent
-\textsc{game-theoretic planning}\quad Game-theoretic traffic
+\section{Game-theoretic planning}
+\label{sec:game-theoretic-planning}
+Game-theoretic traffic
 management is needed to analyze the interactive nature of preferences between
 autonomous agents \cite{qin:2024}. Efficient solution strategies exist
 for game-theoretic planning \cite{laine:2021,williams:2023,mehr:2023,zhu:2023}, but solving games that involve nested optimization problems typically requires approximate solutions, similar to those used in solving trajectory games with continuous action spaces \cite{jond:2022,peters:2022,liu:2023}.
@@ -44,16 +46,8 @@ horizon in game-theoretic planning has been studied in the classical formulation
 and mid-term metrics \cite{fisac:2019}. These approaches do not consider the
 problem of preferences in agent interactions.
 
-% RAL
-
-
-Prior work, closely related to this paper, can be categorized on \emph{preference relations}, \emph{game state estimation}, and \emph{sim-to-real}.
-
-\smallskip \noindent
-\textsc{preference relations} \quad Posetal games \cite{zanardi:2022} model games with prioritized metrics, but in comparison to games of ordered preference \cite{lee:2025}, they use preference hierarchies instead of lexicographic optimization. The scalability for games of ordered preferences has been recently studied \cite{heras:2025}, but all these formulations require the knowledge of other players' preferences.
-
-\smallskip \noindent
-\textsc{game state estimation} \quad 
+\section{Game state estimation}
+\label{sec:game-state-estimation}
 Perception has received a lot of attention since it enables the usage of game-theoretical methods in real scenarios \cite{schwarting:2018}.
 Game theory helps building a model from partial observations \cite{liniger:2020} and approximates optimal trajectories that comply with safety constraints \cite{fridovichkeil:2020}.
 Goal positions can be predicted using minimum likelihood estimators \cite{liu:2023}, or by solving inverse games \cite{li:2023}, although variational auto-encoders can be used to train models that perform better overall \cite{liu:2024}. Receding horizon is commonly employed in dynamic games to take advantage of
@@ -62,10 +56,56 @@ Given the difficulty of predicting other's behavior, contingency planning has pr
 The inverse game problem is also a common approach for Markov gamesn reinforcement learning, and Stackelberg games \cite{chen:2023,lian:2024,ward:2025}.
 In this work we use inverse games to infer the preference order.
 
-\smallskip \noindent
-\textsc{sim-to-real} \quad The Duckietown project proposes a common environment to learn and perform experiments on autonomous vehicles \cite{duckietown:2017}. Their low cost makes it accessible to perform real tests, thus reducing the sim-to-real gap. Many works use camera and odometry input to follow the road and detect immediate obstacles, turns and intersections \cite{castro:2019}.
+\section{Sim-to-real}
+\label{sec:sim-to-real}
+The Duckietown project proposes a common environment to learn and perform experiments on autonomous vehicles \cite{duckietown:2017}. Their low cost makes it accessible to perform real tests, thus reducing the sim-to-real gap. Many works use camera and odometry input to follow the road and detect immediate obstacles, turns and intersections \cite{castro:2019}.
 External inputs such as camera tracking complement the robot's sensors and allow for more complex behaviors, such or obstacle
 avoidance \cite{candela:2022}.
 Duckiebots are also used outside the standardized city model and are able to navigate through sidewalks or other real-world situations using reinforcement learning techniques \cite{kahn:2021}.
 In this work we make robots interact with each other in intersection scenarios.
 Apart from Duckietown, the CARLA simulator is vastly used to test complex environments \cite{carla:2017}, and projects like f1/10 \cite{f110:2019} also provide cyber-physical systems to perform experiments.
+
+\section{Terminology}
+
+The reader is referred to \cite{fridovich-keil:2024} for a smooth introduction
+into game theory. In this section, we will define the basic terminology used in
+this field.
+
+\smallskip \noindent
+\textbf{Agents or players} \quad
+Decision-making entities that interact in a shared environment, where each agent's actions influence others.
+
+\smallskip \noindent
+\textbf{Objective or cost function} \quad
+A function evaluating an agent's behavior over trajectories.
+Minimizing the outcome of these functions yields better trajectories for the agent.
+In this work, objectives are ordered and compared lexicographically.
+
+\smallskip \noindent
+\textbf{Trajectory} \quad
+A sequence of states and actions over time generated by system dynamics and control inputs.
+In non-trajectory game theoretical models, it is also called strategy.
+
+\smallskip \noindent
+\textbf{Generalized Nash equilibrium (GNE)} \quad
+A set of strategies where no agent can improve its objective unilaterally, under shared and coupled constraints.
+
+\smallskip \noindent
+\textbf{Preference relations} \quad
+A binary relation over outcomes encoding how agents rank them. Here, preferences are ordered and induce lexicographic comparisons.
+
+\smallskip \noindent
+\textbf{Inverse game} \quad
+A method to infer agents' objectives or preferences from observed behavior in a game-theoretic setting.
+
+\smallskip \noindent
+\textbf{Iterated best response (IBR)} \quad
+An algorithm where agents sequentially optimize their strategy given others' fixed strategies until convergence.
+
+\smallskip \noindent
+\textbf{Coupled constraints} \quad
+Constraints that depend on multiple agents' decisions, linking their feasible strategy sets.
+
+\smallskip \noindent
+\textbf{Dynamic game} \quad
+A game where agents interact over time through system dynamics and evolving states.
