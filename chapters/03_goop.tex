@@ -1,8 +1,26 @@
 \chapter{Games of ordered preference}
+\label{ch:goop}
 
-In this section, we review key concepts
+In game theory, agents minimize an objective function subject to constraints to find an optimal
+strategy. In trajectory games, that strategy is a sequence of acceleration
+or pitch and yawn actions, which will alter a trajectory. In multi-agent games,
+we usually try to find generalized Nash equilibria (GNE) by jointly minimizing the
+objective functions of all agents.
+
+Games of ordered preference introduce multiple objective functions per agent,
+ranked with each other, which we will want to lexicographically optimize to
+find GNE. This requires encoding the cost functions of each agent to ensure
+preferences are preserved.
+Trajectory games are also usually solved in receding horizon, so future state
+variations can be used to calculate the optimal trajectory, while allowing to
+solve for a smaller number of steps, which improves performance.
+
+In this chapter, we review key concepts
 in trajectory games, lexicographic minimization,
-and games of ordered preference.
+and games of ordered preference. In \cref{ch:lex-ibr-ot} we use this
+base knowledge to introduce \emph{Lexicographic IBR over time}, a method that
+takes advantage of the nature of trajectory games to approximate GNE for
+games of ordered preference.
 
 \section{Notation}
 
