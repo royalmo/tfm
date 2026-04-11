@@ -1,145 +1,139 @@
 \chapter{Introduction}
+\label{ch:introduction}
 
-\section{GOOP}
+Autonomous systems are commonly required to satisfy several objectives at
+once. A service robot must navigate efficiently while remaining safe and
+socially acceptable around people, a warehouse robot must complete tasks
+quickly while respecting coordination and collision-avoidance constraints,
+and an aerial robot must balance mission progress against energy use and
+environmental restrictions. In each case, good behavior depends not only
+on what objective is pursued, but also on how competing objectives are
+ordered when they come into conflict.
 
-\section{Goop efficiencies}
+Road traffic provides a particularly demanding instance of this general
+problem. Autonomous vehicles optimize objective functions, yet the
+adequacy of their behavior is ultimately assessed against the subjective
+and context-dependent choices of human road users. In traffic, an agent
+must avoid collisions, remain within the road boundaries, obey traffic
+rules, and make progress towards its destination. These requirements are
+not naturally reduced to a single weighted objective. Some objectives must
+dominate others, and their relative importance depends on the situation. A
+vehicle may accept slower progress to yield at an intersection, or
+temporarily relax lane centering to preserve safety. Capturing this kind
+of structured prioritization is therefore necessary for autonomous systems
+that operate in interactive environments.
 
-\section{Estimation}
+This thesis studies such decision problems through \emph{preference
+relations}, understood as comparative rules that rank candidate
+trajectories according to prioritized metrics \cite{hausman:2011}.
+Preference relations offer a principled way to describe how an agent
+resolves conflicts between objectives without collapsing them into a
+single scalar trade-off. Building on this idea, the thesis adopts
+\emph{games of ordered preference} as a framework for modelling multi-agent
+interactions in which each agent follows a lexicographically ordered set
+of objectives \cite{zanardi:2022,lee:2025}.
 
-\section{sim2real}
+\section{Games of ordered preference}
 
-\section{Structure}
+Traffic interactions rarely involve a single agent pursuing a single
+objective. Several agents act simultaneously under shared constraints
+while evaluating the same situation according to different priorities. In
+such settings, sensible behavior may require relaxing a lower-priority
+objective in order to preserve a more important one. This is the type of
+decision structure that games of ordered preference are intended to
+represent.
 
-he structure of this thesis reflects the dual nature of its approach. Following the background
-presentation, the thesis branches into two main parts, each dedicated to one of the case studies:
+\begin{figure}[!t]
+\centering
+\def\svgwidth{0.6\linewidth}
+\subimport{figures/itsc/}{scenario.pdf_tex}
+\caption{Agents operate under shared constraints, but their behavior is
+shaped by different preference relations. In traffic, coordination may
+require relaxing a lower-priority objective in order to preserve a more
+important one. Adapted from Zanardi et al.~\protect\cite{zanardi:2022},
+Mendes Filho et al.~\protect\cite{filho:2017}, and Lee et
+al.~\protect\cite{lee:2025}.}
+\label{fig:scenario}
+\end{figure}
+
+The appeal of this framework lies in its ability to represent
+context-sensitive and hierarchical decision making in a form that remains
+compatible with game-theoretic planning. Its practical use, however,
+depends on more than expressive modelling. A useful methodology must be
+computationally tractable, must operate when other agents do not
+explicitly reveal their priorities, and should remain meaningful when it
+is transferred from simulation to physical systems. These three aspects
+define the scope of this thesis.
+
+\smallskip \noindent
+\textsc{computational tractability} \quad
+Games of ordered preference are expensive to solve because lexicographic
+optimization generates nested subproblems, and the coupling between agents
+prevents the overall game from being decomposed without approximation.
+When the problem is cast as a dynamic game, the dimensionality of the
+trajectories and the presence of shared constraints further increase the
+computational burden. This is especially restrictive in autonomous
+driving, where decisions must be recomputed repeatedly as the environment
+changes. To address this issue, the thesis develops
+\emph{lexicographic IBR over time}, an extension of iterated best response
+that exploits temporal continuity in receding horizon to produce efficient
+approximate solutions.
+
+\smallskip \noindent
+\textsc{preference order estimation} \quad
+Efficient solvers alone are not sufficient in non-cooperative settings.
+Most formulations assume that the objectives of the other agents are known
+in advance, or at least that the parameters required to predict their
+behavior are available. Real traffic does not satisfy this assumption.
+Human drivers do not communicate the relative priority they assign to
+progress, rule compliance, safety, or comfort. If games of ordered
+preference are to be used in mixed environments with limited
+communication, agents must be able to infer the preference order of others
+from observations. This motivates the second line of work in the thesis,
+which studies inverse games of ordered preference.
+
+\smallskip \noindent
+\textsc{experimental validation} \quad
+Simulation is essential for developing game-theoretic planning methods,
+but its assumptions do not automatically survive on physical platforms.
+Sensing noise, imperfect actuation, synchronization delays, and partial
+observability all affect how interactive behavior unfolds in practice. A
+convincing account of preference-aware planning and preference estimation
+therefore requires experimental validation beyond simulation. For this
+purpose, the thesis uses Duckietown, a low-cost robotic platform for
+autonomous driving experiments \cite{duckietown:2017}, as a testbed for
+small-scale interaction scenarios.
+
+\section{Objectives}
+
+The general objective of this thesis is to advance the practical use of
+games of ordered preference in interactive autonomous-driving scenarios.
+This goal is addressed through the following specific objectives:
+
+\begin{enumerate}
+    \item To improve the computational tractability of solving games of ordered preference in receding-horizon settings through efficient approximate methods.
+    \item To investigate the inverse problem of games of ordered preference and methods for estimating the preference order of other agents from observations.
+    \item To assess the practical relevance of the proposed methods through simulation and experiments on a physical robotic platform.
+\end{enumerate}
+
+To achieve these objectives, this thesis makes the following contributions:
+
+\begin{enumerate}
+    \item It develops lexicographic IBR over time as an approximate solution method for receding-horizon games of ordered preference.
+    \item It formulates the inverse problem of games of ordered preference and studies methods for estimating the preference order of other agents from observations.
+    \item It evaluates the proposed methods in simulated traffic scenarios and in Duckietown experiments with small-scale robots.
+\end{enumerate}
+
+\section{Thesis structure}
+
+The remainder of the thesis follows the progression from modelling to
+computation, estimation, and experimental validation.
 
 \begin{itemize}
-    \item In \cref{ch:background}, we present the background and related work relevant to the thesis.
-    \item In \cref{ch:goop}, we introduce the challenges of finding solutions to games of ordered preference.
-    \item In \cref{ch:lex-ibr-ot}, we present our contributions towards improving the tractability of computing solutions to games of ordered preference.
-    \item In \cref{ch:estimation}, we 
-    \item In \cref{ch:duckietown}, we present our contributions to making a simple physical test environment for 
-    \item In \cref{ch:conclusions}, we summarize the main findings of this thesis and discuss potential avenues for future work.
+    \item In \cref{ch:background}, we review the literature on prioritized metrics, game-theoretic planning, inverse games, and sim-to-real experimentation.
+    \item In \cref{ch:goop}, we formalize games of ordered preference and introduce the notation and optimization structure used throughout the thesis.
+    \item In \cref{ch:lex-ibr-ot}, we formulate games of ordered preference in receding horizon and present lexicographic IBR over time as an efficient approximate solution method.
+    \item In \cref{ch:estimation}, we study the inverse problem and develop methods for estimating preference orders from observations of other agents.
+    \item In \cref{ch:duckietown}, we describe the Duckietown platform and the experimental setting used to evaluate the proposed methods in a physical environment.
+    \item In \cref{ch:conclusions}, we summarize the main findings of the thesis and discuss directions for future work.
 \end{itemize}
-
-%% ITSC Introduction
-
-% Complex agent decisions are often characterized by conflicting objectives.
-% An autonomous vehicle, for example, must avoid collisions while also staying
-% on the road, reaching a goal position,
-% and obeying the speed limit.
-% This problem is even
-% harder when objectives of multiple agents conflict.
-% Agents must determine which strategies are preferable,
-% for example, going off-road
-% to prevent a crash with another vehicle.
-% Such decisions reflect an underlying comparative evaluation
-% that ranks possible trajectories according
-% to subjective preferences.
-% We study the problem
-% of comparative evaluations
-% in transportation systems 
-% from the lens of \emph{preference relations}
-% that codify prioritized metrics; metrics
-% that human drivers implicitly follow on the road.
-
-% A preference is a ``total subjective comparative evaluation'' \cite{hausman:2011}.
-% In the context
-% of an autonomous vehicle, a total subjective comparative evaluation is a rule
-% that, given two trajectories, decides which
-% of the two is preferred from the perspective
-% of the controller.
-% For multiagent systems too,
-% preferences model the multiobjective
-% and often conflicting requirements
-% that the system must adhere to
-% for producing good behavior
-% as subjective comparative evaluations (\cref{fig:scenario}).
-
-% \begin{figure}[!t]
-% \def\svgwidth{\linewidth}
-% \subimport{figures/}{scenario.pdf_tex}
-% \caption{Agents operate under shared constraints, but are incentivized by different preferences
-% (adapted from Zanardi et al.~\protect\cite{zanardi:2022}, Mendes Filho et al.~\protect\cite{filho:2017}, and Lee et al.~\protect\cite{lee:2025}). On the road, situations arise where a vehicle has to coordinate with other vehicles and must relax a low-priority metric to preserve more important metrics, such as giving way to an ambulance.}
-% \label{fig:scenario}
-% %\vspace{-1em}
-% \end{figure}
-
-% One way to express the tension between prioritized metrics
-% of multiple agents is to express them
-% as lexicographic optimization problems
-% in a game of ordered preference \cite{lee:2025}.
-% Games of ordered preference are multi-player games
-% with prohibitive computational cost.
-% Solving these games with a receding horizon alleviates this cost
-% through shorter time horizons and the introduction of feedback.
-% However, the receding horizon setting does not address the rapid dimensional increase caused
-% by adding players or preference levels.
-% Iterated best response~(IBR) efficiently solves multi-player games
-% by decomposing them into single-player problems,
-% where each player optimizes assuming fixed opponent strategies.
-% IBR convergence can be slow due
-% to the need to explore large opponent decision spaces.
-% We propose ``lexicographic IBR over time,''
-% an extension of IBR that incorporates past information,
-% available in receding horizon,
-% to make predictions about future opponent decisions
-% that accelerate convergence
-% to generalized Nash equilibria
-% for games of ordered preference.
-
-% To study this area, this paper asks:
-% \begin{enumerate}[itemsep=0pt,topsep=0pt,label=\textlangle ?\textrangle]
-%     \item \emph{%
-%         Can we efficiently compute approximate-optimal trajectories
-%         for games of ordered preference?}\label{Q1}
-% \end{enumerate}
-
-% To make progress on this question, we
-% \begin{enumerate}
-% \item find that lexicographic IBR over time approximates optimal solutions
-% for games of ordered preference; and
-% \item design experiments demonstrating that games
-% of ordered preference are an effective tool
-% for analyzing interactive preferences in transportation systems.
-% \end{enumerate}
-
-
-% RAL
-
-% Conflicting objectives are present when having to make a decision. Autonomous agents need to make a choice of what objective should be prioritized. In urban driving scenarios, agents may prefer staying on the lane over staying under the speed limit to avoid hitting pedestrians, while the opposite may be preferred in the countryside.
-% Games of ordered preference model such scenarios in X way.
-
-% Non-cooperative games are often characterized by the lack of information
-% shared between different agents. In driving scenarios, goal destinations are rarely
-% broadcasted, enforcing an autonomous agent to make estimations on the
-% other agents' objectives.
-
-% While many works succeed in inferring some of the objectives, such as goal
-% position, there are no formal methods of estimating the preference order of other agents.
-
-% \begin{figure}[!t]
-% \def\svgwidth{\linewidth}
-% \subimport{figures/}{scenario.pdf_tex}
-% \caption{The order of the game objectives determines the behavior of an
-% agent. To this end, estimating that order from partial state 
-% observations allows the usage of games of ordered preference in
-% environments where there is little to no communications between agents,
-% such as traffic scenarios with humans involved.}
-% \label{fig:scenario}
-% %\vspace{-1em}
-% \end{figure}
-
-
-% To study this area, this paper asks:
-% \begin{enumerate}[itemsep=0pt,topsep=0pt,label=\textlangle ?\textrangle]
-%     \item \emph{%
-%         Can we efficiently infer other agents' preference relations in
-%         games of ordered preference?}\label{Q1}
-% \end{enumerate}
-
-% To make progress on this question, we
-% 1. design a method that estimates preference relations in games of ordered
-%    preference; and
-% 2. test the previous tool on small-scale robots (cref:fig:scenario), demonstrating
-%    the utility of preference estimation.
