@@ -12,24 +12,29 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{environ,lmodern,newverbs,amsmath,amssymb}
 \RequirePackage[automark,headsepline=0.4pt]{scrlayer-scrpage}
+\RequirePackage{xcolor}
 \RequirePackage{colorprofiles}
 \RequirePackage[a-3b,mathxmp]{pdfx}
-\RequirePackage{tikz,xcolor,booktabs}
+\RequirePackage{tikz,booktabs}
+\RequirePackage{xurl}
 \RequirePackage[
 style=alphabetic,
 datezeros=false]{biblatex}[2022/07/12]
-\RequirePackage[
-binary-units=true,
-per-mode=symbol,
-round-mode=places,
-round-precision=2,
-round-pad=false]{siunitx}[>v3]
 \RequirePackage[autostyle=true]{csquotes}
 \usetikzlibrary{svg.path}
 \hypersetup{hidelinks,bookmarksnumbered=true}
+\ifdefined\pdfsuppresswarningpagegroup
+  \pdfsuppresswarningpagegroup=1
+\fi
 % In some TeX Live/bookmark combinations, \BKM@entry can appear in .aux
 % before bookmark defines it on a rerun. Guard against that to keep latexmk stable.
 \providecommand\BKM@entry[2]{}
+
+% The thesis only relies on \si{\second}; a tiny compatibility shim avoids
+% pulling in siunitx and its TeX-installation-dependent translation warnings.
+\providecommand{\second}{s}
+\providecommand{\si}[1]{\ensuremath{\,\mathrm{#1}}}
+\providecommand{\SI}[2]{\ensuremath{#1\,\mathrm{#2}}}
 
 % Les opcions de la classe
 \newif\if@creativecommons  \@creativecommonstrue
@@ -43,24 +48,19 @@ round-pad=false]{siunitx}[>v3]
 \DeclareOption{master}{\@mastertrue}
 \ProcessOptions\relax
 
-% Opcions localitzades per a siunitx
-\if@catalanlang
-  \sisetup{output-decimal-marker={,}}
-\else
-  \sisetup{output-decimal-marker={.}}
-\fi
-
 % Opcions correctes per a babel
 \if@catalanlang
 \PassOptionsToPackage{english,main=catalan}{babel}
 \else
-\PassOptionsToPackage{main=english,catalan}{babel}
+\PassOptionsToPackage{main=english}{babel}
 \fi
 \RequirePackage{babel}
 
 
 % Configuració de les cometes
-\DeclareQuoteAlias{spanish/spanish}{catalan}
+\if@catalanlang
+  \DeclareQuoteAlias{spanish/spanish}{catalan}
+\fi
 \MakeAutoQuote{«}{»}
 
 
@@ -301,7 +301,9 @@ round-pad=false]{siunitx}[>v3]
     \mbox{}
     \fi
     \vfill
-    {\tfgitic@typohow}
+    \begin{minipage}{\linewidth}
+      \raggedright\small\tfgitic@typohow
+    \end{minipage}
   \end{titlepage}
 }
 
@@ -427,6 +429,7 @@ round-pad=false]{siunitx}[>v3]
 \setkomafont{descriptionlabel}{\sffamily}
 \setkomafont{caption}{\small}
 \setkomafont{captionlabel}{\usekomafont{caption}}
+\AtBeginBibliography{\raggedright}
 
 
 %%
@@ -439,10 +442,13 @@ round-pad=false]{siunitx}[>v3]
   % https://www.mail-archive.com/tex-hyphen@tug.org/msg01801.html
   \if@catalanlang\lccode`'=0\fi
   \sloppy
-  \maketitle{}
   \frontmatter
-  \tfgitic@declaracio
-  \tfgitic@dedicacio
+  {%
+    \hfuzz=11pt
+    \maketitle{}
+    \tfgitic@declaracio
+    \tfgitic@dedicacio
+  }%
   \if@catalanlang
     \chapter{Resum}
     \abstractca
@@ -452,7 +458,7 @@ round-pad=false]{siunitx}[>v3]
     \chapter{Abstract}
     \abstracten
     {\let\clearpage\relax\chapter{Resum}}
-    \begin{otherlanguage}{catalan}\noindent\abstractca\end{otherlanguage}
+    \noindent\abstractca
   \fi
   \tableofcontents
   \mainmatter

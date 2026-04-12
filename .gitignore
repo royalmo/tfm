@@ -300,6 +300,7 @@ TSWLatexianTemp*
 .vscode
 
 *.xmpdata
+!thesis.xmpdata
 
 # Saving the paper as a reference but don't want to commit it
 include/itsc.tex
