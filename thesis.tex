@@ -76,23 +76,66 @@ understanding my lack of social life these past months.
 \end{acknowledgments}
 
 \begin{resum}
-TODO
+Els sistemes autònoms sovint han de satisfer diversos objectius que no es
+poden reduir de manera natural a un únic cost escalar. Això és especialment
+evident en la conducció autònoma, on la seguretat, el compliment de les
+normes, el manteniment del carril i el progrés cap al destí s'han de
+prioritzar de manera diferent segons la situació. Aquesta tesi estudia
+aquest problema mitjançant els jocs de preferència ordenada, un marc de
+teoria de jocs en què cada agent ordena lexicogràficament els
+seus objectius.
+
+La tesi se centra en tres aspectes necessaris per fer aquest marc més útil
+a la pràctica. En primer lloc, es desenvolupa \emph{lexicographic IBR over
+time}, un mètode aproximat de resolució en horitzó lliscant que aprofita
+la continuïtat temporal per reduir el cost computacional de resoldre jocs
+de preferència ordenada, mantenint l'efecte qualitatiu de l'ordre de
+preferències sobre el comportament. En segon lloc, es formula el problema
+invers d'estimar l'ordre de preferències d'altres agents a partir
+d'observacions, i posa de manifest la limitació de l'assumpció
+d'informació completa habitual en els jocs de trajectòries. Finalment,
+presenta Duckietown com a plataforma experimental de baix cost per
+avançar cap a una validació física dels mètodes proposats sota soroll de
+mesura, errors d'actuació i altres imperfeccions del món real.
+
+En conjunt, els resultats mostren que els jocs de preferència ordenada
+constitueixen un marc prometedor per modelar la presa de decisions
+interactiva amb objectius jerarquitzats, i que les aproximacions en
+horitzó lliscant poden fer-lo considerablement més tractable. Alhora, la
+tesi identifica l'estimació de preferències i una validació \emph{sim-to-real}
+més àmplia com a línies essencials de treball futur.
 \end{resum}
 
 \begin{abstract}
-Autonomous vehicles must balance ranked objectives, such as minimizing travel
-time, ensuring safety, and coordinating with traffic.
-Games of ordered preference effectively model these interactions but become
-computationally intractable as the time horizon, number of players, or number
-of preference levels increase.
-Moreover, solving these games requires knowing the preferences of other agents.
-% While receding horizon frameworks mitigate long-horizon intractability by solving sequential shorter games,
-% often warm-started, they do not resolve the complexity growth inherent in existing methods for solving games of ordered preference.
-This thesis introduces a solution strategy that avoids excessive complexity growth by approximating solutions using
-lexicographic iterated best response in receding horizon, which uses past information to accelerate convergence.
-Some methods are proposed to infer the preference order of other agents based on past observations.
-The effectiveness of the proposed algorithms are demonstrated through simulated traffic scenarios, where approximate-optimal solutions for receding horizon games of ordered preference are computed, which converge towards generalized Nash equilibria.
-A test environment using Duckietown's environment.  TODO
+Autonomous systems often operate under multiple objectives that cannot be
+naturally reduced to a single scalar cost. This is especially true in
+autonomous driving, where safety, rule compliance, lane keeping, and
+progress towards a destination must be prioritized differently depending
+on the situation. This thesis studies that problem through games of
+ordered preference, a game-theoretic framework in which each agent ranks
+its objectives lexicographically.
+
+The thesis focuses on three aspects required for the practical use of this
+framework. First, it develops \emph{lexicographic IBR over time}, an
+approximate receding-horizon solution method that exploits temporal
+continuity to reduce the computational burden of solving games of ordered
+preference while preserving the qualitative influence of preference order
+on behavior. Results in simulated traffic scenarios show substantial
+reductions in compilation and solution times relative to the baseline
+formulation, especially as the number of preference levels increases.
+Second, it formulates the inverse problem of estimating the preference
+order of other agents from observations, highlighting the need to move
+beyond the complete-information assumption common in trajectory games.
+Third, it introduces Duckietown as a low-cost robotic platform for moving
+towards experimental validation under sensing noise, actuation errors, and
+other real-world imperfections.
+
+Taken together, the thesis shows that games of ordered preference provide
+a promising framework for modelling interactive decision making with
+prioritized objectives, and that receding-horizon approximations can make
+their use considerably more tractable. At the same time, it identifies
+preference-order estimation and broader sim-to-real validation as
+essential directions for future work.
 \end{abstract}
 
 \begin{document}
