@@ -85,12 +85,17 @@ Efficient solvers alone are not sufficient in non-cooperative settings.
 Most formulations assume that the objectives of the other agents are known
 in advance, or at least that the parameters required to predict their
 behavior are available. Real traffic does not satisfy this assumption.
-Human drivers do not communicate the relative priority they assign to
-progress, rule compliance, safety, or comfort. If games of ordered
-preference are to be used in mixed environments with limited
-communication, agents must be able to infer the preference order of others
-from observations. This motivates the second line of work in the thesis,
-which studies inverse games of ordered preference.
+Inverse-game methods can already be used to estimate latent quantities
+such as goal positions and unknown objective functions
+\cite{liu:2023,li:2023,liu:2024}. However, those methods do not recover
+the lexicographic structure that is central to games of ordered
+preference. Human drivers do not communicate the relative priority they
+assign to progress, rule compliance, safety, or comfort, and inferring a
+goal is not the same as inferring how conflicting objectives are ordered.
+If games of ordered preference are to be used in mixed environments with
+limited communication, agents must be able to infer the preference order
+of others from observations. This motivates the second line of work in
+the thesis, which studies inverse games of ordered preference.
 
 \smallskip \noindent
 \textsc{experimental validation} \quad

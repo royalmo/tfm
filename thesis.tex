@@ -92,8 +92,10 @@ la continuïtat temporal per reduir el cost computacional de resoldre jocs
 de preferència ordenada, mantenint l'efecte qualitatiu de l'ordre de
 preferències sobre el comportament. En segon lloc, es formula el problema
 invers d'estimar l'ordre de preferències d'altres agents a partir
-d'observacions, i posa de manifest la limitació de l'assumpció
-d'informació completa habitual en els jocs de trajectòries. Finalment,
+d'observacions. A diferència de treballs previs que poden inferir
+posicions objectiu o funcions objectiu latents, aquesta tesi se centra en
+estimar l'ordre de preferències mateix, que és l'element definitori dels
+jocs de preferència ordenada. Finalment,
 presenta Duckietown com a plataforma experimental de baix cost per
 avançar cap a una validació física dels mètodes proposats sota soroll de
 mesura, errors d'actuació i altres imperfeccions del món real.
@@ -124,11 +126,13 @@ on behavior. Results in simulated traffic scenarios show substantial
 reductions in compilation and solution times relative to the baseline
 formulation, especially as the number of preference levels increases.
 Second, it formulates the inverse problem of estimating the preference
-order of other agents from observations, highlighting the need to move
-beyond the complete-information assumption common in trajectory games.
-Third, it introduces Duckietown as a low-cost robotic platform for moving
-towards experimental validation under sensing noise, actuation errors, and
-other real-world imperfections.
+order of other agents from observations. Whereas prior inverse-game
+methods can recover latent goals or objective functions, this thesis
+targets the ordering of objectives itself, which is the defining
+information in games of ordered preference. Third, it introduces
+Duckietown as a low-cost robotic platform for moving towards experimental
+validation under sensing noise, actuation errors, and other real-world
+imperfections.
 
 Taken together, the thesis shows that games of ordered preference provide
 a promising framework for modelling interactive decision making with
