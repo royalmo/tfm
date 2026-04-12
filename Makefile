@@ -14,7 +14,7 @@ redo: trigger-pdf-redo thesis.pdf clean
 %.pdf_tex: %.svg
 	inkscape $< --export-type=pdf --export-latex
 
-thesis.pdf: thesis.tex chapters/*.tex include/* $(IMAGE_FILES) $(MISC_FILES) $(FIGURE_PDF_TEX_FILES)
+thesis.pdf: thesis.tex chapters/*.tex $(IMAGE_FILES) $(MISC_FILES) $(FIGURE_PDF_TEX_FILES)
 	pdflatex thesis.tex
 	biber thesis
 	pdflatex thesis.tex
