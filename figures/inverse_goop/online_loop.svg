@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="330" viewBox="0 0 1120 330" version="1.1">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 6 L 0 12" style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round" />
+    </marker>
+  </defs>
+
+  <text x="560" y="26" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{adaptive online loop}</text>
+
+  <rect x="18" y="40" width="204" height="210" rx="18" ry="18" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
+  <rect x="240" y="40" width="204" height="210" rx="18" ry="18" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
+  <rect x="462" y="40" width="204" height="210" rx="18" ry="18" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
+  <rect x="684" y="40" width="204" height="210" rx="18" ry="18" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
+  <rect x="906" y="40" width="196" height="210" rx="18" ry="18" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
+
+  <text x="120" y="72" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{observe}</text>
+  <text x="342" y="72" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{score}</text>
+  <text x="564" y="72" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{smooth}</text>
+  <text x="786" y="72" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{switch}</text>
+  <text x="1004" y="72" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{plan / execute}</text>
+
+  <rect x="42" y="104" width="156" height="70" rx="16" ry="16" style="fill:#d1d1d1;stroke:#7f7d76;stroke-width:2.4" />
+  <line x1="54" y1="138" x2="186" y2="138" style="stroke:#f9f9f9;stroke-width:4;stroke-dasharray:14,12;stroke-linecap:round" />
+  <path d="M 54 160 C 77 157, 102 151, 128 142 C 146 136, 163 129, 186 116" style="fill:none;stroke:#f4a259;stroke-width:4.2;stroke-linecap:round" />
+  <text x="120" y="201" text-anchor="middle" style="font-family:Sans;font-size:15px">\footnotesize{windowed measurements}</text>
+
+  <rect x="264" y="100" width="156" height="82" rx="16" ry="16" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
+  <rect x="282" y="116" width="120" height="14" rx="5" ry="5" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
+  <rect x="282" y="136" width="120" height="14" rx="5" ry="5" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
+  <rect x="282" y="156" width="120" height="14" rx="5" ry="5" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
+  <rect x="282" y="116" width="26" height="14" rx="5" ry="5" style="fill:#f4a259;stroke:none" />
+  <rect x="282" y="136" width="48" height="14" rx="5" ry="5" style="fill:#329a55;stroke:none" />
+  <rect x="282" y="156" width="68" height="14" rx="5" ry="5" style="fill:#2f78c4;stroke:none" />
+  <text x="342" y="201" text-anchor="middle" style="font-family:Sans;font-size:15px">\footnotesize{candidate losses}</text>
+
+  <rect x="486" y="100" width="156" height="82" rx="16" ry="16" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
+  <path d="M 510 146 C 534 129, 558 129, 582 146" style="fill:none;stroke:#f4a259;stroke-width:4;stroke-linecap:round" />
+  <path d="M 510 158 C 534 144, 558 144, 582 158" style="fill:none;stroke:#2f78c4;stroke-width:4;stroke-linecap:round;stroke-dasharray:7,6" />
+  <path d="M 510 134 C 534 120, 558 120, 582 134" style="fill:none;stroke:#329a55;stroke-width:4;stroke-linecap:round;stroke-dasharray:7,6" />
+  <text x="564" y="201" text-anchor="middle" style="font-family:Sans;font-size:15px">\footnotesize{exponential moving average}</text>
+
+  <rect x="708" y="96" width="156" height="90" rx="16" ry="16" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
+  <rect x="728" y="114" width="116" height="16" rx="5" ry="5" style="fill:#f4a259;stroke:#d97706;stroke-width:0.8" />
+  <rect x="728" y="138" width="116" height="16" rx="5" ry="5" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
+  <text x="786" y="176" text-anchor="middle" style="font-family:Sans;font-size:15px">\footnotesize{switch only if the new}</text>
+  <text x="786" y="196" text-anchor="middle" style="font-family:Sans;font-size:15px">\footnotesize{order is decisively better}</text>
+
+  <rect x="930" y="100" width="148" height="82" rx="16" ry="16" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
+  <text x="1004" y="132" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{ego GOOP}</text>
+  <text x="1004" y="156" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{replanning}</text>
+  <rect x="952" y="170" width="104" height="12" rx="4" ry="4" style="fill:#d1d1d1;stroke:#7f7d76;stroke-width:0.8" />
+  <rect x="952" y="170" width="44" height="12" rx="4" ry="4" style="fill:#f4a259;stroke:none" />
+  <text x="1004" y="201" text-anchor="middle" style="font-family:Sans;font-size:15px">\footnotesize{execute and repeat}</text>
+
+  <path d="M 222 145 L 238 145" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
+  <path d="M 444 145 L 460 145" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
+  <path d="M 666 145 L 682 145" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
+  <path d="M 888 145 L 904 145" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
+  <path d="M 1004 252 C 790 306, 334 306, 120 252" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
+  <text x="562" y="318" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{the loop closes when the next observation window arrives}</text>
+</svg>
