@@ -1,29 +1,116 @@
 \chapter{Conclusions and future work}
 \label{ch:conclusions}
 
-% Conclusions for ITSC
-Autonomous vehicles are objective decision makers,
-yet the quality of those decisions must be measured against the subjective,
-context-aware choices of human drivers.
-Preference relations model prioritized metrics
-in multi-objective optimization,
-which capture the subjective decision making of human drivers.
-Accounting for the context-varying preferences and intentions
-of all vehicles in the road
-is a necessary condition for intelligent traffic management.
-Games of ordered preference have demonstrated compelling support
-for addressing this requirement.
-However, the computational cost of considering preference hierarchies
-has limited their inclusion in real-time systems' design.
-Beyond real-time trajectory optimization, autonomous navigation
-also demands that agents are able to react to the changing environments.
-Our proposed algorithm, lexicographic IBR over time,
-produces approximate-optimal solutions
-to games of ordered preference in receding horizon
-fast enough to potentially be practical.
-Lexicographic IBR over time equips autonomous agents
-in complex traffic scenarios with the ability
-to adapt to the environment
-in real time while ranking their preferences and considering those of others.
+This chapter summarizes the main findings of the thesis and outlines
+promising directions for continuing this line of research.
 
-Talk about newest paper from CleAR lab: \cite{lee:2026}.
+\section{Conclusions}
+
+This thesis has studied autonomous decision making in interactive
+environments through the framework of games of ordered preference,
+since many autonomous systems, and especially
+autonomous vehicles, must satisfy multiple objectives whose relative
+importance cannot be represented satisfactorily through a single
+scalarized cost. Preference relations provide a suitable formalism for
+capturing such prioritized objectives, but their practical value depends
+on whether they can be solved efficiently, inferred from observations, and
+evaluated beyond purely idealized simulation settings.
+
+\smallskip \noindent
+\textsc{computational tractability} \quad
+The principal contribution of the thesis lies in the computational
+tractability of games of ordered preference. In
+\cref{ch:lex-ibr-ot}, we introduced lexicographic IBR over time as an
+approximate solution method for receding-horizon games of ordered
+preference. The results show that the method preserves the qualitative
+effect of different preference relations on agent behavior while
+substantially reducing compilation and solution times with respect to the
+baseline formulation. This advantage becomes particularly significant as
+the number of preference levels increases, which is precisely the regime
+in which the standard formulation becomes least practical. The results of
+this chapter therefore support the conclusion that approximate solutions
+can be obtained efficiently enough to strengthen the practical viability
+of preference-aware planning in interactive traffic scenarios.
+
+\smallskip \noindent
+\textsc{preference order estimation} \quad
+The second contribution of the thesis concerns the inverse problem of
+games of ordered preference. Although this part remains less developed
+than the computational contribution, it identifies a fundamental
+limitation of the complete-information assumption commonly adopted in
+trajectory games. Realistic traffic scenarios do not provide direct access
+to the preference order of other agents. The work initiated in
+\cref{ch:estimation} therefore establishes preference-order estimation as
+an essential direction for extending games of ordered preference to mixed
+environments involving limited communication and human agents. In this
+sense, the thesis clarifies that efficient solution methods alone are not
+sufficient for practical deployment; they must be complemented by methods
+capable of inferring how other agents rank their objectives.
+
+\smallskip \noindent
+\textsc{experimental validation} \quad
+The third contribution of the thesis is the inclusion of experimental
+validation on the Duckietown platform. The work presented in
+\cref{ch:duckietown} is intentionally modest in its current scope, but it
+establishes an important link between simulation and physical
+experimentation. This is relevant because the significance of
+preference-aware planning does not depend only on formal models and
+simulation results, but also on how those methods behave under sensing
+noise, actuation errors, synchronization issues, and partial
+observability. The Duckietown platform should therefore be understood as
+an enabling step towards a more complete sim-to-real evaluation of games
+of ordered preference and preference estimation.
+
+Taken together, the results of the thesis indicate that games of ordered
+preference constitute a promising framework for representing interactive
+decision making with prioritized objectives, and that their use can be
+made considerably more practical through receding-horizon approximations.
+At the same time, the thesis also shows that further progress in
+preference estimation and experimental validation is needed if the
+framework is to become fully useful in realistic autonomous-driving
+settings.
+
+\section{Future work}
+
+Future work follows naturally from the three main axes of the thesis.
+The most immediate opportunities lie in improving the tractability of
+games of ordered preference further, broadening the methodological basis
+for preference estimation, and strengthening the experimental validation
+of the proposed framework.
+
+\smallskip \noindent
+\textsc{computational tractability} \quad
+While this thesis achieved a considerable efficiency improvement by
+presenting Lexicographic IBR over time, the obtained trajectories are
+an approximation of the optimal solution. Future works can search for
+optimizations that don't compromise accuracy. 
+In particular, the tractable
+reformulation proposed by Lee et al. \cite{lee:2026} replaces the
+exponentially growing complete KKT system with a reduced system whose
+size grows polynomially with the number of players and preference levels, all
+while obtaining optimal solutions.
+These results suggest that structural reformulations and temporal
+approximation schemes may be combined to obtain methods that are both
+efficient and accurate, while still requiring care in more general
+nonlinear settings.
+
+\smallskip \noindent
+\textsc{preference order estimation} \quad
+Future work should also continue the development of inverse games of
+ordered preference. This includes completing the estimation methodology,
+comparing alternative inference strategies, and studying how partial
+observability, model mismatch, and limited sensing affect the recovery of
+other agents' preference orders. Since this part of the thesis remains at
+an initial stage, it offers considerable room for methodological
+improvement.
+
+\smallskip \noindent
+\textsc{experimental validation} \quad
+Another important direction is to make the experimental evaluation more
+robust and substantially broader. This involves conducting a larger
+number of experiments, considering richer interaction scenarios,
+incorporating additional sensing modalities, and combining the proposed
+methods with other existing works in perception, estimation, and
+planning. Extending the use of the Duckietown platform in this way would
+provide a more complete assessment of how games of ordered preference
+behave under realistic sim-to-real conditions.
