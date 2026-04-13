@@ -53,7 +53,7 @@ releases page.
 Simply install latex and other packages. If I'm not missing anything:
 
 ```sh
-sudo apt install texlive-full biber libpgf6 texlive-lang-spanish
+sudo apt install texlive-full biber libpgf6 texlive-lang-spanish inkscape
 ```
 
 ### Build using LaTeX
