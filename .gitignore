@@ -308,3 +308,5 @@ include/itsc.tex
 # Inkscape generated
 *.pdf_tex
 *.pdf
+
+.codex
