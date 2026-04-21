@@ -47,7 +47,7 @@
   <text x="786" y="196" text-anchor="middle" style="font-family:Sans;font-size:15px">\footnotesize{order is decisively better}</text>
 
   <rect x="930" y="100" width="148" height="82" rx="16" ry="16" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
-  <text x="1004" y="132" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{ego GOOP}</text>
+  <text x="1004" y="132" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{ego planning}</text>
   <text x="1004" y="156" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{replanning}</text>
   <rect x="952" y="170" width="104" height="12" rx="4" ry="4" style="fill:#d1d1d1;stroke:#7f7d76;stroke-width:0.8" />
   <rect x="952" y="170" width="44" height="12" rx="4" ry="4" style="fill:#f4a259;stroke:none" />

@@ -47,11 +47,11 @@
 
   <g id="solve-panel">
     <rect x="498" y="26" width="220" height="300" rx="20" ry="20" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
-    <text x="608" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{local GOOP solves}</text>
+    <text x="608" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{local prediction solves}</text>
 
     <rect x="531" y="101" width="154" height="114" rx="16" ry="16" style="fill:#ffffff;stroke:#000000;stroke-width:1.4" />
     <text x="608" y="134" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{player $i$ subproblem}</text>
-    <text x="608" y="162" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\operatorname{LexBR}^i(\hat{x}_t, \hat{\mathbf{z}}^{-i}; \pi^i)$}</text>
+    <text x="608" y="162" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\operatorname{Pred}_{\mathrm{lex}}^i(\hat{x}_t, \hat{\mathbf{z}}^{-i}; \pi^i)$}</text>
     <text x="608" y="191" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\tilde{\mathbf{z}}^i_{t:t+T-1}(\pi^i)$}</text>
 
     <text x="608" y="258" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{reuse the same lexicographic}</text>
