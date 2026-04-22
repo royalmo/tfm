@@ -5,8 +5,8 @@ Chapter~\ref{ch:lex-ibr-ot} assumed that each agent knows the ordered objectives
 This assumption is restrictive in traffic scenes, where vehicles do not explicitly communicate
 which objectives they prioritize or how they rank them.
 We therefore consider the inverse problem for games of ordered preference: given a short window
-of observed behavior and a known set of candidate objectives, infer the preference order
-that best explains the observed trajectory.
+of observed behavior and a known set of candidate objectives, infer the non-ego preference orders
+that jointly best explain the observed trajectories.
 This chapter develops two offline estimators for that problem and then extends the same idea to
 an online adaptive setting in which inference and control are interleaved.
 
@@ -15,7 +15,7 @@ The dynamics, shared constraints, and objective library are assumed known, while
 those objectives is not.
 This places the estimation problem close to inverse formulations studied in trajectory games
 with unknown opponents \cite{liu:2023}, but here the unknown quantity is discrete: the
-lexicographic ordering itself. Existing inverse-game methods can recover
+profile of lexicographic orderings. Existing inverse-game methods can recover
 latent goals or objective functions from behavior \cite{liu:2023,li:2023,liu:2024},
 but they do not estimate the preference order or preference relation
 between multiple objectives. In games of ordered preference, that
@@ -25,67 +25,78 @@ behavior even when the objective library remains fixed.
 \section{Problem formulation}
 \label{sec:inverse-order-estimation}
 
-Consider an agent $i \in [N]$ with objective library
-$\mathcal{J}^i = \{J^i_1, \dots, J^i_{K^i}\}$.
-A candidate preference order is a permutation
-$\pi^i = [\pi^i_1, \dots, \pi^i_{K^i}] \in \Pi^i$ of the index set \([K^i]\),
+Let $e \in [N]$ denote the ego player, whose preference order is known to the
+planner, and let $\mathcal{U} = [N] \setminus \{e\}$ be the set of players whose
+orders must be inferred.
+For each player $j \in \mathcal{U}$, the objective library
+$\mathcal{J}^j = \{J^j_1, \dots, J^j_{K^j}\}$ is known, but its priority order is not.
+A candidate order for player $j$ is a permutation
+$\pi^j = [\pi^j_1, \dots, \pi^j_{K^j}] \in \Pi^j$ of the index set \([K^j]\),
 listed from highest to lowest priority, consistent with the notation introduced in
 \cref{ch:goop}.
-For a measured state $\hat{\mathbf{x}}_t$ and an observed slice of the other players' trajectories
-$\hat{\mathbf{z}}^{-i}_{t:t+T-1}$ over a receding horizon of length $T$,
-a candidate order $\pi^i$ induces a short-horizon prediction
+The unknown object is the joint profile
 \begin{equation}
-\tilde{\mathbf{z}}^i_{t:t+T-1}(\pi^i)
+\boldsymbol{\pi}^{-e}
 =
-\operatorname{Pred}_{\mathrm{lex}}^i\left(\hat{\mathbf{x}}_t, \hat{\mathbf{z}}^{-i}_{t:t+T-1}; \pi^i\right),
+\left(\pi^j\right)_{j \in \mathcal{U}}
+\in
+\Pi^{-e}
+\equiv
+\prod_{j \in \mathcal{U}} \Pi^j .
+\label{eq:inverse_candidate_profile}
+\end{equation}
+
+For a measured joint state $\hat{\mathbf{x}}_t$ over a receding horizon of length $T$,
+a candidate profile $\boldsymbol{\pi}^{-e}$ induces a short-horizon prediction
+\begin{equation}
+\tilde{\mathbf{z}}_{t:t+T-1}(\boldsymbol{\pi}^{-e})
+=
+\operatorname{Pred}_{\mathrm{ord}}\left(\hat{\mathbf{x}}_t; \pi^e, \boldsymbol{\pi}^{-e}\right),
 \label{eq:inverse_prediction}
 \end{equation}
-obtained by solving the same single-player ordered-preference problem used inside lexicographic IBR over time,
-as described in \cref{ch:lex-ibr-ot}.
-% This solve yields the trajectory that player $i$ would have done with preference
-% permutation $\pi^i$, but even if $\pi^i$ was the actual permutation of the
-% observed period, the optimal trajectory will likely differ from the observed one,
-% since lexicographic IBR over time iterates this solve step multiple times.
-% This solve is used as a forward model for the candidate order, not as the inverse estimator itself:
-% it asks what player $i$ would have done from the observed state if its order had been $\pi^i$ and
-% the other players had followed the observed trajectory slice.
+obtained by solving the ordered-preference interaction from the observed state with
+the ego order fixed to $\pi^e$ and the non-ego orders fixed to
+$\boldsymbol{\pi}^{-e}$.
+This prediction step must be evaluated at the profile level.
+Estimating one non-ego order while holding the other unknown players outside the
+candidate profile would generally score a different game from the one that generated
+the observations.
 
 Let $T_{\mathrm{id}}$ denote the identification window.
-Given the observed trajectory of player $i$,
-$\hat{\mathbf{z}}^i_{0:T_{\mathrm{id}}+T-1}$,
-the inverse estimation problem consists of selecting the order that minimizes a trajectory-consistency score,
+Given the observed trajectory window
+$\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$,
+the inverse estimation problem consists of selecting the non-ego profile that minimizes
+a trajectory-consistency score,
 \begin{equation}
-\hat{\pi}^i
+\hat{\boldsymbol{\pi}}^{-e}
 =
-\argmin_{\pi^i \in \Pi^i} S\left(\pi^i; \hat{\mathbf{z}}^i_{0:T_{\mathrm{id}}+T-1}\right).
+\argmin_{\boldsymbol{\pi}^{-e} \in \Pi^{-e}}
+S\left(\boldsymbol{\pi}^{-e}; \hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}\right).
 \label{eq:inverse_problem}
 \end{equation}
 
-This score function $S$ compares the predicted trajectory of player $i$, $\tilde{\mathbf{z}}^i_{t:t+T-1}(\pi^i)$,
-with the observed trajectory $\hat{\mathbf{z}}^{i}_{t:t+T-1}$. To keep consistency with the
-validation methods used in \cref{ch:lex-ibr-ot}, we will use the $L_1$ distance
-between the trajectories as a score to minimize.
-
-Since lexicographic IBR over time usually requires more than one iteration $L$ to
-obtain approximate-optimal solutions, the inverse estimation problem will need
-to be performed for all players with unknown permutation $\pi^i$ jointly.
+The score function $S$ compares the predicted non-ego trajectories
+$\tilde{\mathbf{z}}^{-e}_{t:t+T-1}(\boldsymbol{\pi}^{-e})$ with the observed
+trajectories $\hat{\mathbf{z}}^{-e}_{t:t+T-1}$.
+Following the validation metrics used in \cref{ch:lex-ibr-ot}, we use an $L_1$
+trajectory distance as the basic mismatch measure.
 
 % The overall estimation pipeline is summarized in \cref{fig:inverse_pipeline}.
-Observed trajectories define the data window, each admissible candidate order is evaluated by
-retrospective local solves at the observed time indices, and the resulting predictions are ranked by
-their similarity to the observed states and controls.
+Observed trajectories define the data window, each admissible profile is evaluated by
+retrospective prediction solves at the observed time indices, and the resulting predictions are ranked by
+their similarity to the observed trajectories.
 %The discrete search space is illustrated in \cref{fig:inverse_candidate_space}, while
 The
-lexicographic cascade used inside each local solve is summarized in
+lexicographic cascade used inside each prediction solve is summarized in
 \cref{fig:inverse_lexicographic_rule}.
 
 \begin{figure}[t]
     \centering
     \def\svgwidth{0.98\textwidth}
     \subimport{figures/inverse_goop/}{inverse_pipeline.pdf_tex}
-    \caption{Inverse game of ordered preference estimation pipeline. A measured trajectory segment is compared against the
-    local predictions induced by each admissible preference order. The candidate orders are then ranked
-    by consistency scores, and the most plausible order is retained for subsequent planning or control.}
+    \caption{Inverse game of ordered preference estimation pipeline. A measured trajectory segment and a
+    joint candidate profile of non-ego orders are passed to the prediction step. The resulting trajectories are
+    compared with the observations, and the profile with the lowest consistency score is retained.}
     \label{fig:inverse_pipeline}
 \end{figure}
 
@@ -99,11 +110,11 @@ lexicographic cascade used inside each local solve is summarized in
 %     \label{fig:inverse_candidate_space}
 % \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[h]
     \centering
     \def\svgwidth{0.90\textwidth}
     \subimport{figures/inverse_goop/}{lexicographic_rule.pdf_tex}
-    \caption{Lexicographic decision rule used inside each local ordered-preference solve. The first objective level is
+    \caption{Lexicographic decision rule used inside each ordered-preference solve. The first objective level is
     minimized first, and additional levels are only considered when the previous one remains tied.}
     \label{fig:inverse_lexicographic_rule}
 \end{figure}
@@ -111,43 +122,46 @@ lexicographic cascade used inside each local solve is summarized in
 \section{Exhaustive order identification}
 \label{sec:inverse-baseline}
 
-The most direct estimator tests every admissible preference order and keeps the one whose predicted
-first control actions are closest to the observed ones.
-For each candidate order $\pi^i \in \Pi^i$ we solve \cref{eq:inverse_prediction} at each time step of the
-identification window and accumulate the score
+The most direct estimator tests every admissible non-ego preference profile and keeps the one whose
+predicted first control actions are closest to the observed ones.
+For each candidate profile $\boldsymbol{\pi}^{-e} \in \Pi^{-e}$ we solve
+\cref{eq:inverse_prediction} at each time step of the identification window and accumulate the score
 \begin{equation}
-S_{\mathrm{base}}(\pi^i)
+S_{\mathrm{base}}(\boldsymbol{\pi}^{-e})
 =
 \sum_{t=0}^{T_{\mathrm{id}}-1}
+\sum_{j \in \mathcal{U}}
 \left\lVert
-\tilde{u}^i_t(\pi^i) - \hat{u}^i_t
+\tilde{u}^j_t(\boldsymbol{\pi}^{-e}) - \hat{u}^j_t
 \right\rVert_2^2,
 \label{eq:inverse_baseline_score}
 \end{equation}
-where $\tilde{u}^i_t(\pi^i)$ is the first control input returned by the local solve initialized at
-$\hat{\mathbf{x}}_t$.
-The inferred order is then $\hat{\pi}^i = \argmin_{\pi^i \in \Pi^i} S_{\mathrm{base}}(\pi^i)$.
+where $\tilde{u}^j_t(\boldsymbol{\pi}^{-e})$ is the first predicted control input for player $j$.
+The inferred profile is then
+$\hat{\boldsymbol{\pi}}^{-e}
+= \argmin_{\boldsymbol{\pi}^{-e} \in \Pi^{-e}} S_{\mathrm{base}}(\boldsymbol{\pi}^{-e})$.
 
 This baseline is easy to interpret and directly aligned with the receding-horizon control action.
-Its main limitation is that it uses only the first control input of each local solve.
-As a consequence, distinct preference orders that induce similar immediate behavior can remain hard to
+Its main limitation is that it uses only the first control input of each prediction.
+As a consequence, distinct preference profiles that induce similar immediate behavior can remain hard to
 distinguish.
-The method is also factorial in the number of objective levels, since it enumerates every admissible
-permutation.
+The method also scales with the Cartesian product of the candidate order sets.
 
 \begin{algorithm}
-\KwData{Objective library $\mathcal{J}^i$, candidate set $\Pi^i$, observed trajectory $\hat{\mathbf{z}}^i_{0:T_{\mathrm{id}}+T-1}$, observed other-player trajectories $\hat{\mathbf{z}}^{-i}_{0:T_{\mathrm{id}}+T-1}$, and receding horizon $T$}
-\KwResult{Inferred preference order $\hat{\pi}^i$}
+\KwData{Known ego order $\pi^e$, non-ego candidate profile set $\Pi^{-e}$, observed trajectory $\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$, and receding horizon $T$}
+\KwResult{Inferred non-ego preference profile $\hat{\boldsymbol{\pi}}^{-e}$}
 \medskip
-\ForEach{$\pi^i \in \Pi^i$}{
-    $S_{\mathrm{base}}(\pi^i) \gets 0$\;
+\ForEach{$\boldsymbol{\pi}^{-e} \in \Pi^{-e}$}{
+    $S_{\mathrm{base}}(\boldsymbol{\pi}^{-e}) \gets 0$\;
     \For{$t = 0$ \KwTo $T_{\mathrm{id}}-1$}{
-        Build the local ordered-preference problem for player $i$ with order $\pi^i$\;
-        Solve \cref{eq:inverse_prediction} using the observed state $\hat{\mathbf{x}}_t$ and observed other-player slice $\hat{\mathbf{z}}^{-i}_{t:t+T-1}$\;
-        $S_{\mathrm{base}}(\pi^i) \gets S_{\mathrm{base}}(\pi^i) + \lVert \tilde{u}^i_t(\pi^i) - \hat{u}^i_t \rVert_2^2$\;
+        Solve the joint prediction problem with ego order $\pi^e$ and profile $\boldsymbol{\pi}^{-e}$ from $\hat{\mathbf{x}}_t$\;
+        $S_{\mathrm{base}}(\boldsymbol{\pi}^{-e}) \gets
+        S_{\mathrm{base}}(\boldsymbol{\pi}^{-e})
+        + \sum_{j \in \mathcal{U}}\lVert \tilde{u}^j_t(\boldsymbol{\pi}^{-e}) - \hat{u}^j_t \rVert_2^2$\;
     }
 }
-$\hat{\pi}^i \gets \argmin_{\pi^i \in \Pi^i} S_{\mathrm{base}}(\pi^i)$\;
+$\hat{\boldsymbol{\pi}}^{-e} \gets
+\argmin_{\boldsymbol{\pi}^{-e} \in \Pi^{-e}} S_{\mathrm{base}}(\boldsymbol{\pi}^{-e})$\;
 \caption{Exhaustive baseline for preference-order identification.}
 \label{alg:inverse_baseline}
 \end{algorithm}
@@ -155,39 +169,43 @@ $\hat{\pi}^i \gets \argmin_{\pi^i \in \Pi^i} S_{\mathrm{base}}(\pi^i)$\;
 \section{Multi-step trajectory matching and Bayesian ranking}
 \label{sec:inverse-bayesian}
 
-The baseline in \cref{sec:inverse-baseline} only evaluates whether a candidate order explains the next
+The baseline in \cref{sec:inverse-baseline} only evaluates whether a candidate profile explains the next
 executed control.
-A stronger criterion should also account for the short trajectory segment that the candidate order
+A stronger criterion should also account for the short trajectory segment that the candidate profile
 predicts after that control is applied.
 To that end, we compare the predicted and observed trajectories over multiple future steps.
 The ambiguity that motivates the multi-step loss is illustrated in
 \cref{fig:inverse_ambiguity_identifiability}.
 
 Let $p_t \in \mathbb{R}^2$ denote the planar position components of the state at time $t$.
-For a plan-matching horizon $H_p \leq T$, the per-step loss of candidate order $\pi^i$ is defined as
+For a plan-matching horizon $H_p \leq T$, the per-step loss of candidate profile
+$\boldsymbol{\pi}^{-e}$ is defined as
 \begin{align}
-L_t(\pi^i)
+L_t(\boldsymbol{\pi}^{-e})
 =
-&\; w_u \left\lVert \tilde{u}^i_t(\pi^i) - \hat{u}^i_t \right\rVert_2^2
-+ w_x \left\lVert \tilde{p}^i_{t+1}(\pi^i) - \hat{p}^i_{t+1} \right\rVert_2^2 \notag \\
+\sum_{j \in \mathcal{U}}
+\Bigg(
+&\; w_u \left\lVert \tilde{u}^j_t(\boldsymbol{\pi}^{-e}) - \hat{u}^j_t \right\rVert_2^2
++ w_x \left\lVert \tilde{p}^j_{t+1}(\boldsymbol{\pi}^{-e}) - \hat{p}^j_{t+1} \right\rVert_2^2 \notag \\
 &+ \frac{w_p}{H_p}
 \sum_{k=0}^{H_p-1}
-\left\lVert \tilde{u}^i_{t+k}(\pi^i) - \hat{u}^i_{t+k} \right\rVert_2^2
+\left\lVert \tilde{u}^j_{t+k}(\boldsymbol{\pi}^{-e}) - \hat{u}^j_{t+k} \right\rVert_2^2
 + \frac{w_p}{H_p}
 \sum_{k=1}^{H_p}
-\left\lVert \tilde{p}^i_{t+k}(\pi^i) - \hat{p}^i_{t+k} \right\rVert_2^2
-+ \rho_t(\pi^i),
+\left\lVert \tilde{p}^j_{t+k}(\boldsymbol{\pi}^{-e}) - \hat{p}^j_{t+k} \right\rVert_2^2
+\Bigg)
++ \rho_t(\boldsymbol{\pi}^{-e}),
 \label{eq:inverse_step_loss}
 \end{align}
 where $w_u$, $w_x$, and $w_p$ weight the immediate control fit, the next-state fit, and the short-horizon
 plan fit, respectively.
-The term $\rho_t(\pi^i)$ penalizes local optimization failures and large solver residuals.
-In the implementation, $\rho_t(\pi^i)$ is set to a fixed failure penalty when the local solve does not converge
+The term $\rho_t(\boldsymbol{\pi}^{-e})$ penalizes optimization failures and large solver residuals.
+In the implementation, $\rho_t(\boldsymbol{\pi}^{-e})$ is set to a fixed failure penalty when the prediction does not converge
 and to a residual-weighted penalty otherwise.
 This preserves a preference for candidates that not only match the observed motion, but also produce
-numerically consistent local ordered-preference solutions.
+numerically consistent ordered-preference predictions.
 The geometric effect of this multi-step comparison is illustrated in
-\cref{fig:trajectory_matching_schema}: a candidate order is preferred when the predicted short-horizon
+\cref{fig:trajectory_matching_schema}: a candidate profile is preferred when the predicted short-horizon
 motion remains close to the observed trajectory, and penalized when the prediction diverges even if the
 first action is locally plausible.
 
@@ -196,7 +214,7 @@ first action is locally plausible.
     \def\svgwidth{0.96\textwidth}
     \subimport{figures/inverse_goop/}{trajectory_matching.pdf_tex}
     \caption{Interpretation of the multi-step matching loss. The observed trajectory is compared with
-    candidate short-horizon predictions generated by local ordered-preference solves. Candidate orders that reproduce
+    candidate short-horizon predictions generated by ordered-preference solves. Candidate profiles that reproduce
     both the immediate control action and the subsequent trajectory segment receive lower loss values than
     candidates whose predicted motion quickly diverges.}
     \label{fig:trajectory_matching_schema}
@@ -206,62 +224,71 @@ first action is locally plausible.
     \centering
     \def\svgwidth{0.98\textwidth}
     \subimport{figures/inverse_goop/}{ambiguity_identifiability.pdf_tex}
-    \caption{Why short-horizon information matters. In the ambiguous case, two candidate orders produce
+    \caption{Why short-horizon information matters. In the ambiguous case, two candidate profiles produce
     nearly identical first-step behavior and can only be separated by looking further ahead. In the
-    identifiable case, the divergence appears earlier and the order is easier to recover.}
+    identifiable case, the divergence appears earlier and the profile is easier to recover.}
     \label{fig:inverse_ambiguity_identifiability}
 \end{figure}
 
 Accumulating \cref{eq:inverse_step_loss} over the identification window yields the trajectory score
 \begin{equation}
-S_{\mathrm{traj}}(\pi^i) = \sum_{t=0}^{T_{\mathrm{id}}-1} L_t(\pi^i).
+S_{\mathrm{traj}}(\boldsymbol{\pi}^{-e}) =
+\sum_{t=0}^{T_{\mathrm{id}}-1} L_t(\boldsymbol{\pi}^{-e}).
 \label{eq:inverse_traj_score}
 \end{equation}
 We also retain the control-only score
 \begin{equation}
-S_u(\pi^i)
+S_u(\boldsymbol{\pi}^{-e})
 =
 \sum_{t=0}^{T_{\mathrm{id}}-1}
+\sum_{j \in \mathcal{U}}
 \left\lVert
-\tilde{u}^i_t(\pi^i) - \hat{u}^i_t
+\tilde{u}^j_t(\boldsymbol{\pi}^{-e}) - \hat{u}^j_t
 \right\rVert_2^2,
 \label{eq:inverse_control_score}
 \end{equation}
 which coincides with the baseline score in \cref{eq:inverse_baseline_score}.
 After min-max normalization over the candidate set,
 \begin{equation}
-\bar{S}(\pi^i; S)
+\bar{S}(\boldsymbol{\pi}^{-e}; S)
 =
-\frac{S(\pi^i) - \min_{\pi \in \Pi^i} S(\pi)}{\max_{\pi \in \Pi^i} S(\pi) - \min_{\pi \in \Pi^i} S(\pi)},
+\frac{S(\boldsymbol{\pi}^{-e}) - \min_{\boldsymbol{\pi} \in \Pi^{-e}} S(\boldsymbol{\pi})}
+{\max_{\boldsymbol{\pi} \in \Pi^{-e}} S(\boldsymbol{\pi}) - \min_{\boldsymbol{\pi} \in \Pi^{-e}} S(\boldsymbol{\pi})},
 \label{eq:inverse_normalized_score}
 \end{equation}
 we combine both criteria as
 \begin{equation}
-S_{\mathrm{comb}}(\pi^i)
+S_{\mathrm{comb}}(\boldsymbol{\pi}^{-e})
 =
-\bar{S}(\pi^i; S_u)
+\bar{S}(\boldsymbol{\pi}^{-e}; S_u)
 +
-\frac{1}{2} \bar{S}(\pi^i; S_{\mathrm{traj}}).
+\frac{1}{2} \bar{S}(\boldsymbol{\pi}^{-e}; S_{\mathrm{traj}}).
 \label{eq:inverse_combined_score}
 \end{equation}
 The final estimate is chosen by minimizing $S_{\mathrm{comb}}$.
 The role of the individual ranking ingredients is summarized in
 \cref{fig:inverse_score_decomposition}.
-In the special case $|\Pi^i| = 2$, the implementation falls back to $S_u$ in order to avoid spurious
-rescaling effects in nearly symmetric binary comparisons.
+The one-player diagnostic implementation used in the offline table below falls back to $S_u$ when its
+candidate set has two elements, in order to avoid spurious rescaling effects in nearly symmetric binary
+comparisons.
 
-In addition to the deterministic score above, we maintain an online posterior over candidate orders.
-Starting from the uniform prior $p_0(\pi^i) = 1 / |\Pi^i|$, we update
+In addition to the deterministic score above, we maintain an online posterior over candidate profiles.
+Starting from the uniform prior $p_0(\boldsymbol{\pi}^{-e}) = 1 / |\Pi^{-e}|$, we update
 \begin{equation}
-p_t(\pi^i)
+p_t(\boldsymbol{\pi}^{-e})
 =
-\frac{p_{t-1}(\pi^i) \exp\!\left(-L_t(\pi^i) / \tau\right)}{\sum_{\pi \in \Pi^i} p_{t-1}(\pi) \exp\!\left(-L_t(\pi) / \tau\right)},
+\frac{
+p_{t-1}(\boldsymbol{\pi}^{-e}) \exp\!\left(-L_t(\boldsymbol{\pi}^{-e}) / \tau\right)
+}{
+\sum_{\boldsymbol{\pi} \in \Pi^{-e}}
+p_{t-1}(\boldsymbol{\pi}) \exp\!\left(-L_t(\boldsymbol{\pi}) / \tau\right)
+},
 \label{eq:inverse_posterior}
 \end{equation}
 where $\tau > 0$ is a temperature parameter.
-The posterior is not used directly to choose the final order.
+The posterior is not used directly to choose the final profile.
 Instead, it acts as a confidence trace that reveals whether the candidate set is sharply separated or
-whether several orders remain observationally similar.
+whether several profiles remain observationally similar.
 Its evolution over the identification window is shown in
 \cref{fig:inverse_posterior_evolution}.
 
@@ -270,7 +297,7 @@ Its evolution over the identification window is shown in
     \def\svgwidth{0.98\textwidth}
     \subimport{figures/inverse_goop/}{score_decomposition.pdf_tex}
     \caption{Decomposition of the ranking score. The control-only term, the multi-step trajectory term,
-    and the posterior confidence trace are combined to obtain the final order estimate.}
+    and the posterior confidence trace are combined to obtain the final profile estimate.}
     \label{fig:inverse_score_decomposition}
 \end{figure}
 
@@ -279,26 +306,29 @@ Its evolution over the identification window is shown in
     \def\svgwidth{0.82\textwidth}
     \subimport{figures/inverse_goop/}{posterior_evolution.pdf_tex}
     \caption{Posterior concentration over time for a small candidate set. The confidence mass shifts
-    gradually toward the most plausible order as more windows are observed.}
+    gradually toward the most plausible profile as more windows are observed.}
     \label{fig:inverse_posterior_evolution}
 \end{figure}
 
 \begin{algorithm}
-\KwData{Objective library $\mathcal{J}^i$, candidate set $\Pi^i$, observed trajectory $\hat{\mathbf{z}}^i_{0:T_{\mathrm{id}}+T-1}$, observed other-player trajectories $\hat{\mathbf{z}}^{-i}_{0:T_{\mathrm{id}}+T-1}$, plan-matching horizon $H_p$, and temperature $\tau$}
-\KwResult{Inferred preference order $\hat{\pi}^i$ and posterior history $p_t$}
+\KwData{Known ego order $\pi^e$, non-ego candidate profile set $\Pi^{-e}$, observed trajectory $\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$, plan-matching horizon $H_p$, and temperature $\tau$}
+\KwResult{Inferred non-ego preference profile $\hat{\boldsymbol{\pi}}^{-e}$ and posterior history $p_t$}
 \medskip
-Initialize $p_0(\pi^i) = 1 / |\Pi^i|$ for all $\pi^i \in \Pi^i$\;
-\ForEach{$\pi^i \in \Pi^i$}{
-    $S_u(\pi^i) \gets 0$, $S_{\mathrm{traj}}(\pi^i) \gets 0$\;
-    \For{$t = 0$ \KwTo $T_{\mathrm{id}}-1$}{
-        Solve the local ordered-preference problem for order $\pi^i$\;
-        Compute $L_t(\pi^i)$ from \cref{eq:inverse_step_loss}\;
-        Update $S_u(\pi^i)$ and $S_{\mathrm{traj}}(\pi^i)$\;
-        Update the posterior using \cref{eq:inverse_posterior}\;
+Initialize $p_0(\boldsymbol{\pi}^{-e}) = 1 / |\Pi^{-e}|$ for all $\boldsymbol{\pi}^{-e} \in \Pi^{-e}$\;
+\ForEach{$\boldsymbol{\pi}^{-e} \in \Pi^{-e}$}{
+    $S_u(\boldsymbol{\pi}^{-e}) \gets 0$, $S_{\mathrm{traj}}(\boldsymbol{\pi}^{-e}) \gets 0$\;
+}
+\For{$t = 0$ \KwTo $T_{\mathrm{id}}-1$}{
+    \ForEach{$\boldsymbol{\pi}^{-e} \in \Pi^{-e}$}{
+        Solve the joint prediction problem for profile $\boldsymbol{\pi}^{-e}$ from $\hat{\mathbf{x}}_t$\;
+        Compute $L_t(\boldsymbol{\pi}^{-e})$ from \cref{eq:inverse_step_loss}\;
+        Update $S_u(\boldsymbol{\pi}^{-e})$ and $S_{\mathrm{traj}}(\boldsymbol{\pi}^{-e})$\;
     }
+    Update the posterior over all profiles using \cref{eq:inverse_posterior}\;
 }
 Normalize scores with \cref{eq:inverse_normalized_score} and form $S_{\mathrm{comb}}$ by \cref{eq:inverse_combined_score}\;
-$\hat{\pi}^i \gets \argmin_{\pi^i \in \Pi^i} S_{\mathrm{comb}}(\pi^i)$\;
+$\hat{\boldsymbol{\pi}}^{-e} \gets
+\argmin_{\boldsymbol{\pi}^{-e} \in \Pi^{-e}} S_{\mathrm{comb}}(\boldsymbol{\pi}^{-e})$\;
 \caption{Multi-step trajectory matching with Bayesian candidate ranking.}
 \label{alg:inverse_bayesian}
 \end{algorithm}
@@ -306,58 +336,62 @@ $\hat{\pi}^i \gets \argmin_{\pi^i \in \Pi^i} S_{\mathrm{comb}}(\pi^i)$\;
 \section{Adaptive online inference and control}
 \label{sec:inverse-online}
 
-The offline estimators infer a single preference order before a decentralized rollout begins.
+The offline estimators infer a single non-ego preference profile before a decentralized rollout begins.
 In practice, however, an ego agent should update its beliefs while the interaction unfolds.
 The implementation therefore includes an adaptive extension in which inference and control are
 performed simultaneously.
 The closed-loop structure is summarized in \cref{fig:inverse_online_loop}.
 
-For each non-ego player $j \neq i$, we consider a small candidate set
+For each non-ego player $j \in \mathcal{U}$, we consider a small candidate set
 $\mathcal{C}^j \subseteq \Pi^j$.
-Unlike the offline case, this set is not the full permutation space.
-Instead, it is built from a nominal order by a small number of simple reorderings, which keeps the
+The online profile set is
+$\mathcal{C}^{-e} = \prod_{j \in \mathcal{U}} \mathcal{C}^j$.
+Unlike the offline case, these sets are not full permutation spaces.
+They are built from nominal orders by a small number of simple reorderings, which keeps the
 online computations tractable.
 Let $W$ be the observation-window length, expressed in executed control steps.
-At update index $m$, the raw score of candidate $c \in \mathcal{C}^j$ is
+At update index $m$, the raw score of candidate profile
+$\mathbf{c}^{-e} \in \mathcal{C}^{-e}$ is
 \begin{equation}
-R_m^j(c)
+R_m(\mathbf{c}^{-e})
 =
 \sum_{t \in \mathcal{W}_m}
+\sum_{j \in \mathcal{U}}
 \left(
-\omega_u \left\lVert \tilde{u}^j_t(c) - \hat{u}^j_t \right\rVert_2^2
+\omega_u \left\lVert \tilde{u}^j_t(\mathbf{c}^{-e}) - \hat{u}^j_t \right\rVert_2^2
 +
-\omega_x \left\lVert \tilde{p}^j_{t+1}(c) - \hat{p}^j_{t+1} \right\rVert_2^2
+\omega_x \left\lVert \tilde{p}^j_{t+1}(\mathbf{c}^{-e}) - \hat{p}^j_{t+1} \right\rVert_2^2
 \right)
 +
-\rho_m^j(c),
+\rho_m(\mathbf{c}^{-e}),
 \label{eq:inverse_online_raw}
 \end{equation}
-where $\mathcal{W}_m$ is the current observation window and $\rho_m^j(c)$ again absorbs penalties for
-failed or inaccurate local solves.
+where $\mathcal{W}_m$ is the current observation window and $\rho_m(\mathbf{c}^{-e})$ again absorbs
+penalties for failed or inaccurate prediction solves.
 
-To avoid switching the inferred order in response to transient variations, we smooth the candidate scores
+To avoid switching the inferred profile in response to transient variations, we smooth the profile scores
 through an exponential moving average,
 \begin{equation}
-\bar{R}_m^j(c)
+\bar{R}_m(\mathbf{c}^{-e})
 =
-\alpha \bar{R}_{m-1}^j(c) + (1-\alpha) R_m^j(c),
+\alpha \bar{R}_{m-1}(\mathbf{c}^{-e}) + (1-\alpha) R_m(\mathbf{c}^{-e}),
 \qquad \alpha \in [0,1),
 \label{eq:inverse_online_smooth}
 \end{equation}
-and only replace the current candidate $c_{\mathrm{cur}}$ by the best candidate
-$c_{\mathrm{best}}$ if
+and only replace the current profile $\mathbf{c}_{\mathrm{cur}}^{-e}$ by the best profile
+$\mathbf{c}_{\mathrm{best}}^{-e}$ if
 \begin{equation}
-\bar{R}_m^j(c_{\mathrm{best}})
+\bar{R}_m(\mathbf{c}_{\mathrm{best}}^{-e})
 +
 \Delta_{\mathrm{abs}}
 +
-\Delta_{\mathrm{rel}} \left| \bar{R}_m^j(c_{\mathrm{cur}}) \right|
+\Delta_{\mathrm{rel}} \left| \bar{R}_m(\mathbf{c}_{\mathrm{cur}}^{-e}) \right|
 <
-\bar{R}_m^j(c_{\mathrm{cur}}),
+\bar{R}_m(\mathbf{c}_{\mathrm{cur}}^{-e}),
 \label{eq:inverse_online_switch}
 \end{equation}
 with absolute and relative switch margins $\Delta_{\mathrm{abs}}$ and $\Delta_{\mathrm{rel}}$.
-The ego agent then plans against the trajectories predicted under the currently inferred orders,
+The ego agent then plans against the trajectories predicted under the currently inferred profile,
 while the horizon recedes exactly as in \cref{alg:ibr}.
 
 \begin{figure}[t]
@@ -365,24 +399,22 @@ while the horizon recedes exactly as in \cref{alg:ibr}.
     \def\svgwidth{0.98\textwidth}
     \subimport{figures/inverse_goop/}{online_loop.pdf_tex}
     \caption{Adaptive online inference and control loop. Observations are accumulated over a short
-    window, candidate orders are re-scored and smoothed, the current order is updated only when the new
-    candidate is decisively better, and the ego player replans against the resulting predictions.}
+    window, candidate profiles are re-scored and smoothed, the current profile is updated only when the new
+    profile is decisively better, and the ego player replans against the resulting predictions.}
     \label{fig:inverse_online_loop}
 \end{figure}
 
 \begin{algorithm}
-\KwData{Ego player $i$, candidate sets $\mathcal{C}^j$ for $j \neq i$, window length $W$, smoothing factor $\alpha$, and switch margins $\Delta_{\mathrm{abs}}, \Delta_{\mathrm{rel}}$}
-\KwResult{Online control sequence for the ego player and inferred orders for the non-ego players}
+\KwData{Ego player $e$, candidate profile set $\mathcal{C}^{-e}$, window length $W$, smoothing factor $\alpha$, and switch margins $\Delta_{\mathrm{abs}}, \Delta_{\mathrm{rel}}$}
+\KwResult{Online control sequence for the ego player and inferred profile for the non-ego players}
 \medskip
-Initialize one candidate order for each non-ego player and predict their trajectories\;
+Initialize a candidate profile for the non-ego players and predict their trajectories\;
 \For{each control step $t$}{
     \If{an observation window has just completed}{
-        \ForEach{non-ego player $j \neq i$}{
-            Evaluate $R_m^j(c)$ for all $c \in \mathcal{C}^j$ using \cref{eq:inverse_online_raw}\;
-            Update smoothed scores $\bar{R}_m^j(c)$ using \cref{eq:inverse_online_smooth}\;
-            Update the inferred candidate only if \cref{eq:inverse_online_switch} is satisfied\;
-            Refresh the predicted trajectory associated with the selected candidate\;
-        }
+        Evaluate $R_m(\mathbf{c}^{-e})$ for all $\mathbf{c}^{-e} \in \mathcal{C}^{-e}$ using \cref{eq:inverse_online_raw}\;
+        Update smoothed scores $\bar{R}_m(\mathbf{c}^{-e})$ using \cref{eq:inverse_online_smooth}\;
+        Update the inferred profile only if \cref{eq:inverse_online_switch} is satisfied\;
+        Refresh the predicted trajectories associated with the selected profile\;
     }
     Solve the ego ordered-preference problem against the currently assumed non-ego trajectories\;
     Execute the first control input and recede the horizon\;
@@ -419,31 +451,34 @@ In the city scenario, a third objective, maintaining a margin from the road edge
 The side vehicles followed richer six-level preference hierarchies that differed across the two environments.
 In highway, those hierarchies emphasized making room for the ego vehicle and maintaining speed, whereas in city
 they emphasized yielding, staying in lane, and remaining near the lane center.
-For the offline experiments, the candidate set for the ego player was the full permutation space,
-which yields two candidates in highway and six in city.
-For the online experiment, each non-ego player was instead assigned a four-element candidate set built from a
-nominal order and a small number of order perturbations.
+The offline numerical table below was generated by an earlier one-player diagnostic implementation:
+it enumerates the full permutation space of player~1, which yields two candidates in highway and six in city.
+It is therefore useful for comparing scoring rules, but it should not be read as the full joint
+non-ego profile estimator defined in \cref{eq:inverse_problem}.
+For the online experiment, each non-ego player was assigned a four-element candidate set built from a
+nominal order and a small number of order perturbations; the coherent profile-level version scores the
+Cartesian product of those sets.
 
 \subsection{Offline preference-order estimation}
 
 \Cref{tab:inverse_offline} compares the exhaustive baseline and the multi-step estimator on the two benchmark
-environments.
+environments for the one-player diagnostic described above.
 In both cases the observations were generated by the centralized ordered-preference solve of
-\cref{ch:lex-ibr-ot}, after which the inferred ego order was inserted into the decentralized controller and the
+\cref{ch:lex-ibr-ot}, after which the inferred diagnostic order was inserted into the decentralized controller and the
 resulting rollout was evaluated.
 The reported clearance is therefore a closed-loop quantity, not merely a fitting statistic.
 
 \begin{table}
     \centering
-    \caption{Offline preference-order estimation for the ego player.
-    Yes/No entries indicate exact recovery of the ego order.
-    The last column reports the minimum clearance obtained by the decentralized rollout after replacing the ego order
+    \caption{Offline preference-order estimation for the one-player diagnostic.
+    Yes/No entries indicate exact recovery of the diagnostic order.
+    The last column reports the minimum clearance obtained by the decentralized rollout after replacing that order
     by the inferred one.}
     \label{tab:inverse_offline}
     \small
     \begin{tabular}{lccccccc}
         \toprule
-        Scenario & $|\Pi^1|$ & Base. & $S_{\mathrm{base}}$ & Multi. & $S_{\mathrm{traj}}$ & Post. peak & Clearance \\
+        Scenario & Cand. & Base. & $S_{\mathrm{base}}$ & Multi. & $S_{\mathrm{traj}}$ & Post. peak & Clearance \\
         \midrule
         Highway & 2 & No  & 0.158 & No  & 0.213 & 0.500 & 0.057 \\
         City    & 6 & Yes & 0.006 & Yes & 0.009 & 0.167 & $10^{-6}$ \\
@@ -452,17 +487,17 @@ The reported clearance is therefore a closed-loop quantity, not merely a fitting
 \end{table}
 
 The city scenario is identifiable from a short observation window.
-Both estimators recover the correct ego preference order, and the decentralized rollout obtained with the inferred
+Both estimators recover the correct diagnostic preference order, and the decentralized rollout obtained with the inferred
 order remains feasible.
-The multi-step method does not improve the final order estimate in this case, but it produces a richer diagnostic:
+The multi-step method does not improve the final diagnostic estimate in this case, but it produces a richer diagnostic:
 its cumulative trajectory score accounts for consistency over several future steps rather than only the next executed
 control.
 At the same time, the posterior remains diffuse, with a best probability close to the uniform value $1/6$.
-This indicates that several candidate orders remain behaviorally similar over a three-step identification window,
-even though the final combined score still ranks the correct order first.
+This indicates that several candidate profiles can remain behaviorally similar over a three-step identification window,
+even though the final combined score still ranks the correct diagnostic candidate first.
 
 The highway scenario is more challenging.
-With only two candidate orders, both methods select the wrong permutation under the current default setup.
+With only two diagnostic candidates, both methods select the wrong permutation under the current default setup.
 The associated posterior is essentially uniform, which suggests an identifiability issue rather than an optimization
 failure: the two orders induce nearly indistinguishable short-horizon responses in this symmetric setting.
 Even so, the decentralized rollout obtained with the inferred order remains safe, with positive minimum clearance.
@@ -510,15 +545,14 @@ The goal completion ratio is defined as the fraction of the initial goal error r
         \label{fig:inverse_online_city}
     \end{subfigure}
     \caption{Adaptive online inference and control for the two benchmark scenarios.
-    The ego vehicle plans against trajectories predicted under the currently inferred preference orders of the two
-    side vehicles.
-    In the runs shown, the final inferred orders match the ground truth for both non-ego players in both scenarios.
+    The ego vehicle plans against trajectories predicted under the currently inferred non-ego preference profile.
+    In the runs shown, the final inferred profile matches the ground truth for both non-ego players in both scenarios.
     The city case is visibly tighter and operates close to the road and safety boundaries.}
     \label{fig:inverse_online_trajectories}
 \end{figure*}
 
 The online extension succeeds in both environments.
-For the two non-ego players, the final inferred orders coincide with the ground truth in highway and city,
+For the two non-ego players, the final inferred profile coincides with the ground truth in highway and city,
 yielding a match rate of $1.0$ in both runs.
 In highway, the resulting behavior is comfortably feasible: the minimum clearance remains positive,
 all local solves succeed, and the ego vehicle removes more than $92\%$ of its initial goal error.
@@ -527,7 +561,7 @@ The side vehicles also preserve substantial forward progress while yielding to t
 The city scenario is more constrained.
 The minimum clearance becomes effectively active, and the minimum solve-success rate drops to $0.625$ for the
 players that interact most strongly with the road boundaries.
-Nevertheless, the inference layer still converges to the correct final orders, and the ego vehicle removes roughly
+Nevertheless, the inference layer still converges to the correct final profile, and the ego vehicle removes roughly
 three quarters of its initial goal error.
 Taken together with \cref{fig:inverse_online_trajectories}, these results show that inverse ordered-preference reasoning can be
 embedded inside a receding-horizon controller without sacrificing the structure introduced in
@@ -538,10 +572,10 @@ embedded inside a receding-horizon controller without sacrificing the structure 
 
 Preference-order estimation extends games of ordered preference beyond the complete-information assumption used by
 current solvers for games of ordered preference.
-The exhaustive estimator provides a transparent baseline, but it scales factorially with the number of objective
-levels and can only discriminate through the next executed control.
+The exhaustive estimator provides a transparent baseline, but it scales with the product of the non-ego
+candidate order sets and can only discriminate through the next executed control.
 The multi-step estimator enriches the comparison by incorporating short-horizon state and control consistency and by
-maintaining a posterior over candidate orders, which helps diagnose when the inference problem is weakly
+maintaining a posterior over candidate profiles, which helps diagnose when the inference problem is weakly
 identifiable.
 The adaptive online extension shows that the same ideas can be carried into closed-loop interaction, where order
 estimation and control are updated together over time.

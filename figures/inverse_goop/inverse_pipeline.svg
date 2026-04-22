@@ -15,77 +15,66 @@
   </defs>
 
   <g id="observation-panel">
-    <rect x="18" y="26" width="252" height="300" rx="20" ry="20" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
-    <text x="144" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{observed horizon}</text>
-    <text x="144" y="83" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{$\hat{\mathbf{z}}_{t:t+T_{\mathrm{id}}+T-1}$}</text>
+    <rect x="18" y="26" width="280" height="155" rx="18" ry="18" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
+    <text x="158" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{observed trajectories}</text>
+    <text x="158" y="82" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{$\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$}</text>
 
-    <rect x="40" y="114" width="208" height="124" rx="28" ry="28" style="fill:#d1d1d1;stroke:#7f7d76;stroke-width:3" />
-    <line x1="58" y1="176" x2="230" y2="176" style="stroke:#f9f9f9;stroke-width:4;stroke-dasharray:14,12;stroke-linecap:round" />
-    <path d="M 60 203 C 102 198, 142 188, 183 166 C 198 158, 210 149, 226 136" style="fill:none;stroke:#f4a259;stroke-width:5;stroke-linecap:round" />
-    <path d="M 64 143 C 106 152, 145 172, 185 196 C 198 203, 210 209, 224 214" style="fill:none;stroke:#329a55;stroke-width:4.2;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8" />
-    <path d="M 224 136 C 186 126, 149 121, 111 122 C 95 123, 78 128, 63 140" style="fill:none;stroke:#2f78c4;stroke-width:4.2;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8" />
-    <circle cx="60" cy="203" r="4.6" style="fill:#f4a259;stroke:#d97706;stroke-width:1.2" />
-    <circle cx="127" cy="192" r="3.9" style="fill:#f4a259;stroke:#d97706;stroke-width:1.0" />
-    <circle cx="191" cy="160" r="3.9" style="fill:#f4a259;stroke:#d97706;stroke-width:1.0" />
-    <circle cx="226" cy="136" r="4.6" style="fill:#f4a259;stroke:#d97706;stroke-width:1.2" />
-
-    <text x="144" y="276" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{states and controls of all players}</text>
+    <rect x="44" y="101" width="228" height="54" rx="18" ry="18" style="fill:#d1d1d1;stroke:#7f7d76;stroke-width:2.4" />
+    <line x1="58" y1="128" x2="258" y2="128" style="stroke:#f9f9f9;stroke-width:3;stroke-dasharray:12,10;stroke-linecap:round" />
+    <path d="M 62 143 C 104 139, 145 134, 184 123 C 209 116, 229 109, 254 105" style="fill:none;stroke:#f4a259;stroke-width:4.4;stroke-linecap:round" />
+    <path d="M 62 112 C 111 116, 154 128, 202 143 C 219 148, 238 151, 256 150" style="fill:none;stroke:#329a55;stroke-width:3.8;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8" />
+    <path d="M 254 105 C 213 99, 169 97, 127 101 C 101 104, 80 107, 62 112" style="fill:none;stroke:#2f78c4;stroke-width:3.8;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8" />
+    <circle cx="62" cy="143" r="4.2" style="fill:#f4a259;stroke:#d97706;stroke-width:1.0" />
+    <circle cx="158" cy="132" r="3.5" style="fill:#f4a259;stroke:#d97706;stroke-width:0.9" />
+    <circle cx="254" cy="105" r="4.2" style="fill:#f4a259;stroke:#d97706;stroke-width:1.0" />
   </g>
 
   <g id="candidate-panel">
-    <rect x="318" y="26" width="132" height="300" rx="20" ry="20" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
-    <text x="384" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{candidate orders}</text>
-    <rect x="344" y="105" width="80" height="40" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
-    <rect x="344" y="160" width="80" height="40" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
-    <rect x="344" y="215" width="80" height="40" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
-    <text x="384" y="131" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{$\pi^i_1$}</text>
-    <text x="384" y="186" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{$\pi^i_2$}</text>
-    <text x="384" y="241" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{$\pi^i_M$}</text>
-    <text x="384" y="283" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{all admissible}</text>
-    <text x="384" y="304" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{permutations}</text>
+    <rect x="18" y="205" width="280" height="121" rx="18" ry="18" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
+    <text x="158" y="237" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{candidate profiles}</text>
+    <rect x="42" y="262" width="72" height="36" rx="9" ry="9" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
+    <rect x="122" y="262" width="72" height="36" rx="9" ry="9" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
+    <rect x="202" y="262" width="72" height="36" rx="9" ry="9" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
+    <text x="78" y="286" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\boldsymbol{\pi}^{-e}_1$}</text>
+    <text x="158" y="286" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\boldsymbol{\pi}^{-e}_2$}</text>
+    <text x="238" y="286" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\boldsymbol{\pi}^{-e}_M$}</text>
   </g>
 
   <g id="solve-panel">
-    <rect x="498" y="26" width="220" height="300" rx="20" ry="20" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
-    <text x="608" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{local prediction solves}</text>
+    <rect x="350" y="26" width="300" height="300" rx="20" ry="20" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
+    <text x="500" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{joint prediction solves}</text>
 
-    <rect x="531" y="101" width="154" height="114" rx="16" ry="16" style="fill:#ffffff;stroke:#000000;stroke-width:1.4" />
-    <text x="608" y="134" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{player $i$ subproblem}</text>
-    <text x="608" y="162" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\operatorname{Pred}_{\mathrm{lex}}^i(\hat{x}_t, \hat{\mathbf{z}}^{-i}; \pi^i)$}</text>
-    <text x="608" y="191" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\tilde{\mathbf{z}}^i_{t:t+T-1}(\pi^i)$}</text>
-
-    <text x="608" y="258" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{reuse the same lexicographic}</text>
-    <text x="608" y="279" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{solver structure as Chapter 4}</text>
+    <rect x="384" y="96" width="232" height="160" rx="16" ry="16" style="fill:#ffffff;stroke:#000000;stroke-width:1.4" />
+    <text x="500" y="126" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{for each $t$ and $\boldsymbol{\pi}^{-e}$}</text>
+    <text x="500" y="156" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\hat{\mathbf{x}}_t,\ \pi^e,\ \boldsymbol{\pi}^{-e}$}</text>
+    <text x="500" y="190" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\operatorname{Pred}_{\mathrm{ord}}(\cdot)$}</text>
+    <text x="500" y="224" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\tilde{\mathbf{z}}(\boldsymbol{\pi}^{-e})$}</text>
   </g>
 
   <g id="score-panel">
-    <rect x="766" y="26" width="296" height="300" rx="20" ry="20" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
-    <text x="914" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{ranking and update}</text>
+    <rect x="704" y="26" width="358" height="300" rx="20" ry="20" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
+    <text x="883" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{match and rank}</text>
 
-    <rect x="792" y="101" width="160" height="38" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
-    <rect x="792" y="151" width="160" height="38" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
-    <rect x="792" y="201" width="160" height="38" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
-    <text x="872" y="126" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$S_{\mathrm{base}}(\pi^i)$}</text>
-    <text x="872" y="176" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$S_{\mathrm{traj}}(\pi^i)$}</text>
-    <text x="872" y="226" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$p_t(\pi^i)$}</text>
+    <rect x="736" y="101" width="198" height="38" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
+    <rect x="736" y="151" width="198" height="38" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
+    <rect x="736" y="201" width="198" height="38" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
+    <text x="835" y="126" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\tilde{\mathbf{z}}^{-e}$ vs. $\hat{\mathbf{z}}^{-e}$}</text>
+    <text x="835" y="176" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$S(\boldsymbol{\pi}^{-e})$}</text>
+    <text x="835" y="226" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$p_t(\boldsymbol{\pi}^{-e})$}</text>
 
-    <rect x="975" y="118" width="59" height="16" rx="4" ry="4" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
-    <rect x="975" y="168" width="59" height="16" rx="4" ry="4" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
-    <rect x="975" y="218" width="59" height="16" rx="4" ry="4" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
-    <rect x="975" y="118" width="17" height="16" rx="4" ry="4" style="fill:#f4a259;stroke:none" />
-    <rect x="975" y="168" width="26" height="16" rx="4" ry="4" style="fill:#329a55;stroke:none" />
-    <rect x="975" y="218" width="38" height="16" rx="4" ry="4" style="fill:#2f78c4;stroke:none" />
+    <rect x="966" y="118" width="64" height="16" rx="4" ry="4" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
+    <rect x="966" y="168" width="64" height="16" rx="4" ry="4" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
+    <rect x="966" y="218" width="64" height="16" rx="4" ry="4" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
+    <rect x="966" y="118" width="18" height="16" rx="4" ry="4" style="fill:#f4a259;stroke:none" />
+    <rect x="966" y="168" width="31" height="16" rx="4" ry="4" style="fill:#329a55;stroke:none" />
+    <rect x="966" y="218" width="44" height="16" rx="4" ry="4" style="fill:#2f78c4;stroke:none" />
 
-    <rect x="836" y="264" width="156" height="40" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
-    <text x="914" y="290" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{$\hat{\pi}^i$}</text>
+    <rect x="805" y="264" width="156" height="40" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
+    <text x="883" y="290" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{$\hat{\boldsymbol{\pi}}^{-e}$}</text>
   </g>
 
-  <path d="M 270 176 L 316 176" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
-  <path d="M 450 176 L 496 176" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
-  <path d="M 718 176 L 764 176" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
-  <path d="M 914 239 L 914 261" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
-  <path d="M 994 284 L 1056 284" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
-
-  <rect x="1062" y="258" width="14" height="52" rx="6" ry="6" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
-  <text x="1069" y="287" text-anchor="middle" transform="rotate(-90 1069 287)" style="font-family:Sans;font-size:17px">\footnotesize{planning / control}</text>
+  <path d="M 298 108 L 348 135" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
+  <path d="M 298 266 L 348 205" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
+  <path d="M 650 176 L 702 176" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
+  <path d="M 883 239 L 883 261" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
 </svg>

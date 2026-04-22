@@ -7,7 +7,8 @@ MISC_FILES := $(shell find misc -type f 2>/dev/null)
 FIGURE_SVG_FILES := $(shell find figures -type f -name '*.svg' 2>/dev/null)
 FIGURE_PDF_TEX_FILES := $(FIGURE_SVG_FILES:.svg=.pdf_tex)
 
-default: thesis.pdf clean
+default: thesis.pdf
+# default: thesis.pdf clean
 
 redo: trigger-pdf-redo thesis.pdf clean
 
