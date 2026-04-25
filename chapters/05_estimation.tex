@@ -163,8 +163,8 @@ S_{\mathrm{base}}(\boldsymbol{\pi}^{-e})
 \end{equation}
 where $\tilde{u}^j_t(\boldsymbol{\pi}^{-e})$ is the first predicted control input for player $j$.
 The inferred profile is then
-$\hat{\boldsymbol{\pi}}^{-e}
-= \argmin_{\boldsymbol{\pi}^{-e} \in \Pi^{-e}} S_{\mathrm{base}}(\boldsymbol{\pi}^{-e})$.
+\[\hat{\boldsymbol{\pi}}^{-e}
+= \argmin_{\boldsymbol{\pi}^{-e} \in \Pi^{-e}} S_{\mathrm{base}}(\boldsymbol{\pi}^{-e}).\]
 
 This baseline is easy to interpret and directly aligned with the receding-horizon control action.
 Its main limitation is that it uses only the first control input of each prediction.
@@ -190,6 +190,14 @@ $\hat{\boldsymbol{\pi}}^{-e} \gets
 \caption{Exhaustive baseline for preference-order identification.}
 \label{alg:inverse_baseline}
 \end{algorithm}
+
+The exhaustive baseline is a useful reference because it isolates 
+which candidate profile best explains the control executed at the current receding-horizon step.
+In ordered-preference games, however, that information is often insufficient. Distinct profiles can
+produce the same first feasible action because shared constraints or dominant high-priority objectives
+govern the immediate decision, while differences in lower-priority ordering only become visible after
+the state evolves and the horizon is shifted. For that reason, the next section replaces one-step
+control matching with a score that also evaluates the short trajectory segment implied by each profile.
 
 \section{Multi-step trajectory matching and Bayesian ranking}
 \label{sec:inverse-bayesian}
