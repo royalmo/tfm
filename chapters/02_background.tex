@@ -54,7 +54,11 @@ Game theory helps building a model from partial observations \cite{liniger:2020}
 Goal positions can be predicted using minimum likelihood estimators \cite{liu:2023}, or by solving inverse games \cite{li:2023}, although variational auto-encoders can be used to train models that perform better overall \cite{liu:2024}. Receding horizon is commonly employed in dynamic games to take advantage of
 previous observations over time \cite{peters:2023}.
 Given the difficulty of predicting other's behavior, contingency planning has proven useful in many situations \cite{peters:2024}.
-The inverse game problem is also a common approach for Markov gamesn reinforcement learning, and Stackelberg games \cite{chen:2023,lian:2024,ward:2025}.
+The inverse game problem is also studied in discrete matrix and Markov games, where utilities or
+rewards are inferred from equilibrium or demonstration data \cite{wang:2018,yu:2019,yu:2023},
+in generalized Nash games on transportation networks \cite{allen:2022}, and in game-based
+intent inference for autonomous vehicles \cite{wang:2020}. It is also a common approach in
+Markov games, reinforcement learning, and Stackelberg games \cite{chen:2023,lian:2024,ward:2025}.
 In this thesis, inverse games are not used to infer only a goal or a scalar objective, but to infer the preference order itself.
 
 \section{Sim-to-real}

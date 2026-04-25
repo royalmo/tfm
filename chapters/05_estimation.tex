@@ -16,9 +16,11 @@ those objectives is not.
 This places the estimation problem close to inverse formulations studied in trajectory games
 with unknown opponents \cite{liu:2023}, but here the unknown quantity is discrete: the
 profile of lexicographic orderings. Existing inverse-game methods can recover
-latent goals or objective functions from behavior \cite{liu:2023,li:2023,liu:2024},
-but they do not estimate the preference order or preference relation
-between multiple objectives. In games of ordered preference, that
+latent goals in trajectory games \cite{liu:2023}, reward or cost parameters from
+observed interactions \cite{li:2023,wang:2018,yu:2019}, utility functions in
+matrix or generalized Nash games \cite{yu:2023,allen:2022}, and latent
+game representations through Bayesian encodings \cite{liu:2024}, but they do not estimate
+the preference order itself. In games of ordered preference, that
 ordering is the key modeling object, since changing the order can alter
 behavior even when the objective library remains fixed.
 
@@ -81,14 +83,14 @@ trajectories $\hat{\mathbf{z}}^{-e}_{t:t+T-1}$.
 Following the validation metrics used in \cref{ch:lex-ibr-ot}, we use an $L_1$
 trajectory distance as the basic mismatch measure.
 
-% The overall estimation pipeline is summarized in \cref{fig:inverse_pipeline}.
-Observed trajectories define the data window, each admissible profile is evaluated by
-retrospective prediction solves at the observed time indices, and the resulting predictions are scored by
-their similarity to the observed trajectories.
-%The discrete search space is illustrated in \cref{fig:inverse_candidate_space}, while
-The
-lexicographic cascade used inside each prediction solve is summarized in
-\cref{fig:inverse_lexicographic_rule}.
+% % The overall estimation pipeline is summarized in \cref{fig:inverse_pipeline}.
+% Observed trajectories define the data window, each admissible profile is evaluated by
+% retrospective prediction solves at the observed time indices, and the resulting predictions are scored by
+% their similarity to the observed trajectories.
+% %The discrete search space is illustrated in \cref{fig:inverse_candidate_space}, while
+% The
+% lexicographic cascade used inside each prediction solve is summarized in
+% \cref{fig:inverse_lexicographic_rule}.
 
 \begin{figure}[t]
     \centering
@@ -111,14 +113,36 @@ lexicographic cascade used inside each prediction solve is summarized in
 %     \label{fig:inverse_candidate_space}
 % \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \def\svgwidth{0.90\textwidth}
-    \subimport{figures/inverse_goop/}{lexicographic_rule.pdf_tex}
-    \caption{Lexicographic decision rule used inside each ordered-preference solve. The first objective level is
-    minimized first, and additional levels are only considered when the previous one remains tied.}
-    \label{fig:inverse_lexicographic_rule}
-\end{figure}
+The inverse layer does not introduce a new game solution concept.
+Its role is to wrap the forward ordered-preference solver in a discrete hypothesis test over
+joint non-ego profiles.
+Once a candidate profile $\boldsymbol{\pi}^{-e}$ is fixed, the remaining task is to evaluate
+how well the resulting predicted motion matches the observations.
+The main difficulty is therefore combinatorial: the candidate set grows as the Cartesian product
+$\Pi^{-e} = \prod_{j \in \mathcal{U}} \Pi^j$, and each candidate requires one or more forward
+prediction solves over the identification window.
+
+Viewed this way, the estimator is closer to finite-hypothesis model selection than to continuous
+reward learning. Each candidate profile defines one fully specified forward game, and the inverse
+task is to score how well that game reproduces the observed interaction window. This differs from
+inverse reinforcement learning in Markov games \cite{wang:2018,yu:2019} and from
+inverse utility learning in matrix or generalized Nash games \cite{yu:2023,allen:2022},
+where the unknown object is typically a parameterized reward or utility model.
+
+The closest robotics motivation is game-based intent inference, where planners maintain and update
+a finite set of latent hypotheses about the other agent \cite{wang:2020}. Here, however,
+the latent hypothesis is not a maneuver label or a single intent variable, but a joint profile of
+lexicographic orders over a known objective library. That distinction is what makes the search
+space finite yet combinatorial, and it motivates the exhaustive profile evaluation introduced next.
+
+% \begin{figure}[h]
+%     \centering
+%     \def\svgwidth{0.90\textwidth}
+%     \subimport{figures/inverse_goop/}{lexicographic_rule.pdf_tex}
+%     \caption{Lexicographic decision rule used inside each ordered-preference solve. The first objective level is
+%     minimized first, and additional levels are only considered when the previous one remains tied.}
+%     \label{fig:inverse_lexicographic_rule}
+% \end{figure}
 
 \section{Exhaustive order identification}
 \label{sec:inverse-baseline}
