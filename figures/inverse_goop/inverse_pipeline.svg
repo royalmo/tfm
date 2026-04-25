@@ -1,80 +1,319 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1080"
    height="380"
    viewBox="0 0 1080 380"
    version="1.1"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)">
-  <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto" markerUnits="strokeWidth">
-      <path d="M 0 0 L 10 6 L 0 12" style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round" />
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   id="svg346"
+   sodipodi:docname="inverse_pipeline.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview348"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.1333333"
+     inkscape:cx="540"
+     inkscape:cy="190.14706"
+     inkscape:window-width="1854"
+     inkscape:window-height="1011"
+     inkscape:window-x="66"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg346" />
+  <defs
+     id="defs260">
+    <marker
+       id="arrow"
+       markerWidth="8"
+       markerHeight="8"
+       refX="6.2"
+       refY="4"
+       orient="auto"
+       markerUnits="strokeWidth">
+      <path
+         d="M 0 0 L 6.8 4 L 0 8"
+         style="fill:none;stroke:#000000;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round"
+         id="path257" />
     </marker>
   </defs>
-
-  <g id="observation-panel">
-    <rect x="18" y="26" width="280" height="155" rx="18" ry="18" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
-    <text x="158" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{observed trajectories}</text>
-    <text x="158" y="82" text-anchor="middle" style="font-family:Sans;font-size:16px">\footnotesize{$\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$}</text>
-
-    <rect x="44" y="101" width="228" height="54" rx="18" ry="18" style="fill:#d1d1d1;stroke:#7f7d76;stroke-width:2.4" />
-    <line x1="58" y1="128" x2="258" y2="128" style="stroke:#f9f9f9;stroke-width:3;stroke-dasharray:12,10;stroke-linecap:round" />
-    <path d="M 62 143 C 104 139, 145 134, 184 123 C 209 116, 229 109, 254 105" style="fill:none;stroke:#f4a259;stroke-width:4.4;stroke-linecap:round" />
-    <path d="M 62 112 C 111 116, 154 128, 202 143 C 219 148, 238 151, 256 150" style="fill:none;stroke:#329a55;stroke-width:3.8;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8" />
-    <path d="M 254 105 C 213 99, 169 97, 127 101 C 101 104, 80 107, 62 112" style="fill:none;stroke:#2f78c4;stroke-width:3.8;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8" />
-    <circle cx="62" cy="143" r="4.2" style="fill:#f4a259;stroke:#d97706;stroke-width:1.0" />
-    <circle cx="158" cy="132" r="3.5" style="fill:#f4a259;stroke:#d97706;stroke-width:0.9" />
-    <circle cx="254" cy="105" r="4.2" style="fill:#f4a259;stroke:#d97706;stroke-width:1.0" />
+  <g
+     id="observation-panel">
+    <rect
+       x="18"
+       y="26"
+       width="280"
+       height="155"
+       rx="18"
+       ry="18"
+       style="fill:#f7f7f7;stroke:#000000;stroke-width:1.6"
+       id="rect262" />
+    <text
+       x="158"
+       y="58"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:18px"
+       id="text264">\footnotesize{observed trajectories}</text>
+    <text
+       x="158"
+       y="82"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:16px"
+       id="text266">\footnotesize{$\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$}</text>
+    <rect
+       x="44"
+       y="101"
+       width="228"
+       height="54"
+       rx="18"
+       ry="18"
+       style="fill:#e9e9e9;stroke:#8d8d8d;stroke-width:2.0"
+       id="rect268" />
+    <line
+       x1="58"
+       y1="128"
+       x2="258"
+       y2="128"
+       style="stroke:#f9f9f9;stroke-width:3;stroke-dasharray:12,10;stroke-linecap:round"
+       id="line270" />
+    <path
+       d="M 62 143 C 104 139, 145 134, 184 123 C 209 116, 229 109, 254 105"
+       style="fill:none;stroke:#f4a259;stroke-width:4.4;stroke-linecap:round"
+       id="path272" />
+    <path
+       d="M 62 112 C 111 116, 154 128, 202 143 C 219 148, 238 151, 256 150"
+       style="fill:none;stroke:#329a55;stroke-width:3.8;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8"
+       id="path274" />
+    <path
+       d="M 254 105 C 213 99, 169 97, 127 101 C 101 104, 80 107, 62 112"
+       style="fill:none;stroke:#2f78c4;stroke-width:3.8;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8"
+       id="path276" />
+    <circle
+       cx="62"
+       cy="143"
+       r="4.2"
+       style="fill:#f4a259;stroke:#d97706;stroke-width:1.0"
+       id="circle278" />
+    <circle
+       cx="158"
+       cy="132"
+       r="3.5"
+       style="fill:#f4a259;stroke:#d97706;stroke-width:0.9"
+       id="circle280" />
+    <circle
+       cx="254"
+       cy="105"
+       r="4.2"
+       style="fill:#f4a259;stroke:#d97706;stroke-width:1.0"
+       id="circle282" />
   </g>
-
-  <g id="candidate-panel">
-    <rect x="18" y="205" width="280" height="121" rx="18" ry="18" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
-    <text x="158" y="237" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{candidate profiles}</text>
-    <rect x="42" y="262" width="72" height="36" rx="9" ry="9" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
-    <rect x="122" y="262" width="72" height="36" rx="9" ry="9" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
-    <rect x="202" y="262" width="72" height="36" rx="9" ry="9" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
-    <text x="78" y="286" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\boldsymbol{\pi}^{-e}_1$}</text>
-    <text x="158" y="286" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\boldsymbol{\pi}^{-e}_2$}</text>
-    <text x="238" y="286" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\boldsymbol{\pi}^{-e}_M$}</text>
+  <g
+     id="candidate-panel">
+    <rect
+       x="18"
+       y="205"
+       width="280"
+       height="121"
+       rx="18"
+       ry="18"
+       style="fill:#f7f7f7;stroke:#000000;stroke-width:1.6"
+       id="rect285" />
+    <text
+       x="158"
+       y="237"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:18px"
+       id="text287">\footnotesize{candidate profiles}</text>
+    <rect
+       x="42"
+       y="262"
+       width="64"
+       height="36"
+       rx="9"
+       ry="9"
+       style="fill:#fbfbfb;stroke:#000000;stroke-width:1.2"
+       id="rect289" />
+    <rect
+       x="116"
+       y="262"
+       width="64"
+       height="36"
+       rx="9"
+       ry="9"
+       style="fill:#fbfbfb;stroke:#000000;stroke-width:1.2"
+       id="rect291" />
+    <rect
+       x="214"
+       y="262"
+       width="64"
+       height="36"
+       rx="9"
+       ry="9"
+       style="fill:#fbfbfb;stroke:#000000;stroke-width:1.2"
+       id="rect293" />
+    <text
+       x="74"
+       y="286"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:17px"
+       id="text295">\footnotesize{$\boldsymbol{\pi}^{-e}_1$}</text>
+    <text
+       x="148"
+       y="286"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:17px"
+       id="text297">\footnotesize{$\boldsymbol{\pi}^{-e}_2$}</text>
+    <text
+       x="197"
+       y="285"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:16px"
+       id="text299">\footnotesize{$\ldotp\!\ldotp\!\ldotp$}</text>
+    <text
+       x="246"
+       y="286"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:17px"
+       id="text301">\footnotesize{$\boldsymbol{\pi}^{-e}_M$}</text>
   </g>
-
-  <g id="solve-panel">
-    <rect x="350" y="26" width="300" height="300" rx="20" ry="20" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
-    <text x="500" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{joint prediction solves}</text>
-
-    <rect x="384" y="96" width="232" height="160" rx="16" ry="16" style="fill:#ffffff;stroke:#000000;stroke-width:1.4" />
-    <text x="500" y="126" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{for each $t$ and $\boldsymbol{\pi}^{-e}$}</text>
-    <text x="500" y="156" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\hat{\mathbf{x}}_t,\ \pi^e,\ \boldsymbol{\pi}^{-e}$}</text>
-    <text x="500" y="190" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\operatorname{Pred}_{\mathrm{ord}}(\cdot)$}</text>
-    <text x="500" y="224" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\tilde{\mathbf{z}}(\boldsymbol{\pi}^{-e})$}</text>
+  <g
+     id="solve-panel">
+    <rect
+       x="350"
+       y="26"
+       width="300"
+       height="300"
+       rx="20"
+       ry="20"
+       style="fill:#f7f7f7;stroke:#000000;stroke-width:1.6"
+       id="rect304" />
+    <text
+       x="500"
+       y="58"
+       text-anchor="middle"
+       style="font-size:18px;font-family:Sans"
+       id="text306">\footnotesize{joint prediction}</text>
+    <rect
+       x="363.97131"
+       y="121.96401"
+       width="272.05737"
+       height="135.19089"
+       rx="16.003376"
+       ry="14.615232"
+       style="fill:#ffffff;fill-opacity:0.62;stroke:#6f6f6f;stroke-width:1.2426;stroke-dasharray:1.2426, 1.2426;stroke-dashoffset:0"
+       id="rect308" />
+    <text
+       x="374.89255"
+       y="162"
+       style="font-size:17px;font-family:Sans"
+       id="text310">\footnotesize{for each $t$ and $\boldsymbol{\pi}^{-e}$}</text>
+    <text
+       x="390.89255"
+       y="200"
+       style="font-size:16px;font-family:Sans"
+       id="text312">\footnotesize{$\tilde{\mathbf{z}}^{-e}_{t:t+T-1} =$}</text>
+    <text
+       x="406.89255"
+       y="230"
+       style="font-size:14px;font-family:Sans"
+       id="text314">\footnotesize{$\operatorname{Pred}_{\mathrm{ord}}(\hat{\mathbf{x}}_t,\ \pi^e,\ \boldsymbol{\pi}^{-e})$}</text>
   </g>
-
-  <g id="score-panel">
-    <rect x="704" y="26" width="358" height="300" rx="20" ry="20" style="fill:#fafafa;stroke:#000000;stroke-width:1.6" />
-    <text x="883" y="58" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{match and rank}</text>
-
-    <rect x="736" y="101" width="198" height="38" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
-    <rect x="736" y="151" width="198" height="38" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
-    <rect x="736" y="201" width="198" height="38" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.2" />
-    <text x="835" y="126" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$\tilde{\mathbf{z}}^{-e}$ vs. $\hat{\mathbf{z}}^{-e}$}</text>
-    <text x="835" y="176" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$S(\boldsymbol{\pi}^{-e})$}</text>
-    <text x="835" y="226" text-anchor="middle" style="font-family:Sans;font-size:17px">\footnotesize{$p_t(\boldsymbol{\pi}^{-e})$}</text>
-
-    <rect x="966" y="118" width="64" height="16" rx="4" ry="4" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
-    <rect x="966" y="168" width="64" height="16" rx="4" ry="4" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
-    <rect x="966" y="218" width="64" height="16" rx="4" ry="4" style="fill:#d8d8d8;stroke:#7f7d76;stroke-width:0.8" />
-    <rect x="966" y="118" width="18" height="16" rx="4" ry="4" style="fill:#f4a259;stroke:none" />
-    <rect x="966" y="168" width="31" height="16" rx="4" ry="4" style="fill:#329a55;stroke:none" />
-    <rect x="966" y="218" width="44" height="16" rx="4" ry="4" style="fill:#2f78c4;stroke:none" />
-
-    <rect x="805" y="264" width="156" height="40" rx="10" ry="10" style="fill:#ffffff;stroke:#000000;stroke-width:1.3" />
-    <text x="883" y="290" text-anchor="middle" style="font-family:Sans;font-size:18px">\footnotesize{$\hat{\boldsymbol{\pi}}^{-e}$}</text>
+  <g
+     id="score-panel">
+    <rect
+       x="704"
+       y="26"
+       width="358"
+       height="300"
+       rx="20"
+       ry="20"
+       style="fill:#f7f7f7;stroke:#000000;stroke-width:1.6"
+       id="rect317" />
+    <text
+       x="883"
+       y="58"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:18px"
+       id="text319">\footnotesize{compare and select}</text>
+    <rect
+       x="760"
+       y="96"
+       width="246"
+       height="62"
+       rx="12"
+       ry="12"
+       style="fill:#fbfbfb;stroke:#000000;stroke-width:1.2"
+       id="rect321" />
+    <text
+       x="883"
+       y="122"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:17px"
+       id="text323">\footnotesize{trajectory comparison}</text>
+    <text
+       x="883"
+       y="145"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:17px"
+       id="text325">\footnotesize{$\tilde{\mathbf{z}}^{-e}$ vs. $\hat{\mathbf{z}}^{-e}$}</text>
+    <rect
+       x="790"
+       y="180"
+       width="186"
+       height="40"
+       rx="10"
+       ry="10"
+       style="fill:#fbfbfb;stroke:#000000;stroke-width:1.2"
+       id="rect327" />
+    <text
+       x="883"
+       y="205"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:17px"
+       id="text329">\footnotesize{score $S(\boldsymbol{\pi}^{-e})$}</text>
+    <rect
+       x="790"
+       y="246"
+       width="186"
+       height="40"
+       rx="10"
+       ry="10"
+       style="fill:#fbfbfb;stroke:#000000;stroke-width:1.2"
+       id="rect331" />
+    <text
+       x="883"
+       y="271"
+       text-anchor="middle"
+       style="font-family:Sans;font-size:17px"
+       id="text333">\footnotesize{best profile $\hat{\boldsymbol{\pi}}^{-e}$}</text>
   </g>
-
-  <path d="M 298 108 L 348 135" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
-  <path d="M 298 266 L 348 205" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
-  <path d="M 650 176 L 702 176" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
-  <path d="M 883 239 L 883 261" style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;marker-end:url(#arrow)" />
+  <path
+     d="M 298 108 L 348 135"
+     style="fill:none;stroke:#000000;stroke-width:1.6;stroke-linecap:round;marker-end:url(#arrow)"
+     id="path336" />
+  <path
+     d="M 298 266 L 348 205"
+     style="fill:none;stroke:#000000;stroke-width:1.6;stroke-linecap:round;marker-end:url(#arrow)"
+     id="path338" />
+  <path
+     d="M 650 176 L 702 176"
+     style="fill:none;stroke:#000000;stroke-width:1.6;stroke-linecap:round;marker-end:url(#arrow)"
+     id="path340" />
+  <path
+     d="M 883 158 L 883 178"
+     style="fill:none;stroke:#000000;stroke-width:1.4;stroke-linecap:round;marker-end:url(#arrow)"
+     id="path342" />
+  <path
+     d="M 883 220 L 883 244"
+     style="fill:none;stroke:#000000;stroke-width:1.4;stroke-linecap:round;marker-end:url(#arrow)"
+     id="path344" />
 </svg>

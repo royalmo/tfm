@@ -83,7 +83,7 @@ trajectory distance as the basic mismatch measure.
 
 % The overall estimation pipeline is summarized in \cref{fig:inverse_pipeline}.
 Observed trajectories define the data window, each admissible profile is evaluated by
-retrospective prediction solves at the observed time indices, and the resulting predictions are ranked by
+retrospective prediction solves at the observed time indices, and the resulting predictions are scored by
 their similarity to the observed trajectories.
 %The discrete search space is illustrated in \cref{fig:inverse_candidate_space}, while
 The
@@ -94,9 +94,10 @@ lexicographic cascade used inside each prediction solve is summarized in
     \centering
     \def\svgwidth{0.98\textwidth}
     \subimport{figures/inverse_goop/}{inverse_pipeline.pdf_tex}
-    \caption{Inverse game of ordered preference estimation pipeline. A measured trajectory segment and a
-    joint candidate profile of non-ego orders are passed to the prediction step. The resulting trajectories are
-    compared with the observations, and the profile with the lowest consistency score is retained.}
+    \caption{Inverse game of ordered preference estimation pipeline. For each observation time and each
+    joint candidate profile of non-ego orders, a joint prediction is generated from the observed state.
+    The predicted non-ego trajectory segment is compared with the observed one, a consistency score is
+    computed, and the lowest-scoring profile is selected.}
     \label{fig:inverse_pipeline}
 \end{figure}
 
