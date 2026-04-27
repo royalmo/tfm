@@ -1,55 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="980" height="420" viewBox="0 0 980 420" version="1.1">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="400" viewBox="100 90 720 300" version="1.1">
   <defs>
     <style>
-      .title { font-family: Sans; font-size: 24px; font-weight: 700; fill: #111111; vector-effect: non-scaling-stroke; }
-      .axis { font-family: Sans; font-size: 18px; fill: #111111; vector-effect: non-scaling-stroke; }
-      .legend { font-family: Sans; font-size: 18px; fill: #111111; vector-effect: non-scaling-stroke; }
-      .plot-outline { fill: #ffffff; stroke: #111111; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
-      .road { fill: #e8e8e8; stroke: none; vector-effect: non-scaling-stroke; }
-      .centerline { fill: none; stroke: #ffffff; stroke-width: 2.6; stroke-dasharray: 10 8; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+      .road { fill: #e8e8e8; stroke: none; }
+      .lane-edge { fill: none; stroke: #c7c7c7; stroke-width: 1.2; }
+      .centerline { fill: none; stroke: #ffffff; stroke-width: 2.6; stroke-dasharray: 10 8; stroke-linecap: round; }
+      .buffer1, .buffer2, .buffer3 { fill: none; stroke-width: 9.2; stroke-linecap: round; stroke-linejoin: round; stroke-opacity: 0.18; }
+      .buffer1 { stroke: #ffa500; }
+      .buffer2 { stroke: #1f77d0; }
+      .buffer3 { stroke: #2ca02c; }
+      .traj1, .traj2, .traj3 { fill: none; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; }
+      .traj1 { stroke: #ffa500; }
+      .traj2 { stroke: #1f77d0; }
+      .traj3 { stroke: #2ca02c; }
+      .marker1, .marker2, .marker3 { stroke: #ffffff; stroke-width: 1.6; }
+      .marker1 { fill: #ffa500; }
+      .marker2 { fill: #1f77d0; }
+      .marker3 { fill: #2ca02c; }
       .goal1 { fill: #ffa500; }
       .goal2 { fill: #1f77d0; }
       .goal3 { fill: #2ca02c; }
     </style>
   </defs>
 
-  <!-- Plot area is in data coordinates and then mapped by the transform below. -->
-  <g id="plot" transform="translate(485 240) scale(180 -110)">
-    <rect x="-2.2" y="-0.75" width="4" height="1.5" class="plot-outline" />
-    <rect x="-2.2" y="-0.6" width="4" height="1.2" class="road" />
-    <line x1="-2.2" y1="0" x2="1.8" y2="0" class="centerline" />
+  <g id="plot">
+    <rect x="89" y="174" width="720" height="132" class="road" />
+    <line x1="89" y1="174" x2="809" y2="174" class="lane-edge" />
+    <line x1="89" y1="306" x2="809" y2="306" class="lane-edge" />
+    <line x1="89" y1="240" x2="809" y2="240" class="centerline" />
 
-    <!-- Player 1
-         points: (-2.05, 0) -> (-1.564, 0.0792) -> (-0.834, 0.2751) -> (0.021, 0.4631) -> (0.8741, 0.6) -> (0.9594, 0.6) -->
-    <path d="M -2.05 0 L -1.564 0.0792 L -0.834 0.2751 L 0.021 0.4631 L 0.8741 0.6 L 0.9594 0.6" class="traj1" style="stroke: #ffa500; fill: none; stroke-linecap: round; stroke-linejoin: round;" />
-    <circle cx="-2.05" cy="0" r="0.025" class="marker1" style="fill: #ffa500; stroke: #ffffff; stroke-width: 0.8;" />
-    <rect x="0.9294" y="0.57" width="0.06" height="0.06" class="marker1" style="fill: #ffa500; stroke: #ffffff; stroke-width: 0.8;" />
-    <path d="M 1.65 -0.115 L 1.6765 -0.0364 L 1.7594 -0.0355 L 1.6928 0.0139 L 1.7176 0.093 L 1.65 0.045 L 1.5824 0.093 L 1.6072 0.0139 L 1.5406 -0.0355 L 1.6235 -0.0364 Z" class="goal1" style="fill: #ffa500;" />
+    <polyline points="116,240 203.5,231.3 334.9,209.7 488.8,189.1 642.3,174 657.7,174" class="buffer1" />
+    <polyline points="116,240 203.5,231.3 334.9,209.7 488.8,189.1 642.3,174 657.7,174" class="traj1" />
+    <circle cx="116" cy="240" r="6" class="marker1" />
+    <rect x="652.7" y="169" width="10" height="10" class="marker1" />
+    <path d="M 782 252.7 L 786.8 244 L 801.7 243.9 L 789.7 238.5 L 794.2 229.8 L 782 235.1 L 769.8 229.8 L 774.3 238.5 L 762.3 243.9 L 777.2 244 Z" class="goal1" transform="translate(782 252.7) scale(0.65) translate(-782 -252.7)" />
 
-    <!-- Player 2
-         points: (-1.4, -0.3) -> (-1.1762, -0.3791) -> (-0.9662, -0.5141) -> (-0.7562, -0.5724) -> (-0.5462, -0.5992) -> (-0.5252, -0.5974) -->
-    <path d="M -1.4 -0.3 L -1.1762 -0.3791 L -0.9662 -0.5141 L -0.7562 -0.5724 L -0.5462 -0.5992 L -0.5252 -0.5974" class="traj2" style="stroke: #1f77d0; fill: none; stroke-linecap: round; stroke-linejoin: round;" />
-    <circle cx="-1.4" cy="-0.3" r="0.025" class="marker2" style="fill: #1f77d0; stroke: #ffffff; stroke-width: 0.8;" />
-    <rect x="-0.5552" y="-0.6274" width="0.06" height="0.06" class="marker2" style="fill: #1f77d0; stroke: #ffffff; stroke-width: 0.8;" />
-    <path d="M 1.6 -0.415 L 1.6265 -0.3364 L 1.7094 -0.3355 L 1.6428 -0.2861 L 1.6676 -0.207 L 1.6 -0.255 L 1.5324 -0.207 L 1.5572 -0.2861 L 1.4906 -0.3355 L 1.5735 -0.3364 Z" class="goal2" style="fill: #1f77d0;" />
+    <polyline points="233,273 273.3,281.7 311.1,296.6 348.9,303 386.7,305.9 390.5,305.7" class="buffer2" />
+    <polyline points="233,273 273.3,281.7 311.1,296.6 348.9,303 386.7,305.9 390.5,305.7" class="traj2" />
+    <circle cx="233" cy="273" r="6" class="marker2" />
+    <rect x="385.5" y="300.7" width="10" height="10" class="marker2" />
+    <path d="M 773 285.6 L 777.8 276.9 L 792.7 276.8 L 780.7 271.4 L 785.2 262.7 L 773 268 L 760.8 262.7 L 765.3 271.4 L 753.3 276.8 L 768.2 276.9 Z" class="goal2" transform="translate(773 285.6) scale(0.65) translate(-773 -285.6)" />
 
-    <!-- Player 3
-         points: (1.4, 0.3) -> (1.1905, 0.3) -> (0.9805, 0.3) -> (0.7803, 0.272) -> (0.5848, 0.232) -> (0.5652, 0.228) -->
-    <path d="M 1.4 0.3 L 1.1905 0.3 L 0.9805 0.3 L 0.7803 0.272 L 0.5848 0.232 L 0.5652 0.228" class="traj3" style="stroke: #2ca02c; fill: none; stroke-linecap: round; stroke-linejoin: round;" />
-    <circle cx="1.4" cy="0.3" r="0.025" class="marker3" style="fill: #2ca02c; stroke: #ffffff; stroke-width: 0.8;" />
-    <rect x="0.5352" y="0.198" width="0.06" height="0.06" class="marker3" style="fill: #2ca02c; stroke: #ffffff; stroke-width: 0.8;" />
-    <path d="M -1.6 0.185 L -1.5735 0.2636 L -1.4906 0.2645 L -1.5572 0.3139 L -1.5324 0.393 L -1.6 0.345 L -1.6676 0.393 L -1.6428 0.3139 L -1.7094 0.2645 L -1.6265 0.2636 Z" class="goal3" style="fill: #2ca02c;" />
-  </g>
-  <text x="490" y="403" text-anchor="middle" class="axis">\footnotesize{x}</text>
-  <text x="28" y="245" text-anchor="middle" transform="rotate(-90 28 245)" class="axis">\footnotesize{y}</text>
-  <g id="legend" transform="translate(780 324)">
-    <rect x="-8" y="-72" width="172" height="110" rx="10" ry="10" fill="#ffffff" fill-opacity="0.88" stroke="none" />
-    <line x1="10" y1="-42" x2="42" y2="-42" style="stroke: #ffa500; stroke-width: 3.8; stroke-linecap: round; fill: none;" />
-    <text x="52" y="-36" class="legend">\footnotesize{Player 1}</text>
-    <line x1="10" y1="-10" x2="42" y2="-10" style="stroke: #1f77d0; stroke-width: 3.8; stroke-linecap: round; fill: none;" />
-    <text x="52" y="-4" class="legend">\footnotesize{Player 2}</text>
-    <line x1="10" y1="22" x2="42" y2="22" style="stroke: #2ca02c; stroke-width: 3.8; stroke-linecap: round; fill: none;" />
-    <text x="52" y="28" class="legend">\footnotesize{Player 3}</text>
+    <polyline points="737,207 699.3,207 661.5,207 625.5,210.1 590.3,214.5 586.7,214.9" class="buffer3" />
+    <polyline points="737,207 699.3,207 661.5,207 625.5,210.1 590.3,214.5 586.7,214.9" class="traj3" />
+    <circle cx="737" cy="207" r="6" class="marker3" />
+    <rect x="581.7" y="209.9" width="10" height="10" class="marker3" />
+    <path d="M 197 219.7 L 201.8 211 L 216.7 210.9 L 204.7 205.5 L 209.2 196.8 L 197 202.1 L 184.8 196.8 L 189.3 205.5 L 177.3 210.9 L 192.2 211 Z" class="goal3" transform="translate(197 219.7) scale(0.65) translate(-197 -219.7)" />
   </g>
 </svg>
