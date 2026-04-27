@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="420" viewBox="0 0 980 420" version="1.1">
+  <defs>
+    <style>
+      .title { font-family: Sans; font-size: 24px; font-weight: 700; fill: #111111; vector-effect: non-scaling-stroke; }
+      .axis { font-family: Sans; font-size: 18px; fill: #111111; vector-effect: non-scaling-stroke; }
+      .legend { font-family: Sans; font-size: 18px; fill: #111111; vector-effect: non-scaling-stroke; }
+      .plot-outline { fill: #ffffff; stroke: #111111; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+      .road { fill: #e8e8e8; stroke: none; vector-effect: non-scaling-stroke; }
+      .centerline { fill: none; stroke: #ffffff; stroke-width: 2.6; stroke-dasharray: 10 8; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+      .goal1 { fill: #ffa500; }
+      .goal2 { fill: #1f77d0; }
+      .goal3 { fill: #2ca02c; }
+    </style>
+  </defs>
+
+  <!-- Plot area is in data coordinates and then mapped by the transform below. -->
+  <g id="plot" transform="translate(485 240) scale(180 -110)">
+    <rect x="-2.2" y="-1.35" width="4" height="2.7" class="plot-outline" />
+    <rect x="-2.2" y="-0.6" width="4" height="1.2" class="road" />
+    <line x1="-2.2" y1="0" x2="1.8" y2="0" class="centerline" />
+
+    <!-- Player 1
+         points: (-2.05, 0) -> (-1.564, -0.0408) -> (-0.834, -0.0866) -> (0.096, -0.1303) -> (1.1926, -0.174) -> (1.3041, -0.1784) -->
+    <path d="M -2.05 0 L -1.564 -0.0408 L -0.834 -0.0866 L 0.096 -0.1303 L 1.1926 -0.174 L 1.3041 -0.1784" class="traj1" style="stroke: #ffa500; fill: none; stroke-linecap: round; stroke-linejoin: round;" />
+    <circle cx="-2.05" cy="0" r="0.025" class="marker1" style="fill: #ffa500; stroke: #ffffff; stroke-width: 0.8;" />
+    <rect x="1.2741" y="-0.2084" width="0.06" height="0.06" class="marker1" style="fill: #ffa500; stroke: #ffffff; stroke-width: 0.8;" />
+    <path d="M 1.65 -0.115 L 1.6765 -0.0364 L 1.7594 -0.0355 L 1.6928 0.0139 L 1.7176 0.093 L 1.65 0.045 L 1.5824 0.093 L 1.6072 0.0139 L 1.5406 -0.0355 L 1.6235 -0.0364 Z" class="goal1" style="fill: #ffa500;" />
+
+    <!-- Player 2
+         points: (-1.4, -0.3) -> (-1.049, -0.381) -> (-0.469, -0.636) -> (0.311, -0.916) -> (1.255, -1.196) -> (1.351, -1.224) -->
+    <path d="M -1.4 -0.3 L -1.049 -0.381 L -0.469 -0.636 L 0.311 -0.916 L 1.255 -1.196 L 1.351 -1.224" class="traj2" style="stroke: #1f77d0; fill: none; stroke-linecap: round; stroke-linejoin: round;" />
+    <circle cx="-1.4" cy="-0.3" r="0.025" class="marker2" style="fill: #1f77d0; stroke: #ffffff; stroke-width: 0.8;" />
+    <rect x="1.321" y="-1.254" width="0.06" height="0.06" class="marker2" style="fill: #1f77d0; stroke: #ffffff; stroke-width: 0.8;" />
+    <path d="M 1.6 -0.415 L 1.6265 -0.3364 L 1.7094 -0.3355 L 1.6428 -0.2861 L 1.6676 -0.207 L 1.6 -0.255 L 1.5324 -0.207 L 1.5572 -0.2861 L 1.4906 -0.3355 L 1.5735 -0.3364 Z" class="goal2" style="fill: #1f77d0;" />
+
+    <!-- Player 3
+         points: (1.4, 0.3) -> (1.049, 0.381) -> (0.469, 0.636) -> (-0.311, 0.916) -> (-1.255, 1.196) -> (-1.351, 1.224) -->
+    <path d="M 1.4 0.3 L 1.049 0.381 L 0.469 0.636 L -0.311 0.916 L -1.255 1.196 L -1.351 1.224" class="traj3" style="stroke: #2ca02c; fill: none; stroke-linecap: round; stroke-linejoin: round;" />
+    <circle cx="1.4" cy="0.3" r="0.025" class="marker3" style="fill: #2ca02c; stroke: #ffffff; stroke-width: 0.8;" />
+    <rect x="-1.381" y="1.194" width="0.06" height="0.06" class="marker3" style="fill: #2ca02c; stroke: #ffffff; stroke-width: 0.8;" />
+    <path d="M -1.6 0.185 L -1.5735 0.2636 L -1.4906 0.2645 L -1.5572 0.3139 L -1.5324 0.393 L -1.6 0.345 L -1.6676 0.393 L -1.6428 0.3139 L -1.7094 0.2645 L -1.6265 0.2636 Z" class="goal3" style="fill: #2ca02c;" />
+  </g>
+  <text x="490" y="403" text-anchor="middle" class="axis">\footnotesize{x}</text>
+  <text x="28" y="245" text-anchor="middle" transform="rotate(-90 28 245)" class="axis">\footnotesize{y}</text>
+  <g id="legend" transform="translate(780 324)">
+    <rect x="-8" y="-72" width="172" height="110" rx="10" ry="10" fill="#ffffff" fill-opacity="0.88" stroke="none" />
+    <line x1="10" y1="-42" x2="42" y2="-42" style="stroke: #ffa500; stroke-width: 3.8; stroke-linecap: round; fill: none;" />
+    <text x="52" y="-36" class="legend">\footnotesize{Player 1}</text>
+    <line x1="10" y1="-10" x2="42" y2="-10" style="stroke: #1f77d0; stroke-width: 3.8; stroke-linecap: round; fill: none;" />
+    <text x="52" y="-4" class="legend">\footnotesize{Player 2}</text>
+    <line x1="10" y1="22" x2="42" y2="22" style="stroke: #2ca02c; stroke-width: 3.8; stroke-linecap: round; fill: none;" />
+    <text x="52" y="28" class="legend">\footnotesize{Player 3}</text>
+  </g>
+</svg>

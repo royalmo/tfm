@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="1700" height="560" viewBox="0 0 1700 560">
+     width="1600" height="690" viewBox="0 0 1600 690">
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
       <path d="M 0 0 L 12 6 L 0 12 z" fill="#475569"/>
@@ -10,42 +10,42 @@
       <path d="M 0 0 L 12 6 L 0 12 z" fill="#2f855a"/>
     </marker>
   </defs>
-  <rect x="25" y="30" width="765" height="500" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
-  <rect x="910" y="30" width="765" height="500" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
-  <text x="407" y="64" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">Laptop side</text>
-  <text x="1280" y="64" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">Robot side</text>
-  <text x="850" y="92" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">Duckietown real-robot execution path</text>
-  <rect x="55" y="160" width="290" height="170" rx="18" fill="#eff6ff" stroke="#334155" stroke-width="3"/>
-  <text x="200.0" y="194" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">LEXIBROverTime.jl</text>
-  <text x="200.0" y="234" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">GameOfOrderedPreference / RecedingHorizonStrategy / solve\_receding\_horizon\_goop</text>
-  <rect x="395" y="160" width="330" height="170" rx="18" fill="#f0fdf4" stroke="#334155" stroke-width="3"/>
-  <text x="560.0" y="194" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">julia\_solver/server.jl</text>
-  <text x="560.0" y="234" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">TCP bridge: STEP x,y,vx,vy,theta -&gt; OK ax,ay</text>
-  <rect x="55" y="365" width="670" height="120" rx="18" fill="#fffbeb" stroke="#334155" stroke-width="3"/>
-  <text x="390.0" y="399" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">duckie\_manager.py</text>
-  <text x="390.0" y="439" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">reads RobotStateStamped, calls the Julia bridge once per dt, publishes Accel2DStamped or a fallback sequence</text>
-  <rect x="945" y="160" width="345" height="170" rx="18" fill="#fdf2f8" stroke="#334155" stroke-width="3"/>
-  <text x="1117.5" y="194" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">robot\_adapter\_node.py</text>
-  <text x="1117.5" y="234" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">$a_k$ to $v_{\mathrm{cmd}}, \omega_{\mathrm{cmd}}$ with state, encoder feedback, and watchdog support</text>
-  <rect x="1330" y="160" width="300" height="170" rx="18" fill="#eef2ff" stroke="#334155" stroke-width="3"/>
-  <text x="1480.0" y="194" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">Duckiebot</text>
-  <text x="1480.0" y="234" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">wheel motors, encoders, and physical motion</text>
-  <line x1="345" y1="245" x2="395" y2="245" stroke="#475569" stroke-width="3" marker-end="url(#arrow-green)"/>
-  <text x="370" y="222" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">solve</text>
-  <line x1="725" y1="245" x2="945" y2="245" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="835" y="222" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">STEP / OK</text>
-  <line x1="1290" y1="245" x2="1330" y2="245" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="1310" y="222" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">cmd</text>
-  <line x1="1480" y1="330" x2="1480" y2="365" stroke="#166534" stroke-width="3" marker-end="url(#arrow-green)"/>
-  <text x="1510" y="352" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">motion</text>
-  <line x1="1115" y1="330" x2="1115" y2="365" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="1138" y="352" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">state + encoders</text>
-  <line x1="700" y1="430" x2="945" y2="430" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="820" y="408" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">Accel2DStamped / RobotStateStamped</text>
-  <line x1="720" y1="430" x2="720" y2="245" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <line x1="945" y1="245" x2="945" y2="430" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <line x1="1330" y1="330" x2="1330" y2="430" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <line x1="1330" y1="430" x2="1255" y2="430" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="1288" y="452" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">wheel command feedback</text>
-  <text x="850" y="520" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">The manager and adapter close the loop through ROS topics, while the solver side remains isolated in Julia.</text>
+  <rect x="20" y="28" width="760" height="595" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="820" y="28" width="760" height="595" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="400" y="68" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize Laptop side</text>
+  <text x="1200" y="68" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize Robot side</text>
+  <text x="800" y="102" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\small Duckietown real-robot execution path</text>
+  <rect x="50" y="155" width="320" height="205" rx="18" fill="#eff6ff" stroke="#334155" stroke-width="3"/>
+  <text x="210" y="192" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize LEXIBROverTime.jl</text>
+  <text x="210" y="228" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny GameOfOrderedPreference /\\RecedingHorizonStrategy /\\solve\_receding\_horizon\_goop</text>
+  <rect x="410" y="155" width="330" height="205" rx="18" fill="#f0fdf4" stroke="#334155" stroke-width="3"/>
+  <text x="575" y="192" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize julia\_solver/server.jl</text>
+  <text x="575" y="228" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny TCP bridge:\\STEP x,y,vx,vy,theta -&gt;\\OK ax,ay</text>
+  <rect x="50" y="410" width="690" height="150" rx="18" fill="#fffbeb" stroke="#334155" stroke-width="3"/>
+  <text x="395" y="447" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize duckie\_manager.py</text>
+  <text x="395" y="482" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny reads RobotStateStamped, calls the Julia bridge\\once per dt, publishes Accel2DStamped\\or a fallback sequence</text>
+  <rect x="855" y="155" width="360" height="205" rx="18" fill="#fdf2f8" stroke="#334155" stroke-width="3"/>
+  <text x="1035" y="192" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize robot\_adapter\_node.py</text>
+  <text x="1035" y="228" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny $a_k$ to $v_{\mathrm{cmd}}, \omega_{\mathrm{cmd}}$\\with state, encoder feedback,\\and watchdog support</text>
+  <rect x="1255" y="155" width="285" height="205" rx="18" fill="#eef2ff" stroke="#334155" stroke-width="3"/>
+  <text x="1397.5" y="192" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize Duckiebot</text>
+  <text x="1397.5" y="228" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny wheel motors, encoders,\\and physical motion</text>
+  <line x1="370" y1="258" x2="410" y2="258" stroke="#475569" stroke-width="3" marker-end="url(#arrow-green)"/>
+  <text x="390" y="234" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny solve</text>
+  <line x1="740" y1="258" x2="855" y2="258" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="798" y="234" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny STEP / OK</text>
+  <line x1="1215" y1="258" x2="1255" y2="258" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="1235" y="234" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny cmd</text>
+  <line x1="1397.5" y1="360" x2="1397.5" y2="410" stroke="#166534" stroke-width="3" marker-end="url(#arrow-green)"/>
+  <text x="1430" y="387" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny motion</text>
+  <line x1="1035" y1="360" x2="1035" y2="410" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="1070" y="386" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny state +\\encoders</text>
+  <line x1="740" y1="485" x2="855" y2="485" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="798" y="452" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny Accel2DStamped /\\RobotStateStamped</text>
+  <line x1="715" y1="485" x2="715" y2="258" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="855" y1="258" x2="855" y2="485" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="1255" y1="360" x2="1255" y2="485" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="1255" y1="485" x2="1170" y2="485" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="1212" y="515" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny wheel command\\feedback</text>
+  <text x="800" y="648" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny The manager and adapter close the loop through ROS topics,\\while the solver side remains isolated in Julia.</text>
 </svg>

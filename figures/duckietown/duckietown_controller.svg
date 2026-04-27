@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="1700" height="640" viewBox="0 0 1700 640">
+     width="1600" height="800" viewBox="0 0 1600 800">
   <defs>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
       <path d="M 0 0 L 12 6 L 0 12 z" fill="#475569"/>
@@ -10,34 +10,31 @@
       <path d="M 0 0 L 12 6 L 0 12 z" fill="#2f855a"/>
     </marker>
   </defs>
-  <text x="850" y="72" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">Robot-side acceleration-vector control</text>
-  <rect x="45" y="160" width="250" height="180" rx="18" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
-  <text x="170.0" y="194" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">State at tick $k$</text>
-  <text x="170.0" y="234" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">$x_k, y_k, \theta_k, v_{x,k}, v_{y,k}$ / RobotStateStamped</text>
-  <rect x="335" y="160" width="250" height="180" rx="18" fill="#fef3c7" stroke="#334155" stroke-width="3"/>
-  <text x="460.0" y="194" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">Incoming command</text>
-  <text x="460.0" y="234" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">$a_k = (a_x, a_y)$ / Accel2DStamped / clamp by $a_{\max}$</text>
-  <rect x="625" y="120" width="650" height="260" rx="18" fill="#ecfeff" stroke="#334155" stroke-width="3"/>
-  <text x="950.0" y="154" text-anchor="middle" fill="#0f172a" font-size="21" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">VelocityVectorController</text>
-  <text x="950.0" y="194" text-anchor="middle" fill="#0f172a" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">$v_{k+1} = \alpha v_k + \Delta t \,\mathrm{clip}(a_k)$</text>
-  <text x="950.0" y="211" text-anchor="middle" fill="#0f172a" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">$\theta^{\mathrm{des}}_{k+1} = \operatorname{atan2}(v_{y,k+1}, v_{x,k+1})$</text>
-  <text x="950.0" y="228" text-anchor="middle" fill="#0f172a" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">$\omega_{k+1} = \mathrm{clip}\!\left(k_\psi\,\mathrm{wrap}_\pi(\theta^{\mathrm{des}}_{k+1} - \theta_k)\right)$</text>
-  <text x="950.0" y="245" text-anchor="middle" fill="#0f172a" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">$v_{k+1}^{\mathrm{cmd}} = \mathrm{clip}(\lVert \mathbf{v}_{k+1} \rVert, 0, v_{\max})$</text>
-  <rect x="1325" y="160" width="320" height="180" rx="18" fill="#f0fdf4" stroke="#334155" stroke-width="3"/>
-  <text x="1485.0" y="194" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">Published command</text>
-  <text x="1485.0" y="234" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">$v_{\mathrm{cmd}}, \omega_{\mathrm{cmd}}$ / Twist2DStamped or Twist / car\_cmd\_switch\_node</text>
-  <rect x="1325" y="390" width="320" height="150" rx="18" fill="#fdf2f8" stroke="#334155" stroke-width="3"/>
-  <text x="1485.0" y="424" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">Feedback and safety</text>
-  <text x="1485.0" y="464" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">encoder odometry / wheel command feedback / watchdog timeout</text>
-  <line x1="295" y1="250" x2="335" y2="250" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="315" y="224" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">state</text>
-  <line x1="585" y1="250" x2="625" y2="250" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="605" y="224" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">ax, ay</text>
-  <line x1="1275" y1="250" x2="1325" y2="250" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="1300" y="224" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">cmd</text>
-  <line x1="1485" y1="340" x2="1485" y2="390" stroke="#475569" stroke-width="3" marker-end="url(#arrow-green)"/>
-  <text x="1512" y="364" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">odometry</text>
-  <line x1="1485" y1="540" x2="1485" y2="610" stroke="#475569" stroke-width="3" marker-end="url(#arrow-green)"/>
-  <text x="1512" y="578" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">watchdog zeroing</text>
-  <text x="850" y="590" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">The controller converts planar accelerations into the command pair used by the Duckietown drive stack.</text>
+  <text x="800" y="74" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\small Robot-side acceleration-vector control</text>
+  <rect x="40" y="170" width="235" height="200" rx="18" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+  <text x="157.5" y="206" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize State at tick $k$</text>
+  <text x="157.5" y="244" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny $x_k, y_k, \theta_k,$\\$v_{x,k}, v_{y,k}$ /\\RobotStateStamped</text>
+  <rect x="305" y="170" width="240" height="200" rx="18" fill="#fef3c7" stroke="#334155" stroke-width="3"/>
+  <text x="425" y="206" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize Incoming command</text>
+  <text x="425" y="244" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny $a_k = (a_x, a_y)$ /\\Accel2DStamped /\\clamp by $a_{\max}$</text>
+  <rect x="575" y="130" width="660" height="290" rx="18" fill="#ecfeff" stroke="#334155" stroke-width="3"/>
+  <text x="905" y="168" text-anchor="middle" fill="#0f172a" font-size="21" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize VelocityVectorController</text>
+  <text x="905" y="208" text-anchor="middle" fill="#0f172a" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny $v_{k+1} = \alpha v_k + \Delta t \,\mathrm{clip}(a_k)$\\$\theta^{\mathrm{des}}_{k+1} = \operatorname{atan2}(v_{y,k+1}, v_{x,k+1})$\\$\omega_{k+1} = \mathrm{clip}\!\left(k_\psi\,\mathrm{wrap}_\pi(\theta^{\mathrm{des}}_{k+1} - \theta_k)\right)$\\$v_{k+1}^{\mathrm{cmd}} = \mathrm{clip}(\lVert \mathbf{v}_{k+1} \rVert, 0, v_{\max})$</text>
+  <rect x="1265" y="170" width="295" height="200" rx="18" fill="#f0fdf4" stroke="#334155" stroke-width="3"/>
+  <text x="1412.5" y="206" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize Published command</text>
+  <text x="1412.5" y="244" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny $v_{\mathrm{cmd}}, \omega_{\mathrm{cmd}}$ /\\Twist2DStamped or Twist /\\car\_cmd\_switch\_node</text>
+  <rect x="1265" y="460" width="295" height="175" rx="18" fill="#fdf2f8" stroke="#334155" stroke-width="3"/>
+  <text x="1412.5" y="496" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize Feedback and safety</text>
+  <text x="1412.5" y="534" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny encoder odometry /\\wheel command feedback /\\watchdog timeout</text>
+  <line x1="275" y1="275" x2="305" y2="275" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="290" y="246" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny state</text>
+  <line x1="545" y1="275" x2="575" y2="275" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="560" y="246" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny ax, ay</text>
+  <line x1="1235" y1="275" x2="1265" y2="275" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="1250" y="246" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny cmd</text>
+  <line x1="1412.5" y1="370" x2="1412.5" y2="460" stroke="#475569" stroke-width="3" marker-end="url(#arrow-green)"/>
+  <text x="1450" y="408" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny odometry</text>
+  <line x1="1412.5" y1="635" x2="1412.5" y2="720" stroke="#475569" stroke-width="3" marker-end="url(#arrow-green)"/>
+  <text x="1454" y="676" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny watchdog\\zeroing</text>
+  <text x="800" y="758" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny The controller converts planar accelerations into the command pair\\used by the Duckietown drive stack.</text>
 </svg>

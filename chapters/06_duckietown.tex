@@ -34,16 +34,18 @@ robotics stack shown in \cref{fig:duckietown_architecture}.
 \section{System architecture}
 \label{sec:duckietown-architecture}
 
-\begin{figure*}
+\begin{figure}[t]
     \centering
-    \def\svgwidth{0.985\textwidth}
+    {\scriptsize
+    \def\svgwidth{\textwidth}
     \subimport{figures/duckietown/}{duckietown_architecture.pdf_tex}
+    }
     \caption{System architecture for the Duckietown validation framework. The Julia solver remains in the
     optimization layer, the TCP bridge exposes a compact line-based protocol, the manager runs the
     receding-horizon loop, and the robot adapter translates acceleration vectors into the low-level drive
     commands executed by the Duckiebot.}
     \label{fig:duckietown_architecture}
-\end{figure*}
+\end{figure}
 
 \Cref{fig:duckietown_architecture} summarizes the execution path.
 At the top of the stack, \texttt{LEXIBROverTime.jl} contains the game-theoretic solver.
@@ -112,15 +114,17 @@ the state estimate is available.
 \section{Robot-side control and telemetry}
 \label{sec:duckietown-control}
 
-\begin{figure*}
+\begin{figure}[t]
     \centering
-    \def\svgwidth{0.985\textwidth}
+    {\scriptsize
+    \def\svgwidth{\textwidth}
     \subimport{figures/duckietown/}{duckietown_controller.pdf_tex}
+    }
     \caption{Robot-side conversion from planar acceleration commands to low-level drive commands. The
     controller stores an internal velocity vector, applies decay, extracts a desired heading from the
     resulting vector, and then computes the linear and angular commands sent to the Duckiebot.}
     \label{fig:duckietown_controller}
-\end{figure*}
+\end{figure}
 
 The robot adapter implements a compact controller that maps the commanded planar acceleration to a
 velocity-vector state and then to the standard driving inputs.
@@ -179,16 +183,18 @@ safe rather than maintain stale commands.
 \section{Validation workflow}
 \label{sec:duckietown-validation}
 
-\begin{figure*}
+\begin{figure}[t]
     \centering
-    \def\svgwidth{0.95\textwidth}
+    {\footnotesize
+    \def\svgwidth{0.92\textwidth}
     \subimport{figures/duckietown/}{duckietown_validation_stack.pdf_tex}
+    }
     \caption{Validation stack for the Duckietown framework. The controller is first exercised through unit
     tests, then through a ROS-free simulation harness, then through a containerized ROS smoke test, and
     finally on physical robots. Each layer validates a different failure mode before the framework is used
     in a full experimental campaign.}
     \label{fig:duckietown_validation}
-\end{figure*}
+\end{figure}
 
 \Cref{fig:duckietown_validation} shows how the current implementation has been exercised before being
 trusted on hardware.
