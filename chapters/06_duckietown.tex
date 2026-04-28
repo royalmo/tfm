@@ -8,14 +8,6 @@ The goal is not to introduce a different planner, but to close the loop between 
 and physical robots in a way that preserves the structure of the optimization problem while respecting the
 constraints of a real deployment.
 
-The implementation is deliberately modular.
-The optimization core remains in Julia, the experiment manager and robot adapter are implemented as ROS 1
-nodes in Python, and the two sides communicate through a small TCP bridge.
-This separation keeps the solver independent from the transport layer and makes the runtime stack easier to
-reason about, test, and replace component by component.
-
-\section{Motivation}
-
 The need for an explicit experimental layer follows from the gap between mathematical feasibility and
 physical execution.
 In simulation, the solver can query the current state, solve a receding-horizon game, and apply the first
@@ -28,103 +20,99 @@ making its execution observable and safe enough for physical trials.
 Duckietown is particularly convenient for that purpose because it provides a standard low-cost platform with
 common software interfaces, common vehicle geometry, and a ROS-based development workflow.
 In this thesis, the platform is used as a validation scaffold for \cref{ch:lex-ibr-ot}: the same
-receding-horizon lexicographic IBR logic is executed, but the state and command loop is mediated by the
+lexicographic IBR over time logic is executed, but the state and command loop is mediated by the
 robotics stack shown in \cref{fig:duckietown_architecture}.
+
+This validation setup is not fully decentralized.
+The sensing available in our environment is not sufficient for each Duckiebot to reliably estimate the
+position and velocity of the other vehicles on its own.
+In particular, with a simple onboard webcam, detecting and tracking the surrounding robots robustly enough
+for closed-loop game execution is not currently realistic.
+For that reason, the experiments use a centralized runtime loop that aggregates the state information needed
+by the solver before redistributing the resulting commands.
 
 \section{System architecture}
 \label{sec:duckietown-architecture}
 
+The setup involves the robots being connected to a central computer that will
+coordinate the runtime loop and solve the games, while each robot will manage
+their actuation and sensing interface.
+This keeps the optimization layer independent from the transport and control
+details of the physical platform.
+
+% TODO REDO
 \begin{figure}[t]
     \centering
-    {\scriptsize
+    {\footnotesize
     \def\svgwidth{\textwidth}
     \subimport{figures/duckietown/}{duckietown_architecture.pdf_tex}
     }
-    \caption{System architecture for the Duckietown validation framework. The Julia solver remains in the
-    optimization layer, the TCP bridge exposes a compact line-based protocol, the manager runs the
-    receding-horizon loop, and the robot adapter translates acceleration vectors into the low-level drive
-    commands executed by the Duckiebot.}
+    \caption{High-level execution path of the Duckietown validation framework. State estimates
+    \(\mathbf{x}_k\) flow from the robot to the laptop-side game solver, which returns planar acceleration
+    commands \(\mathbf{a}_k^\star\); the robot-side adapter maps them to low-level drive commands
+    \(u_k = (v_k,\omega_k)\), while a watchdog keeps the failure mode at a conservative stop.}
     \label{fig:duckietown_architecture}
 \end{figure}
 
-\Cref{fig:duckietown_architecture} summarizes the execution path.
-At the top of the stack, \texttt{LEXIBROverTime.jl} contains the game-theoretic solver.
-The solver is wrapped by \texttt{julia\_solver/server.jl}, which provides a small TCP interface and
-accepts a \texttt{STEP} request containing the current state of every robot in the form
-\texttt{x,y,vx,vy,theta}.
-The bridge returns a list of planar acceleration commands, one per robot, encoded as \texttt{ax,ay} pairs.
+\Cref{fig:duckietown_architecture} summarizes the closed-loop execution path.
+At each sampling instant \(\Delta t\), the runtime loop collects the latest state estimate
+\(\mathbf{x}_k = (x,y,v_x,v_y,\theta)\) and queries the laptop-side bridge for the next control sample.
+The underlying receding-horizon strategy replans only after the current open-loop plan has executed for
+\(T_l\) steps; otherwise, the bridge returns the next command from the existing plan.
+The robot-side adapter then maps that command to the low-level drive input
+\(u_k = (v_k,\omega_k)\) that can be executed by the Duckiebot.
 
-The ROS manager node, \texttt{duckie\_manager.py}, is the central runtime coordinator.
-It runs at a fixed period \(\Delta t\), reads the latest robot states from
-\texttt{/external\_control/state}, forwards them to the Julia bridge, and publishes the resulting
-\texttt{Accel2DStamped} commands.
-If the solver is unavailable, the manager can either fall back to a preloaded sequence or publish zero
-acceleration, depending on the selected runtime mode.
-This fail-safe behavior is important in a real-robot setting, because it makes the system degrade to a
-conservative stop rather than to an undefined command stream.
-
-On the robot side, \texttt{robot\_adapter\_node.py} receives the acceleration vector, converts it into the
-low-level velocity command pair, and publishes the feedback state used by the manager.
-The adapter also integrates optional encoder feedback and wheel-command feedback when those topics are
-available.
-In practice, this means that the experimenter can choose how much of the robot telemetry is trusted in a
-given run without changing the solver itself.
-
-The bridge configuration is carried by two data structures.
-\texttt{BridgeConfig} stores the static experiment settings, including the robot names, the goal
-positions, the receding-horizon length, the turn length, and the physical limits used in the optimization
-problem.
-\texttt{BridgeParameters} stores the time-varying part of the problem: the current initial states, the
-predicted trajectories of the other agents, the relaxation factor, and the auxiliary parameters required by
-the solver.
-The pair provides a clean interface between the robot runtime and the game solver, because the structured
-configuration is flattened only at the boundary where the optimization problem is solved.
+% The same split also fixes the failure mode.
+% If no valid command is returned in time, the watchdog falls back to a zero command rather than leaving a
+% stale input on the robot.
 
 \begin{algorithm}
-\KwData{Robot names, goal positions, solver bridge, manager period \(\Delta t\), turn length \(T_l\)}
-\KwResult{Acceleration commands \(\mathbf{a}_t\) published on the Duckietown control topics}
+\KwData{Solver bridge, sampling period \(\Delta t\), turn length \(T_l\), robot set, goal set}
+\KwResult{Closed-loop acceleration commands \(\mathbf{a}_k^\star\)}
 \medskip
-Initialize the Julia bridge and the ROS publishers/subscribers\;
+Initialize the laptop--robot communication and the state / command interfaces\;
 \While{the experiment is running}{
-    Read the latest \texttt{RobotStateStamped} messages for all robots\;
-    Build a \texttt{STEP} request with \((x, y, v_x, v_y, \theta)\) for each robot\;
-    Send the request to the Julia bridge and wait for \texttt{OK ax,ay} responses\;
-    \If{the solver succeeds}{
-        Publish the returned \texttt{Accel2DStamped} commands\;
+    Read the latest state estimate \(\mathbf{x}_k\)\;
+    Query the bridge for the next control sample; replan only after \(T_l\) executed steps\;
+    \If{a valid command is available}{
+        Publish the returned acceleration command \(\mathbf{a}_k^\star\)\;
     }
-    \ElseIf{a fallback sequence is available}{
-        Replay the next control sample from the sequence bank\;
+    \ElseIf{a fallback policy is available}{
+        Replay the next fallback command\;
     }
     \Else{
-        Publish zero acceleration for every robot\;
+        Publish the zero command\;
     }
-    Sleep until the next manager tick\;
+    Wait until the next tick \(\Delta t\)\;
 }
 \caption{Closed-loop manager cycle in the Duckietown validation framework.}
 \label{alg:duckietown_manager_loop}
 \end{algorithm}
 
-The algorithm above mirrors the receding-horizon logic already described in \cref{ch:lex-ibr-ot},
-but places it in the physical execution environment.
-The first successful solve is especially relevant: until the solver returns a feasible control sequence,
-the manager keeps the robots stationary.
-This choice avoids the common failure mode in which a partially initialized solver drives the hardware before
-the state estimate is available.
+The manager therefore advances the closed loop every \(\Delta t\), while the underlying receding-horizon
+game is refreshed only every \(T_l\) steps and otherwise continues along the current plan.
+The explicit safety boundary remains the same: until a feasible command is available, the robots remain
+stationary (\cref{alg:duckietown_manager_loop}).
 
 \section{Robot-side control and telemetry}
 \label{sec:duckietown-control}
 
-\begin{figure}[t]
-    \centering
-    {\scriptsize
-    \def\svgwidth{\textwidth}
-    \subimport{figures/duckietown/}{duckietown_controller.pdf_tex}
-    }
-    \caption{Robot-side conversion from planar acceleration commands to low-level drive commands. The
-    controller stores an internal velocity vector, applies decay, extracts a desired heading from the
-    resulting vector, and then computes the linear and angular commands sent to the Duckiebot.}
-    \label{fig:duckietown_controller}
-\end{figure}
+The control variable used throughout \cref{ch:goop,ch:lex-ibr-ot} is a planar
+acceleration, whereas the Duckiebot does not accept acceleration commands directly.
+Its native interface is the low-level pair \((v,\omega)\), so the solver output must be converted before it
+can be executed on the robot.
+
+% \begin{figure}[t]
+%     \centering
+%     {\scriptsize
+%     \def\svgwidth{\textwidth}
+%     \subimport{figures/duckietown/}{duckietown_controller.pdf_tex}
+%     }
+%     \caption{Robot-side conversion from planar acceleration commands to low-level drive commands. The
+%     controller stores an internal velocity vector, applies decay, extracts a desired heading from the
+%     resulting vector, and then computes the linear and angular commands sent to the Duckiebot.}
+%     \label{fig:duckietown_controller}
+% \end{figure}
 
 The robot adapter implements a compact controller that maps the commanded planar acceleration to a
 velocity-vector state and then to the standard driving inputs.
@@ -151,88 +139,51 @@ v^{\mathrm{cmd}}_{k+1}
 &=
 \mathrm{clip}_{[0,v_{\max}]}\!\left(\lVert \mathbf{v}_{k+1} \rVert\right).
 \end{align}
-This structure is simple enough to inspect by hand, yet expressive enough to preserve the qualitative
-directional behavior induced by the acceleration command.
+This structure is expressive enough to preserve the qualitative
+directional behavior induced by the acceleration command while maintaining simplicity.
+At the same time, the optimization problem must remain constrained to accelerations that are compatible with
+the physical platform, so that the commanded motion can be mapped to feasible low-level inputs instead of
+producing requests that the robot cannot track reliably.
 
-\begin{algorithm}
-\KwData{Current velocity state \((\theta_k, v_{x,k}, v_{y,k})\), incoming acceleration \((a_x,a_y)\), controller parameters}
-\KwResult{Low-level command pair \((v^{\mathrm{cmd}}_k,\omega^{\mathrm{cmd}}_k)\) and updated state}
-\medskip
-Clamp the incoming acceleration to the admissible range\;
-Apply velocity decay and integrate the acceleration over \(\Delta t\)\;
-Compute the desired heading from the updated velocity vector\;
-Clamp the heading error with the yaw gain \(k_\psi\)\;
-Clamp the speed to obtain \(v^{\mathrm{cmd}}_k\)\;
-Publish the command and the updated \texttt{RobotStateStamped} message\;
-\caption{Robot-side conversion from acceleration vector to drive command.}
-\label{alg:duckietown_adapter_loop}
-\end{algorithm}
+% \begin{algorithm}
+% \KwData{Current velocity state \((\theta_k, v_{x,k}, v_{y,k})\), incoming acceleration \((a_x,a_y)\), controller parameters}
+% \KwResult{Low-level command pair \((v^{\mathrm{cmd}}_k,\omega^{\mathrm{cmd}}_k)\) and updated state}
+% \medskip
+% Clamp the incoming acceleration to the admissible range\;
+% Apply velocity decay and integrate the acceleration over \(\Delta t\)\;
+% Compute the desired heading from the updated velocity vector\;
+% Clamp the heading error with the yaw gain \(k_\psi\)\;
+% Clamp the speed to obtain \(v^{\mathrm{cmd}}_k\)\;
+% Publish the command and the updated \texttt{RobotStateStamped} message\;
+% \caption{Robot-side conversion from acceleration vector to drive command.}
+% \label{alg:duckietown_adapter_loop}
+% \end{algorithm}
 
 The published \texttt{RobotStateStamped} message is richer than a simple pose estimate.
 In addition to \(x\), \(y\), \(\theta\), \(v_x\), and \(v_y\), it carries the command pair
 \(v^{\mathrm{cmd}}\) and \(\omega^{\mathrm{cmd}}\), the encoder-based estimates when available, and the
-wheel command feedback when the robot firmware exposes it.
-This makes the message suitable not only for feedback control but also for runtime introspection and log
-analysis.
-
-The adapter includes a watchdog timer that zeros the command when no fresh acceleration message has been
+wheel command feedback when the robot firmware exposes it, to allow a more precise position estimate for the next solve step.
+The adapter also includes a watchdog timer that zeros the command when no fresh acceleration message has been
 received within a configured timeout.
-This is a conservative design choice, but it is the correct one for a real robot whose controller must fail
-safe rather than maintain stale commands.
+% This makes the message suitable not only for feedback control but also for runtime introspection and log
+% analysis.
 
-\section{Validation workflow}
-\label{sec:duckietown-validation}
 
-\begin{figure}[t]
-    \centering
-    {\footnotesize
-    \def\svgwidth{0.92\textwidth}
-    \subimport{figures/duckietown/}{duckietown_validation_stack.pdf_tex}
-    }
-    \caption{Validation stack for the Duckietown framework. The controller is first exercised through unit
-    tests, then through a ROS-free simulation harness, then through a containerized ROS smoke test, and
-    finally on physical robots. Each layer validates a different failure mode before the framework is used
-    in a full experimental campaign.}
-    \label{fig:duckietown_validation}
-\end{figure}
+% This is a conservative design choice, but it is the correct one for a real robot whose controller must fail
+% safe rather than maintain stale commands.
 
-\Cref{fig:duckietown_validation} shows how the current implementation has been exercised before being
-trusted on hardware.
-At the lowest level, the controller core is covered by unit tests that verify the most important algebraic
-properties: decay of the internal velocity state in the absence of acceleration, heading alignment with the
-resulting vector, command clamping, and angle wrapping.
-These tests are inexpensive to run and give confidence that the control law behaves as intended.
+\section{Results}
+\label{sec:duckietown-results}
 
-The same controller is then exercised through a local simulation harness that does not require ROS or
-Docker.
-This stage is useful because it isolates the control law from the middleware and lets the developer inspect
-the resulting trajectory samples directly.
-The simulation is intentionally deterministic, which makes it suitable for regression tests and for quick
-sanity checks while adjusting controller parameters.
 
-The next layer is a ROS smoke test, in which the manager and adapter are launched in containers and their
-topics are monitored directly.
-This checks the transport layer, the timing of the timer callbacks, and the consistency of the state and
-command messages.
-It is also the first place where the real topic names and the fail-safe behavior of the system become
-visible.
-
-The final layer is the physical robot deployment.
-Here the same manager-adapter loop runs with one adapter process per robot and a single manager process on
-the laptop.
-The Julia bridge remains external to the ROS graph and receives the same state packets that would otherwise
-be consumed by a simulator.
-This makes the transition from software-in-the-loop to hardware-in-the-loop almost entirely a deployment
-change, rather than a modeling change.
 
 \section{Discussion}
 
-The main contribution of this chapter is an experimental framework that makes the receding-horizon game of ordered preference
+This chapter provides an experimental framework that makes the receding-horizon game of ordered preference
 solver usable on real robots without changing its core mathematical formulation.
-The solver, the bridge, the manager, and the adapter are each deliberately small, which makes the system
-easier to audit than a monolithic control application.
-At the same time, the modularization exposes the practical limitations that matter in physical experiments:
-communication latency, calibration drift, encoder availability, and the reliability of the state estimate.
+% TODO
+
+
 
 The framework is therefore best understood as a validation scaffold.
 It already supports the end-to-end execution of LexIBROverTime on Duckietown robots, but it is also designed

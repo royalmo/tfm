@@ -1,51 +1,111 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="1600" height="690" viewBox="0 0 1600 690">
+     width="1600" height="760" viewBox="0 0 1600 760">
   <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
-      <path d="M 0 0 L 12 6 L 0 12 z" fill="#475569"/>
+    <linearGradient id="bg-left" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f8fbff"/>
+      <stop offset="100%" stop-color="#eef5ff"/>
+    </linearGradient>
+    <linearGradient id="bg-right" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fffdf5"/>
+      <stop offset="100%" stop-color="#fff7d6"/>
+    </linearGradient>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#315f8a"/>
     </marker>
     <marker id="arrow-green" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
       <path d="M 0 0 L 12 6 L 0 12 z" fill="#2f855a"/>
     </marker>
+    <marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#c46a1c"/>
+    </marker>
   </defs>
-  <rect x="20" y="28" width="760" height="595" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
-  <rect x="820" y="28" width="760" height="595" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
-  <text x="400" y="68" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize Laptop side</text>
-  <text x="1200" y="68" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize Robot side</text>
-  <text x="800" y="102" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\small Duckietown real-robot execution path</text>
-  <rect x="50" y="155" width="320" height="205" rx="18" fill="#eff6ff" stroke="#334155" stroke-width="3"/>
-  <text x="210" y="192" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize LEXIBROverTime.jl</text>
-  <text x="210" y="228" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny GameOfOrderedPreference /\\RecedingHorizonStrategy /\\solve\_receding\_horizon\_goop</text>
-  <rect x="410" y="155" width="330" height="205" rx="18" fill="#f0fdf4" stroke="#334155" stroke-width="3"/>
-  <text x="575" y="192" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize julia\_solver/server.jl</text>
-  <text x="575" y="228" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny TCP bridge:\\STEP x,y,vx,vy,theta -&gt;\\OK ax,ay</text>
-  <rect x="50" y="410" width="690" height="150" rx="18" fill="#fffbeb" stroke="#334155" stroke-width="3"/>
-  <text x="395" y="447" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize duckie\_manager.py</text>
-  <text x="395" y="482" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny reads RobotStateStamped, calls the Julia bridge\\once per dt, publishes Accel2DStamped\\or a fallback sequence</text>
-  <rect x="855" y="155" width="360" height="205" rx="18" fill="#fdf2f8" stroke="#334155" stroke-width="3"/>
-  <text x="1035" y="192" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize robot\_adapter\_node.py</text>
-  <text x="1035" y="228" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny $a_k$ to $v_{\mathrm{cmd}}, \omega_{\mathrm{cmd}}$\\with state, encoder feedback,\\and watchdog support</text>
-  <rect x="1255" y="155" width="285" height="205" rx="18" fill="#eef2ff" stroke="#334155" stroke-width="3"/>
-  <text x="1397.5" y="192" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\footnotesize Duckiebot</text>
-  <text x="1397.5" y="228" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny wheel motors, encoders,\\and physical motion</text>
-  <line x1="370" y1="258" x2="410" y2="258" stroke="#475569" stroke-width="3" marker-end="url(#arrow-green)"/>
-  <text x="390" y="234" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny solve</text>
-  <line x1="740" y1="258" x2="855" y2="258" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="798" y="234" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny STEP / OK</text>
-  <line x1="1215" y1="258" x2="1255" y2="258" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="1235" y="234" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny cmd</text>
-  <line x1="1397.5" y1="360" x2="1397.5" y2="410" stroke="#166534" stroke-width="3" marker-end="url(#arrow-green)"/>
-  <text x="1430" y="387" text-anchor="middle" fill="#166534" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny motion</text>
-  <line x1="1035" y1="360" x2="1035" y2="410" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="1070" y="386" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny state +\\encoders</text>
-  <line x1="740" y1="485" x2="855" y2="485" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="798" y="452" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny Accel2DStamped /\\RobotStateStamped</text>
-  <line x1="715" y1="485" x2="715" y2="258" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <line x1="855" y1="258" x2="855" y2="485" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <line x1="1255" y1="360" x2="1255" y2="485" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <line x1="1255" y1="485" x2="1170" y2="485" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
-  <text x="1212" y="515" text-anchor="middle" fill="#475569" font-size="13" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny wheel command\\feedback</text>
-  <text x="800" y="648" text-anchor="middle" fill="#0f172a" font-size="14" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="normal">\tiny The manager and adapter close the loop through ROS topics,\\while the solver side remains isolated in Julia.</text>
+
+  <rect x="35" y="70" width="700" height="610" rx="28" fill="url(#bg-left)" stroke="#cbd5e1" stroke-width="2.5"/>
+  <rect x="865" y="70" width="700" height="610" rx="28" fill="url(#bg-right)" stroke="#d6cfa5" stroke-width="2.5"/>
+
+  <text x="385" y="110" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\textbf{Laptop}</text>
+  <text x="1215" y="110" text-anchor="middle" fill="#0f172a" font-size="24" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\textbf{Duckietown}</text>
+
+  <g>
+    <rect x="92" y="160" width="166" height="110" rx="14" fill="#0f172a"/>
+    <rect x="106" y="174" width="138" height="82" rx="8" fill="#dbeafe"/>
+    <path d="M 120 228 C 136 205, 150 215, 164 198 C 176 184, 189 188, 202 204 C 214 219, 224 209, 232 192"
+          fill="none" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="135" cy="221" r="5" fill="#2563eb"/>
+    <circle cx="165" cy="199" r="5" fill="#2563eb"/>
+    <circle cx="201" cy="205" r="5" fill="#2563eb"/>
+    <path d="M 78 286 H 272 L 245 314 H 105 Z" fill="#94a3b8" stroke="#64748b" stroke-width="2"/>
+    <rect x="146" y="292" width="58" height="8" rx="4" fill="#e2e8f0"/>
+  </g>
+
+  <g>
+    <ellipse cx="1265" cy="260" rx="28" ry="28" fill="#1f2937"/>
+    <ellipse cx="1455" cy="260" rx="28" ry="28" fill="#1f2937"/>
+    <ellipse cx="1265" cy="260" rx="14" ry="14" fill="#94a3b8"/>
+    <ellipse cx="1455" cy="260" rx="14" ry="14" fill="#94a3b8"/>
+    <rect x="1230" y="198" width="260" height="68" rx="28" fill="#facc15" stroke="#b45309" stroke-width="4"/>
+    <rect x="1275" y="170" width="135" height="44" rx="16" fill="#fff7ed" stroke="#b45309" stroke-width="4"/>
+    <rect x="1330" y="138" width="26" height="40" rx="8" fill="#1f2937"/>
+    <rect x="1320" y="126" width="46" height="18" rx="8" fill="#0f172a"/>
+    <circle cx="1343" cy="135" r="5" fill="#f8fafc"/>
+    <path d="M 1490 225 L 1528 212 L 1528 252 L 1490 244 Z" fill="#fbbf24" stroke="#b45309" stroke-width="4"/>
+    <rect x="1270" y="214" width="52" height="24" rx="10" fill="#fff7ed"/>
+    <rect x="1340" y="214" width="52" height="24" rx="10" fill="#fff7ed"/>
+  </g>
+
+  <rect x="305" y="165" width="345" height="122" rx="22" fill="#e0f2fe" stroke="#315f8a" stroke-width="3"/>
+  <text x="477.5" y="200" text-anchor="middle" fill="#0f172a" font-size="22" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\textbf{Game solver}</text>
+  <text x="477.5" y="238" text-anchor="middle" fill="#0f172a" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">$\pi_{\mathrm{rh}} : \mathbf{x}_k \mapsto \mathbf{a}_k^\star$</text>
+
+  <rect x="210" y="362" width="445" height="125" rx="22" fill="#fef3c7" stroke="#8b6b2f" stroke-width="3"/>
+  <text x="432.5" y="398" text-anchor="middle" fill="#0f172a" font-size="22" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\textbf{Runtime loop}</text>
+  <text x="432.5" y="435" text-anchor="middle" fill="#0f172a" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">every $\Delta t$</text>
+
+  <rect x="78" y="405" width="96" height="72" rx="18" fill="#ffedd5" stroke="#c46a1c" stroke-width="3"/>
+  <text x="126" y="433" text-anchor="middle" fill="#9a3412" font-size="18" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\textbf{safe}</text>
+  <text x="126" y="460" text-anchor="middle" fill="#9a3412" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">$0$</text>
+
+  <rect x="945" y="215" width="292" height="126" rx="22" fill="#dcfce7" stroke="#2f855a" stroke-width="3"/>
+  <text x="1091" y="250" text-anchor="middle" fill="#0f172a" font-size="22" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\textbf{Adapter}</text>
+  <text x="1091" y="286" text-anchor="middle" fill="#0f172a" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">$\mathbf{a}_k \mapsto u_k$</text>
+  <text x="1091" y="312" text-anchor="middle" fill="#0f172a" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">$u_k = (v_k,\omega_k)$</text>
+
+  <rect x="1270" y="366" width="210" height="96" rx="22" fill="#fee2e2" stroke="#be123c" stroke-width="3"/>
+  <text x="1375" y="399" text-anchor="middle" fill="#0f172a" font-size="20" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\textbf{watchdog}</text>
+  <text x="1375" y="431" text-anchor="middle" fill="#0f172a" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">timeout $\Rightarrow 0$</text>
+
+  <rect x="940" y="498" width="352" height="110" rx="22" fill="#ede9fe" stroke="#6d28d9" stroke-width="3"/>
+  <text x="1116" y="533" text-anchor="middle" fill="#0f172a" font-size="22" font-family="DejaVu Sans, Liberation Sans, sans-serif" font-weight="bold">\textbf{State estimate}</text>
+  <text x="1116" y="571" text-anchor="middle" fill="#0f172a" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">$\mathbf{x}_k = (x,y,v_x,v_y,\theta)$</text>
+
+  <path d="M 432 362 L 432 287" fill="none" stroke="#315f8a" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow-blue)"/>
+  <text x="406" y="320" text-anchor="end" fill="#315f8a" font-size="17" font-family="DejaVu Sans, Liberation Sans, sans-serif">$\mathbf{x}_k$</text>
+
+  <path d="M 525 287 L 525 362" fill="none" stroke="#2f855a" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow-green)"/>
+  <text x="553" y="330" text-anchor="start" fill="#2f855a" font-size="17" font-family="DejaVu Sans, Liberation Sans, sans-serif">$\mathbf{a}_k^\star$</text>
+
+  <path d="M 655 425 L 945 425" fill="none" stroke="#2f855a" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow-green)"/>
+  <text x="800" y="402" text-anchor="middle" fill="#2f855a" font-size="18" font-family="DejaVu Sans, Liberation Sans, sans-serif">$\mathbf{a}_k^\star$</text>
+
+  <path d="M 940 553 L 655 553" fill="none" stroke="#315f8a" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow-blue)"/>
+  <text x="800" y="530" text-anchor="middle" fill="#315f8a" font-size="18" font-family="DejaVu Sans, Liberation Sans, sans-serif">$\mathbf{x}_k$</text>
+
+  <path d="M 1237 278 L 1320 278" fill="none" stroke="#2f855a" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow-green)"/>
+  <text x="1278" y="255" text-anchor="middle" fill="#2f855a" font-size="17" font-family="DejaVu Sans, Liberation Sans, sans-serif">$u_k$</text>
+
+  <path d="M 1376 462 L 1376 284" fill="none" stroke="#c46a1c" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 10" marker-end="url(#arrow-orange)"/>
+  <text x="1404" y="330" text-anchor="start" fill="#c46a1c" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">$0$</text>
+
+  <path d="M 1340 288 C 1330 410, 1230 470, 1178 498" fill="none" stroke="#315f8a" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow-blue)"/>
+  <text x="1288" y="450" text-anchor="middle" fill="#315f8a" font-size="17" font-family="DejaVu Sans, Liberation Sans, sans-serif">odom</text>
+
+  <path d="M 1116 498 L 1116 341" fill="none" stroke="#315f8a" stroke-width="6" stroke-linecap="round" marker-end="url(#arrow-blue)"/>
+  <text x="1144" y="415" text-anchor="start" fill="#315f8a" font-size="17" font-family="DejaVu Sans, Liberation Sans, sans-serif">feedback</text>
+
+  <path d="M 174 441 L 210 441" fill="none" stroke="#c46a1c" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 10" marker-end="url(#arrow-orange)"/>
+  <text x="192" y="418" text-anchor="middle" fill="#c46a1c" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">timeout</text>
+
+  <path d="M 220 618 C 420 676, 1180 676, 1385 618" fill="none" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="8 10"/>
+  <text x="802" y="704" text-anchor="middle" fill="#475569" font-size="16" font-family="DejaVu Sans, Liberation Sans, sans-serif">closed-loop execution</text>
 </svg>
