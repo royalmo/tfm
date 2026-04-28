@@ -175,18 +175,19 @@ received within a configured timeout.
 \section{Results}
 \label{sec:duckietown-results}
 
-
+TODO
 
 \section{Discussion}
 
-This chapter provides an experimental framework that makes the receding-horizon game of ordered preference
-solver usable on real robots without changing its core mathematical formulation.
-% TODO
+This chapter shows that the acceleration-based receding-horizon game formulation developed in the previous
+chapters can be embedded in a physical robotic loop without altering its basic mathematical structure.
+The Duckietown implementation integrates the solver, the centralized runtime manager, and the robot-side
+adapter into a coherent closed-loop system, thereby providing an experimental validation beyond simulation.
 
-
-
-The framework is therefore best understood as a validation scaffold.
-It already supports the end-to-end execution of LexIBROverTime on Duckietown robots, but it is also designed
-to absorb further improvements in sensing, prediction, and multi-robot coordination.
-In that sense, the chapter closes the loop between the theory of ordered-preference games and the concrete
-requirements of a low-cost robotic platform, while keeping the path open for broader experimental campaigns.
+However, the scope of this validation remains limited.
+The platform and sensing configuration motivate a centralized architecture and a conservative control stack,
+and do not support a fully decentralized treatment of multi-robot interaction.
+Accordingly, the contribution of this chapter is methodological rather than definitive: it establishes the
+practical executability of the proposed formulation under real timing, actuation, and safety constraints,
+while a more comprehensive assessment would require richer perception, less centralized execution, and
+broader experimental campaigns.

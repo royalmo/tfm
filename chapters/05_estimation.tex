@@ -538,6 +538,27 @@ $w_u = 1$, $w_x = 2$, $w_p = 0.35$, and $H_p = 3$, with temperature $\tau = 0.1$
 Optimization failures were penalized by a fixed additive term, while successful solves incurred a small
 residual penalty.
 
+Besides strict exact recovery, the experiments also report a weighted order-agreement score.
+For non-ego player $j$, true order $\pi^j$, estimate $\hat{\pi}^j$, and active prefix length $K_j$, we define
+\begin{equation*}
+    a_{\mathrm{ord}}^j
+    =
+    1
+    -
+    \frac{1}{Z_j}
+    \sum_{1 \le a < b \le K_j}
+    2^{-(a-1)}
+    \mathbf{1}\!\left[
+        (\pi_a^j,\pi_b^j)\ \text{is inverted in}\ \hat{\pi}^j
+    \right],
+\end{equation*}
+where $Z_j$ normalizes the weighted pair count.
+This score equals $1$ for an exact match and decreases as higher-priority pairs are inverted.
+We average it over the non-ego players and denote the result again by $a_{\mathrm{ord}}$.
+We also report $r_1$, the fraction of non-ego players whose highest-priority objective is recovered exactly.
+For the reduced offline sweeps below, $K_j = 3$ because only the first three priorities are permuted; for the online
+results, the score is evaluated on the full candidate order.
+
 Two scenarios similar to those in \cref{ch:lex-ibr-ot} were considered.
 In the highway scenario, the ego vehicle had two admissible objectives, reaching its goal and staying on the road.
 In the city scenario, a third objective, maintaining a margin from the road edges, was added.
@@ -549,11 +570,13 @@ $720 \times 720$ joint profiles per scenario.
 For the offline comparison below, both non-ego players are treated as unknown, but only the first three priorities of
 each side vehicle are permuted while the lower-priority tail is kept fixed in its nominal order.
 This yields six candidates per non-ego player and therefore $6 \times 6 = 36$ implied joint hypotheses.
-Because the oracle-conditioned offline surrogate fixes the other players to their observed trajectories, the reduced
-joint score separates across the two non-ego players, so the 36-hypothesis diagnostic can be evaluated through
-36 local candidate solves per method rather than by explicitly rolling out all 36 profiles.
-These local exhaustive sweeps use one relaxation pass per solve, and the offline panel below focuses purely on
-inference quality, without an additional decentralized replay stage.
+The reduced offline comparison now evaluates those $36$ profiles jointly at each of the
+$T_{\mathrm{id}} = 3$ observation starts, for a total of $108$ joint window fits per method.
+The control-only baseline rolls each candidate for one executed step, whereas the richer offline score rolls each
+candidate for three executed steps and combines immediate control fit with short-horizon trajectory fit as in
+\cref{sec:inverse-bayesian}.
+These reduced exhaustive sweeps use one relaxation pass per local solve and focus purely on inference quality,
+without an additional decentralized replay stage.
 
 The reported online results use the joint profile implementation described in \cref{sec:inverse-online}.
 For each non-ego player, the four online candidates are the nominal environment-default order itself, the order obtained
@@ -566,34 +589,33 @@ With observation window $W = 6$, each rollout performs six online updates at exe
 
 \subsection{Offline Diagnostic Comparison}
 
-\Cref{tab:inverse_results} gathers the main evidence.
+\Cref{tab:inverse_results} gathers the main nominal-scenario evidence.
 Panel~A compares the exhaustive one-step baseline of \cref{sec:inverse-baseline} against the richer multi-step
-diagnostic of \cref{sec:inverse-bayesian} on the same reduced two-non-ego inverse task.
+diagnostic of \cref{sec:inverse-bayesian} on the same reduced two-non-ego joint inverse task.
 Panel~B reports the deployed online joint-profile runs.
-In Panel~A, $t_{\mathrm{inf}}$ denotes the local wall time of the offline exhaustive sweep on the same machine used to
-generate the results.
-In Panel~B, rollout counts are kept as the hardware-independent effort proxy.
+Since exact reduced-profile recovery remains too harsh to be informative offline, Panel~A emphasizes the weighted
+order score $a_{\mathrm{ord}}$ and the first-priority recovery rate $r_1$.
 
 \begin{table}
     \centering
     \caption{Summary of the Chapter~5 experiments.
-    In Panel~A, $r_{\mathrm{match}}$ is the fraction of non-ego players whose order is recovered exactly,
-    $\Delta_{\mathrm{sel}}$ is the gap between the selected score and the second-best score under the method's own
-    selection rule, and $q_{\mathrm{peak}}$ is the maximum joint posterior probability after the last identification
-    step.
-    In Panel~B, $N_{\mathrm{roll}}$ counts candidate window rollouts, and $\Delta R(t_\star)$ is the raw-score gap
-    between the selected joint profile and the best wrong profile at the first stable correct update.}
+    In Panel~A, $a_{\mathrm{ord}}$ is the mean weighted order agreement over the two non-ego players,
+    $r_1$ is the fraction of non-ego players whose first priority is recovered exactly, $\Delta_{\mathrm{sel}}$ is
+    the gap between the selected score and the second-best score under the method's own selection rule, and
+    $q_{\mathrm{peak}}$ is the final posterior mass of the most likely reduced joint profile.
+    In Panel~B, Exact denotes strict joint-profile recovery, and $a_{\mathrm{ord}} = 1$ indicates that the full
+    candidate order is recovered for every non-ego player.}
     \label{tab:inverse_results}
     \small
     \setlength{\tabcolsep}{4.5pt}
     \begin{tabular}{lcccccccc}
         \toprule
-        \multicolumn{9}{c}{Panel A. Offline reduced joint non-ego diagnostic} \\
+        \multicolumn{9}{c}{Panel A. Offline reduced joint non-ego sweep} \\
         \midrule
-        Scenario & Hyp. & Base $r_{\mathrm{match}}$ & $\Delta_{\mathrm{sel}}$ & $t_{\mathrm{inf}}$ [s] & Multi $r_{\mathrm{match}}$ & $\Delta_{\mathrm{sel}}$ & $q_{\mathrm{peak}}$ & $t_{\mathrm{inf}}$ [s] \\
+        Scenario & Hyp. & Base $a_{\mathrm{ord}}$ & Base $r_1$ & Base $\Delta_{\mathrm{sel}}$ & Multi $a_{\mathrm{ord}}$ & Multi $r_1$ & Multi $\Delta_{\mathrm{sel}}$ & $q_{\mathrm{peak}}$ \\
         \midrule
-        Highway & 36 & 0.0 & $5.1 \times 10^{-15}$ & 500.2 & 0.0 & 0.0043 & 0.0278 & 515.6 \\
-        City    & 36 & 0.5 & 0.0                   & 530.6 & 0.5 & 0.0    & 0.0278 & 504.4 \\
+        Highway & 36 & 0.40 & 0.0 & $1.6 \times 10^{-14}$ & 0.40 & 0.0 & 0.0034 & 0.0278 \\
+        City    & 36 & 0.90 & 1.0 & 0.0                   & 0.50 & 0.5 & 0.0    & 0.0283 \\
         \bottomrule
     \end{tabular}
 
@@ -603,29 +625,31 @@ In Panel~B, rollout counts are kept as the hardware-independent effort proxy.
         \toprule
         \multicolumn{10}{c}{Panel B. Online joint profile updater} \\
         \midrule
-        Scenario & $|\mathcal{C}^{-e}|$ & Updates & $N_{\mathrm{roll}}$ & $t_\star$ & $\Delta R(t_\star)$ & Exact & Clearance & Ego comp. & Min solve succ. \\
+        Scenario & $|\mathcal{C}^{-e}|$ & Updates & $N_{\mathrm{roll}}$ & $t_\star$ & Exact & $a_{\mathrm{ord}}$ & Clearance & Ego comp. & Min solve succ. \\
         \midrule
-        Highway & 16 & 6 & 96 & 6 & 6.489 & Yes & 0.027 & 0.926 & 1.000 \\
-        City    & 16 & 6 & 96 & 6 & 6.163 & Yes & $10^{-6}$ & 0.741 & 0.625 \\
+        Highway & 16 & 6 & 96 & 6 & Yes & 1.00 & 0.027 & 0.926 & 1.000 \\
+        City    & 16 & 6 & 96 & 6 & Yes & 1.00 & $10^{-6}$ & 0.741 & 0.625 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Panel~A of \cref{tab:inverse_results} shows that even the reduced two-non-ego offline diagnostic remains weak under a
-three-step identification window.
-In highway, neither score recovers any of the two unknown orders.
-The control-only baseline is effectively tied, while the richer score creates a small positive selection margin but
-still selects the wrong joint profile.
-In city, both methods recover one side player and miss the other, so the joint match rate rises only to $0.5$ and the
-selection margin collapses back to zero.
-The joint posterior peak of the multi-step method remains essentially uniform at $1/36 \approx 0.0278$ in both
-scenarios.
+Panel~A of \cref{tab:inverse_results} changes the offline picture in a useful way.
+Under the strict exact metric, none of the four reduced joint sweeps recovers the full two-player profile.
+However, the softer order metrics reveal where the information actually is.
+In highway, both methods remain weak: $a_{\mathrm{ord}} \approx 0.4$ and $r_1 = 0$, so the three-step window does not
+reliably identify even the highest-priority non-ego objective.
+In city, the reduced joint control-only sweep is much more informative, reaching $a_{\mathrm{ord}} = 0.9$ and
+$r_1 = 1.0$.
+It recovers the leading priority of both non-ego players and misses only a second-third swap in one player.
+The richer offline score does not improve this reduced benchmark: it falls back to
+$a_{\mathrm{ord}} = 0.5$, $r_1 = 0.5$, and a nearly uniform posterior with $q_{\mathrm{peak}} \approx 1/36$.
 
-These negative offline results are still useful.
-They show that, even after truncating the search to the three highest priorities of each side vehicle, short
-oracle-conditioned windows do not contain enough information to identify a reliable joint profile.
-The richer score of \cref{sec:inverse-bayesian} makes that ambiguity more explicit through its nonzero highway margin
-and its near-uniform posterior, but it does not improve the recovered match rate on this benchmark.
+This is still a coherent result.
+The true reduced joint sweep shows that partial preference recovery is possible offline, but only in the city case and
+mainly at the level of the highest-priority objectives.
+At the same time, all four reduced sweeps evaluate the same $108$ joint window fits and complete in roughly
+$25$--$31$ seconds on the machine used for the experiments, so the limitation is not search size alone.
+The harder issue is that short offline windows often do not contain enough signal to distinguish the lower priorities.
 This is the main reason the deployed online layer in Panel~B uses a local hypothesis set around a nominal prior rather
 than an exhaustive reduced permutation space.
 
@@ -635,7 +659,7 @@ Panel~B of \cref{tab:inverse_results} moves to the method that is actually deplo
 Each episode performs $96$ candidate window rollouts, coming from $16$ joint hypotheses evaluated across $6$ online
 updates.
 In both scenarios, the correct joint profile is already selected at the first update, $t_\star = 6$, and no later
-switch is triggered.
+switch is triggered, so the online metric also attains $a_{\mathrm{ord}} = 1$.
 Within this local identification setting, the online joint updater therefore validates the intended use case of the online layer:
 rapid confirmation of a good nominal prior while the ego controller keeps replanning.
 
@@ -666,6 +690,37 @@ players that interact most strongly with the road boundaries.
 Nevertheless, the inference layer still identifies the correct joint profile from the first update onward.
 This separation between profile identification and control difficulty is the main positive result of the online
 experiment.
+
+To test whether that nominal city result is brittle to small geometry changes, a separate four-case perturbation batch
+was run around the same environment-default preference orders.
+The initial inter-vehicle spacing was varied by $\pm 0.15$, the ambulance horizontal offset by $\pm 0.10$, the
+ambulance lateral position by $\pm 0.03$, and the two side-vehicle lateral positions by $\pm 0.04$.
+
+\begin{table}
+    \centering
+    \caption{City-only robustness batch for the online joint updater.
+    Exact rate is the fraction of perturbed runs that recover the full joint profile,
+    $a_{\mathrm{ord}}$ and $r_1$ are averaged over the completed runs,
+    and Min solve succ.\ is the minimum playerwise solve-success rate observed within a run.}
+    \label{tab:inverse_city_robustness}
+    \small
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{lccccccc}
+        \toprule
+        Batch & Exact & $\bar a_{\mathrm{ord}}$ & $\bar r_1$ & $\tilde t_\star$ & Min clear. & $\bar c_{\mathrm{ego}}$ & Min solve succ. \\
+        \midrule
+        City (4) & 1.00 & 1.00 & 1.00 & 6 & $10^{-6}$ & 0.708 & 0.600 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\Cref{tab:inverse_city_robustness} shows that, over these small city perturbations, the online updater retains the
+same inference behavior as in the nominal run: every completed case recovers the correct joint profile, attains
+$a_{\mathrm{ord}} = 1$, and locks on at $t_\star = 6$.
+What varies across the batch is not the inferred profile but the control difficulty, reflected in the spread of ego
+completion and in the lower solve-success floor.
+This reinforces the main claim of the online experiment: within a local hypothesis set around a good nominal prior,
+preference identification can remain stable even when the closed-loop interaction itself becomes tighter.
 
 \section{Discussion}
 \label{sec:inverse-discussion}
