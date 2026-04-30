@@ -600,11 +600,11 @@ With observation window $W = 6$, each rollout performs six online updates at exe
 Additional robustness batches apply small perturbations to the longitudinal spacing, ambulance offset,
 and lateral starting positions.
 
-Two additional offline checks are also reported below.
-The first uses a longer identification window with $T_{\mathrm{id}} = 6$.
-The second perturbs the multi-step weights to
-$(w_x, w_p, \lambda) \in \{(1.5, 0.25, 0.60), (2.5, 0.45, 0.75)\}$,
-while $w_u = 1$, $H_p = 3$, and $\tau = 0.1$ remain fixed.
+% Two additional offline checks are also reported below.
+% The first uses a longer identification window with $T_{\mathrm{id}} = 6$.
+% The second perturbs the multi-step weights to
+% $(w_x, w_p, \lambda) \in \{(1.5, 0.25, 0.60), (2.5, 0.45, 0.75)\}$,
+% while $w_u = 1$, $H_p = 3$, and $\tau = 0.1$ remain fixed.
 
 \subsection{Offline Diagnostic Comparison}
 
@@ -629,7 +629,6 @@ weighted order score $a_{\mathrm{ord}}$ and the first-priority recovery rate $r_
     \caption{Offline reduced joint non-ego sweep on the nominal highway and city scenarios.}
     \label{tab:inverse_offline_metrics}
     \begin{tabular}{lcccc}
-        \toprule
         & \multicolumn{2}{c}{$a_{\mathrm{ord}}$} & \multicolumn{2}{c}{$r_1$} \\
         \cmidrule(lr){2-3} \cmidrule(lr){4-5}
         Scenario & Base & Multi & Base & Multi \\
@@ -678,26 +677,32 @@ Even a single first-priority swap in one non-ego player bends the predicted shor
 observed window enough to create a clear raw-score gap, and the later updates preserve that ordering even as the
 interaction approaches the feasibility boundary.
 
-\begin{center}
-    \captionsetup{type=figure}
-    \subcaptionbox{First update window on separated y-bands.\label{fig:program6_city_discrimination_a}}[0.485\linewidth]{%
+\begin{figure}[!t]
+    \centering
+    \begin{subfigure}[t]{0.485\linewidth}
         \centering
-        \input{figures/inverse_goop/program6_city_discrimination_left_tikz.tex}%
-    }\hfill
-    \subcaptionbox{Candidate mismatch score over later windows.\label{fig:program6_city_discrimination_b}}[0.485\linewidth]{%
+        \input{figures/inverse_goop/program6_city_discrimination_left_tikz.tex}
+        \caption{First update window on separated y-bands.}
+        \label{fig:program6_city_discrimination_a}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.485\linewidth}
         \centering
-        \input{figures/inverse_goop/program6_city_discrimination_right_tikz.tex}%
-    }
-    \captionof{figure}{City-scenario mechanism of the online score.
+        \input{figures/inverse_goop/program6_city_discrimination_right_tikz.tex}
+        \caption{Candidate mismatch score over later windows.}
+        \label{fig:program6_city_discrimination_b}
+    \end{subfigure}
+    \caption{City-scenario mechanism of the online score.
     (\subref{fig:program6_city_discrimination_a}) shows the first update window with both side players on separated y-bands.
     (\subref{fig:program6_city_discrimination_b}) shows the corresponding candidate mismatch scores over later windows, where lower is better within each update.
     The selected profile remains below the two single-swap perturbations from the first update onward.}
     \label{fig:program6_city_discrimination}
-\end{center}
+\end{figure}
 
-Nevertheless, the inference layer still identifies the correct joint profile from the first update onward.
-This separation between profile identification and control difficulty is the main positive result of the online
-experiment.
+Even in the tighter city interaction, the inference layer still identifies the correct joint profile from the first
+update onward.
+The main positive result of the online experiment is that identifying the correct preference profile and solving the
+resulting closed-loop control problem are not the same issue: the updater can select the right non-ego order even when
+the interaction later becomes numerically tighter and the clearance margins deteriorate.
 
 The robustness batches retain the same inference behavior as the nominal runs.
 Across four perturbations per scenario, every run recovers the correct joint profile, attains $a_{\mathrm{ord}} = 1$,
@@ -708,7 +713,7 @@ City is much tighter: even though inference remains exact across the four pertur
 nominal clearance margin and the minimum solve-success floor drops to $0.600$.
 This sharpens the main claim of the online experiment:
 within a local hypothesis set around a good nominal prior, profile identification is robust to small geometric
-perturbations, but closed-loop safety margins in the tighter city interaction are not.
+perturbations, but closed-loop safety margins are not.
 
 \section{Discussion}
 \label{sec:inverse-discussion}
@@ -722,14 +727,30 @@ Taken together, the experiments support a narrow but meaningful conclusion:
 preference-order information can be recovered and used online, but only within the identifiability limits of the
 available observation window and candidate set.
 
-The same experiments also make those limits clear.
-Highway remains ambiguous offline even when the identification window is doubled from $T_{\mathrm{id}} = 3$ to
-$T_{\mathrm{id}} = 6$, and the nominal offline rankings do not change under nearby multi-step weights.
-The online method therefore earns its performance not from exhaustive discovery, but from local discrimination around a
-good prior.
-It also relies on a hand-designed finite candidate set rather than the full permutation space.
-Finally, the robustness batches show that correct local profile identification does not by itself guarantee comfortable
-closed-loop margins in the tighter city geometry.
+% The same experiments also make those limits clear.
+% Highway remains ambiguous offline even when the identification window is doubled from $T_{\mathrm{id}} = 3$ to
+% $T_{\mathrm{id}} = 6$, and the nominal offline rankings do not change under nearby multi-step weights.
+% The online method therefore earns its performance not from exhaustive discovery, but from local discrimination around a
+% good prior.
+% It also relies on a hand-designed finite candidate set rather than the full permutation space.
+% Finally, the robustness batches show that correct local profile identification does not by itself guarantee comfortable
+% closed-loop margins in the tighter city geometry.
+
+This offline ambiguity is consistent with the structure of ordered preferences. To identify an order from observations,
+it is not enough to watch a player while only its highest-priority objective is active. Informative evidence appears
+only when the interaction forces a trade-off and lower-priority objectives start to affect the motion. If a vehicle is
+still moving in a regime where several preference orders produce the same locally optimal behavior, then those orders
+remain observationally indistinguishable. In the present benchmarks, this is exactly what can happen in the early time
+steps: before the interaction becomes constraining, one cannot reliably tell whether a side vehicle is following the
+highway or city ordering from its trajectory alone.
+
+The online result is therefore easier to understand as a local discrimination problem than as unconstrained preference
+discovery. Its success depends not only on the windowed score, but also on the quality of the finite candidate set that
+is presented to the updater. In the experiments of \cref{sec:inverse-online}, that set is built around a good nominal
+order and a few nearby reorderings, so the method only needs to reject plausible local alternatives. If the true order
+were absent from that set, or if the nominal prior were poor, the updater could still rank the available candidates
+consistently and yet converge to the wrong profile. The online estimator is therefore robust within its local
+hypothesis set, but it is not a substitute for exhaustive search over the full permutation space.
 
 Even with those limitations, the chapter demonstrates that inverse games of ordered preference can recover meaningful
 preference-order information and use it to support decentralized interaction when ordered objectives are not known
