@@ -1,0 +1,57 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        width=0.95\linewidth,
+        height=0.30\textheight,
+        xmin=6, xmax=36,
+        xtick={6,12,18,24,30,36},
+        xlabel={update step $t$},
+        ylabel={raw score $R_m(\mathbf{c}^{-e})$},
+        title style={font=\sffamily\small\bfseries},
+        label style={font=\sffamily\small},
+        tick label style={font=\sffamily\scriptsize, text=black!75},
+        legend style={
+            font=\sffamily\tiny,
+            at={(0.03,0.97)},
+            anchor=north west,
+            draw=black!8,
+            fill=white,
+            fill opacity=0.92,
+            text opacity=1,
+            rounded corners=2pt,
+            inner xsep=3pt,
+            inner ysep=2pt,
+        },
+        axis line style={draw=black!35},
+        tick style={draw=black!35},
+        tick align=outside,
+        grid=major,
+        major grid style={draw=black!7, line width=0.25pt},
+        minor tick num=0,
+        every axis plot/.append style={line cap=round, line join=round},
+    ]
+        \addplot+[color=blue!70!black, line width=1.8pt, mark=square*, mark size=1.5pt,
+            mark options={fill=blue!70!black, draw=white, line width=0.25pt}] coordinates {
+            (6,0.20784977860647028) (12,0.1326907971444671) (18,0.0005372709255536926)
+            (24,1.999999999999989) (30,12.0) (36,12.0)
+        };
+        \addlegendentry{selected}
+
+        \addplot+[color=teal!70!black, line width=1.2pt, opacity=0.9,
+            mark=triangle*, mark size=1.4pt,
+            mark options={fill=teal!70!black, draw=white, line width=0.25pt}] coordinates {
+            (6,6.370806884570914) (12,6.282279895985741) (18,6.257361224422809)
+            (24,8.475867682677512) (30,18.081762003414394) (36,18.0)
+        };
+        \addlegendentry{swap P2}
+
+        \addplot+[color=orange!85!red!70!black, line width=1.2pt, opacity=0.9,
+            mark=diamond*, mark size=1.3pt,
+            mark options={fill=orange!85!red!70!black, draw=white, line width=0.25pt}] coordinates {
+            (6,6.39775060677271) (12,6.132690797157411) (18,6.000537270925554)
+            (24,8.114680010107556) (30,12.0) (36,12.0)
+        };
+        \addlegendentry{swap P3}
+
+        \draw[densely dotted, black!28, line width=0.45pt] (axis cs:6,0) -- (axis cs:6,19);
+    \end{axis}
+\end{tikzpicture}
