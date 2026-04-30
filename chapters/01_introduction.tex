@@ -92,6 +92,9 @@ the lexicographic structure that is central to games of ordered
 preference. Human drivers do not communicate the relative priority they
 assign to progress, rule compliance, safety, or comfort, and inferring a
 goal is not the same as inferring how conflicting objectives are ordered.
+In addition, this inverse problem is constrained not only by computation
+but also by identifiability: short observation windows may fail to reveal
+an order if lower-priority objectives never become behaviorally active.
 If games of ordered preference are to be used in mixed environments with
 limited communication, agents must be able to infer the preference order
 of others from observations. This motivates the second line of work in
@@ -117,7 +120,7 @@ This goal is addressed through the following specific objectives:
 
 \begin{enumerate}
     \item To improve the computational tractability of solving games of ordered preference in receding-horizon settings through efficient approximate methods.
-    \item To investigate the inverse problem of games of ordered preference and methods for estimating the preference order of other agents from observations.
+    \item To investigate the inverse problem of games of ordered preference, including methods and identifiability limits for estimating the preference order of other agents from observations.
     \item To assess the practical relevance of the proposed methods through simulation and experiments on a physical robotic platform.
 \end{enumerate}
 
@@ -125,7 +128,7 @@ To achieve these objectives, this thesis makes the following contributions:
 
 \begin{enumerate}
     \item It develops lexicographic IBR over time as an approximate solution method for receding-horizon games of ordered preference.
-    \item It formulates the inverse problem of games of ordered preference and studies methods for estimating the preference order of other agents from observations.
+    \item It formulates the inverse problem of games of ordered preference and studies initial offline and online methods for estimating the preference order of other agents from observations.
     \item It evaluates the proposed methods in simulated traffic scenarios and in Duckietown experiments with small-scale robots.
 \end{enumerate}
 
@@ -138,7 +141,7 @@ computation, estimation, and experimental validation.
     \item In \cref{ch:background}, we review the literature on prioritized metrics, game-theoretic planning, inverse games, and sim-to-real experimentation.
     \item In \cref{ch:goop}, we formalize games of ordered preference and introduce the notation and optimization structure used throughout the thesis.
     \item In \cref{ch:lex-ibr-ot}, we formulate games of ordered preference in receding horizon and present lexicographic IBR over time as an efficient approximate solution method.
-    \item In \cref{ch:estimation}, we study the inverse problem and develop methods for estimating preference orders from observations of other agents.
+    \item In \cref{ch:estimation}, we study the inverse problem, develop initial methods for estimating preference orders from observations of other agents, and analyze their limitations.
     \item In \cref{ch:duckietown}, we describe the Duckietown platform and the experimental setting used to evaluate the proposed methods in a physical environment.
     \item In \cref{ch:conclusions}, we summarize the main findings of the thesis and discuss directions for future work.
 \end{itemize}

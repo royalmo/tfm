@@ -36,16 +36,21 @@ of preference-aware planning in interactive traffic scenarios.
 \textsc{preference order estimation} \quad
 The second contribution of the thesis concerns the inverse problem of
 games of ordered preference. Although this part remains less developed
-than the computational contribution, it identifies a fundamental
-limitation of the complete-information assumption commonly adopted in
-trajectory games. Realistic traffic scenarios do not provide direct access
-to the preference order of other agents. The work initiated in
-\cref{ch:estimation} therefore establishes preference-order estimation as
-an essential direction for extending games of ordered preference to mixed
-environments involving limited communication and human agents. In this
-sense, the thesis clarifies that efficient solution methods alone are not
-sufficient for practical deployment; they must be complemented by methods
-capable of inferring how other agents rank their objectives.
+than the computational contribution, it goes beyond identifying a missing
+problem formulation. The experiments in \cref{ch:estimation} show that
+exact offline recovery is difficult under short observation windows,
+mainly because lower-priority objectives may never become active strongly
+enough to reveal the underlying order. In that sense, the main bottleneck
+of the offline study is not merely the size of the search space, but the
+limited identifying signal available in the observed interaction. At the
+same time, the chapter also shows a more positive result: when the true
+profile belongs to a small candidate set around a good nominal prior, the
+online updater can identify the correct joint non-ego order from the
+first update onward, even in the tighter city scenario. This clarifies
+that efficient solution methods alone are not sufficient for practical
+deployment, but also that preference-order inference can still be useful
+when it is posed as local discrimination rather than unconstrained
+discovery.
 
 \smallskip \noindent
 \textsc{experimental validation} \quad
@@ -68,7 +73,10 @@ made considerably more practical through receding-horizon approximations.
 At the same time, the thesis also shows that further progress in
 preference estimation and experimental validation is needed if the
 framework is to become fully useful in realistic autonomous-driving
-settings.
+settings. In particular, the estimation results suggest that practical
+success depends both on the richness of the observation window and on the
+quality of the candidate set against which alternative preference orders
+are tested.
 
 \section{Future work}
 
@@ -97,8 +105,11 @@ nonlinear settings.
 \smallskip \noindent
 \textsc{preference order estimation} \quad
 Future work should also continue the development of inverse games of
-ordered preference. This includes completing the estimation methodology,
-comparing alternative inference strategies, and studying how partial
+ordered preference. This includes improving how candidate preference
+orders are generated, extending the online method beyond local
+discrimination around a nominal prior, and studying how longer or more
+informative observation windows affect identifiability. It also includes
+comparing alternative inference strategies and analyzing how partial
 observability, model mismatch, and limited sensing affect the recovery of
 other agents' preference orders. Since this part of the thesis remains at
 an initial stage, it offers considerable room for methodological

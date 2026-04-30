@@ -98,7 +98,14 @@ invers d'estimar l'ordre de preferències d'altres agents a partir
 d'observacions. A diferència de treballs previs que poden inferir
 posicions objectiu o funcions objectiu latents, aquesta tesi se centra en
 estimar l'ordre de preferències mateix, que és l'element definitori dels
-jocs de preferència ordenada. Finalment,
+jocs de preferència ordenada, i avalua mètodes inicials \emph{offline} i
+\emph{online}.
+%Els experiments mostren que la recuperació exhaustiva
+%\emph{offline} està fortament limitada pel poder identificador de
+%finestres curtes d'observació, mentre que un actualitzador \emph{online}
+%pot discriminar correctament dins d'un petit conjunt local de candidats
+%plausibles.
+Finalment, es
 presenta Duckietown com a plataforma experimental de baix cost per
 avançar cap a una validació física dels mètodes proposats sota soroll de
 mesura, errors d'actuació i altres imperfeccions del món real.
@@ -107,8 +114,10 @@ En conjunt, els resultats mostren que els jocs de preferència ordenada
 constitueixen un marc prometedor per modelar la presa de decisions
 interactiva amb objectius jerarquitzats, i que les aproximacions en
 horitzó lliscant poden fer-lo considerablement més tractable. Alhora, la
-tesi identifica l'estimació de preferències i una validació \emph{sim-to-real}
-més àmplia com a línies essencials de treball futur.
+tesi mostra que l'estimació pràctica de preferències depèn tant de la
+riquesa observacional com de la qualitat del conjunt de candidats, i
+identifica una validació \emph{sim-to-real} més àmplia com una línia
+essencial de treball futur.
 \end{resum}
 
 \begin{abstract}
@@ -132,7 +141,13 @@ Second, it formulates the inverse problem of estimating the preference
 order of other agents from observations. Whereas prior inverse-game
 methods can recover latent goals or objective functions, this thesis
 targets the ordering of objectives itself, which is the defining
-information in games of ordered preference. Third, it introduces
+information in games of ordered preference, and evaluates initial offline
+and online estimators.
+% The experiments show that exhaustive offline
+% recovery is strongly limited by the identifying content of short
+% observation windows, whereas an online updater can still discriminate
+% correctly among a small local set of plausible candidates.
+Third, it introduces
 Duckietown as a low-cost robotic platform for moving towards experimental
 validation under sensing noise, actuation errors, and other real-world
 imperfections.
@@ -140,9 +155,10 @@ imperfections.
 Taken together, the thesis shows that games of ordered preference provide
 a promising framework for modelling interactive decision making with
 prioritized objectives, and that receding-horizon approximations can make
-their use considerably more tractable. At the same time, it identifies
-preference-order estimation and broader sim-to-real validation as
-essential directions for future work.
+their use considerably more tractable. At the same time, it shows that
+practical preference-order estimation depends on both observation richness
+and candidate quality, and identifies broader sim-to-real validation as
+an essential direction for future work.
 \end{abstract}
 
 \begin{document}
