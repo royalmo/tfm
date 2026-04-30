@@ -608,49 +608,39 @@ while $w_u = 1$, $H_p = 3$, and $\tau = 0.1$ remain fixed.
 
 \subsection{Offline Diagnostic Comparison}
 
-\Cref{tab:inverse_results} collects the main nominal-scenario evidence.
-Panel~A compares the exhaustive one-step baseline of \cref{sec:inverse-baseline} against the richer multi-step
+\Cref{tab:inverse_offline_metrics} summarizes the nominal offline comparison.
+It places the exhaustive one-step baseline of \cref{sec:inverse-baseline} and the richer multi-step
 diagnostic of \cref{sec:inverse-bayesian} on the same reduced two-non-ego joint inverse task.
-Panel~B reports the closed-loop runs of the online updater.
-Because strict reduced-profile recovery is too coarse to be informative offline, Panel~A is interpreted mainly through
-the weighted order score $a_{\mathrm{ord}}$ and the first-priority recovery rate $r_1$.
+Because strict reduced-profile recovery is too coarse to be informative offline, the comparison is carried by the
+weighted order score $a_{\mathrm{ord}}$ and the first-priority recovery rate $r_1$.
 
-\begin{table}
+% \begin{figure}[t]
+%     \centering
+%     \input{figures/inverse_goop/offline_metrics_tikz.tex}
+%     \caption{Offline reduced joint non-ego sweep on the nominal highway and city scenarios.
+%     The one-step baseline and the richer multi-step score are compared through
+%     (\subref{fig:inverse_offline_metrics_a}) the weighted order-agreement score $a_{\mathrm{ord}}$ and
+%     (\subref{fig:inverse_offline_metrics_b}) the first-priority recovery rate $r_1$.}
+%     \label{fig:inverse_offline_metrics}
+% \end{figure}
+
+\begin{table}[t]
     \centering
-    \caption{Summary of the Chapter~5 experiments.
-    In Panel~A, $a_{\mathrm{ord}}$ is the mean weighted order agreement over the two non-ego players and
-    $r_1$ is the fraction of non-ego players whose first priority is recovered exactly.
-    In Panel~B, Exact denotes strict joint-profile recovery, and $a_{\mathrm{ord}} = 1$ indicates that the full
-    candidate order is recovered for every non-ego player.}
-    \label{tab:inverse_results}
-    \small
-    \setlength{\tabcolsep}{5pt}
+    \caption{Offline reduced joint non-ego sweep on the nominal highway and city scenarios.}
+    \label{tab:inverse_offline_metrics}
     \begin{tabular}{lcccc}
         \toprule
-        \multicolumn{5}{c}{Panel A. Offline reduced joint non-ego sweep} \\
+        & \multicolumn{2}{c}{$a_{\mathrm{ord}}$} & \multicolumn{2}{c}{$r_1$} \\
+        \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+        Scenario & Base & Multi & Base & Multi \\
         \midrule
-        Scenario & Base $a_{\mathrm{ord}}$ & Base $r_1$ & Multi $a_{\mathrm{ord}}$ & Multi $r_1$ \\
-        \midrule
-        Highway & 0.40 & 0.0 & 0.40 & 0.0 \\
-        City    & 0.90 & 1.0 & 0.50 & 0.5 \\
-        \bottomrule
-    \end{tabular}
-
-    \vspace{0.6em}
-
-    \begin{tabular}{lcccccc}
-        \toprule
-        \multicolumn{7}{c}{Panel B. Online joint profile updater} \\
-        \midrule
-        Scenario & $t_\star$ & Exact & $a_{\mathrm{ord}}$ & Clearance & Ego comp. & Min solve succ. \\
-        \midrule
-        Highway & 6 & Yes & 1.00 & 0.027 & 0.926 & 1.000 \\
-        City    & 6 & Yes & 1.00 & $10^{-6}$ & 0.741 & 0.625 \\
+        Highway & 0.4 & 0.4 & 0.0 & 0.0 \\
+        City    & 0.9 & 0.5 & 1.0 & 0.5 \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Panel~A shows that exact reduced-profile recovery is too harsh to summarize the offline behavior on its own.
+Exact reduced-profile recovery is too harsh to summarize the offline behavior on its own.
 Under that metric, none of the four reduced joint sweeps recovers the full two-player profile.
 The useful distinction is therefore between partial recovery and misleadingly stable errors.
 In highway, both offline methods remain weak: they end at $a_{\mathrm{ord}} = 0.4$ and $r_1 = 0$, so the short window
@@ -671,11 +661,17 @@ short windows.
 
 \subsection{Online Joint Inference and Control}
 
-Panel~B addresses the deployment question.
+The nominal online runs address the deployment question.
 In both scenarios, the correct joint profile is already selected at the first update, $t_\star = 6$, and no later
-switch is triggered, so the online metric also attains $a_{\mathrm{ord}} = 1$.
+switch is triggered, so the online metric attains $a_{\mathrm{ord}} = 1$ in both cases.
 Within this local identification setting, the online updater does what it is meant to do:
 it rapidly confirms a good nominal prior while the ego controller keeps replanning.
+
+The two nominal scenarios should still be interpreted differently.
+Highway remains comfortably feasible, with clearance $0.027$, ego completion $0.926$, and minimum playerwise
+solve-success rate $1.000$.
+City remains near the clearance boundary, with clearance $10^{-6}$, ego completion $0.741$, and minimum
+solve-success rate $0.625$.
 
 \Cref{fig:program6_city_discrimination} explains why the city case locks onto the correct profile immediately.
 Even a single first-priority swap in one non-ego player bends the predicted short-horizon trajectory away from the
@@ -699,39 +695,17 @@ interaction approaches the feasibility boundary.
     \label{fig:program6_city_discrimination}
 \end{center}
 
-The highway and city runs should still be interpreted differently.
-Highway remains comfortably feasible throughout, whereas city operates near the clearance boundary and shows the lower
-solve-success floor reported in Panel~B.
 Nevertheless, the inference layer still identifies the correct joint profile from the first update onward.
 This separation between profile identification and control difficulty is the main positive result of the online
 experiment.
 
-\begin{table}
-    \centering
-    \caption{Small perturbation robustness batches for the online joint updater.
-    Exact rate is the fraction of perturbed runs that recover the full joint profile,
-    $a_{\mathrm{ord}}$ is averaged over the batch,
-    Worst clear.\ is the smallest minimum-clearance value observed in any run, and
-    Min solve succ.\ is the smallest playerwise solve-success rate observed in any run.}
-    \label{tab:inverse_online_robustness}
-    \small
-    \setlength{\tabcolsep}{4pt}
-    \begin{tabular}{lccccc}
-        \toprule
-        Batch & Exact & $\bar a_{\mathrm{ord}}$ & $\tilde t_\star$ & Worst clear. & Min solve succ. \\
-        \midrule
-        Highway (4) & 1.00 & 1.00 & 6 & 0.025 & 1.000 \\
-        City (4)    & 1.00 & 1.00 & 6 & $-0.018$ & 0.600 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\Cref{tab:inverse_online_robustness} shows that both perturbation batches retain the same inference behavior as the
-nominal runs: every case recovers the correct joint profile, attains $a_{\mathrm{ord}} = 1$, and locks on at
-$t_\star = 6$.
+The robustness batches retain the same inference behavior as the nominal runs.
+Across four perturbations per scenario, every run recovers the correct joint profile, attains $a_{\mathrm{ord}} = 1$,
+and locks on at $t_\star = 6$.
 What changes is again the control difficulty.
-Highway remains comfortably feasible, whereas city is much tighter: even though inference remains exact across the four
-perturbations, the worst run crosses the nominal clearance margin and the minimum solve-success floor again drops.
+Highway remains comfortably feasible, with worst clearance $0.025$ and minimum solve-success rate $1.000$.
+City is much tighter: even though inference remains exact across the four perturbations, the worst run crosses the
+nominal clearance margin and the minimum solve-success floor drops to $0.600$.
 This sharpens the main claim of the online experiment:
 within a local hypothesis set around a good nominal prior, profile identification is robust to small geometric
 perturbations, but closed-loop safety margins in the tighter city interaction are not.
