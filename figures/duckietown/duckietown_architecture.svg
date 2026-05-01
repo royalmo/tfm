@@ -22,74 +22,34 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="0.691875"
-     inkscape:cx="951.03884"
-     inkscape:cy="292.68293"
+     inkscape:zoom="1.38375"
+     inkscape:cx="1025.4743"
+     inkscape:cy="504.06504"
      inkscape:window-width="1854"
      inkscape:window-height="1011"
      inkscape:window-x="66"
      inkscape:window-y="32"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg907" />
+     inkscape:current-layer="layer4-1" />
   <defs
      id="defs763">
     <marker
        style="overflow:visible"
-       id="marker6900"
+       id="Arrow3"
        refX="0"
        refY="0"
        orient="auto-start-reverse"
-       inkscape:stockid="Arrow1"
-       markerWidth="4.0606604"
-       markerHeight="6.7071066"
-       viewBox="0 0 4.0606602 6.7071068"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
        inkscape:isstock="true"
        inkscape:collect="always"
        preserveAspectRatio="xMidYMid">
       <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:butt"
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
          d="M 3,-3 0,0 3,3"
-         id="path6898"
-         transform="rotate(180,0.125,0)"
-         sodipodi:nodetypes="ccc" />
-    </marker>
-    <marker
-       style="overflow:visible"
-       id="marker6670"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Arrow1"
-       markerWidth="4.0606599"
-       markerHeight="6.7071066"
-       viewBox="0 0 4.0606602 6.7071068"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:butt"
-         d="M 3,-3 0,0 3,3"
-         id="path6668"
-         transform="rotate(180,0.125,0)"
-         sodipodi:nodetypes="ccc" />
-    </marker>
-    <marker
-       style="overflow:visible"
-       id="Arrow1"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Arrow1"
-       markerWidth="4.0606604"
-       markerHeight="6.7071066"
-       viewBox="0 0 4.0606602 6.7071068"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:butt"
-         d="M 3,-3 0,0 3,3"
-         id="path5057"
+         id="arrow3"
          transform="rotate(180,0.125,0)"
          sodipodi:nodetypes="ccc" />
     </marker>
@@ -165,218 +125,939 @@
         letter-spacing: 0;
       }
     </style>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-1"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-0"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-3"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-2"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-1-0"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-0-6"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-3-4"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-2-4"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-1-0-3"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-0-6-0"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-7"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-27"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-7-4"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-27-9"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-7-9"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-27-1"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-7-1"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-27-5"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-7-4-9"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-27-9-7"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-7-4-9-3"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-27-9-7-9"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-7-1-4"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="7"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-27-5-8"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow3-7-1-0"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Arrow3"
+       markerWidth="4.2071066"
+       markerHeight="6.9999995"
+       viewBox="0 0 4.2071068 7"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
+         d="M 3,-3 0,0 3,3"
+         id="arrow3-27-5-9"
+         transform="rotate(180,0.125,0)"
+         sodipodi:nodetypes="ccc" />
+    </marker>
   </defs>
-  <rect
-     x="29.598196"
-     y="28.508083"
-     width="1539.0806"
-     height="380.83875"
-     rx="32.515785"
-     fill="#f6f8ff"
-     stroke="#d9e2ff"
-     stroke-width="3.3451"
-     id="rect765" />
-  <rect
-     x="220"
-     y="152"
-     width="224"
-     height="112"
-     rx="24"
-     fill="#ffffff"
-     stroke="#dbe4ff"
-     stroke-width="2.4"
-     id="rect769" />
-  <rect
-     x="518"
-     y="152"
-     width="224"
-     height="112"
-     rx="24"
-     fill="#ffffff"
-     stroke="#e7e5ff"
-     stroke-width="2.4"
-     id="rect771" />
-  <rect
-     x="816"
-     y="152"
-     width="224"
-     height="112"
-     rx="24"
-     fill="#ffffff"
-     stroke="#d8eee7"
-     stroke-width="2.4"
-     id="rect773" />
-  <text
-     x="332"
-     y="195"
-     text-anchor="middle"
-     class="section"
-     id="text777">UI</text>
-  <text
-     x="630"
-     y="195"
-     text-anchor="middle"
-     class="section"
-     id="text781">MANAGER</text>
-  <text
-     x="928"
-     y="195"
-     text-anchor="middle"
-     class="section"
-     id="text785">LexIBROverTime.jl</text>
-  <image
-     x="14.406064"
-     y="326.44647"
-     width="125.69061"
-     height="125.69061"
-     xlink:href="laptop.svg"
-     preserveAspectRatio="xMidYMid"
-     id="image789" />
-  <text
-     x="449.35031"
-     y="161.68802"
-     class="word"
-     id="text791">START</text>
-  <path
-     d="M 446 186 L 506 186"
-     fill="none"
-     stroke="#7290e7"
-     stroke-width="5.4"
-     stroke-linecap="round"
-     marker-end="url(#arrow-blue)"
-     id="path795" />
-  <path
-     d="M 744 186 L 804 186"
-     fill="none"
-     stroke="#7290e7"
-     stroke-width="5.4"
-     stroke-linecap="round"
-     marker-end="url(#arrow-blue)"
-     id="path799" />
-  <path
-     d="M 804 230 L 744 230"
-     fill="none"
-     stroke="#58b59a"
-     stroke-width="5.4"
-     stroke-linecap="round"
-     marker-end="url(#arrow-green)"
-     id="path801" />
-  <text
-     x="774.81848"
-     y="211.69849"
-     text-anchor="middle"
-     class="tag"
-     id="text803">TCP</text>
-  <rect
-     x="35.085781"
-     y="520.72607"
-     width="440.138"
-     height="396.26276"
-     rx="32.776234"
-     fill="#fff8f3"
-     stroke="#f0ddd0"
-     stroke-width="3.56588"
-     id="rect805" />
-  <text
-     x="203.43781"
-     y="714.48297"
-     text-anchor="middle"
-     class="section"
-     id="text811">v^1_t,w1t</text>
-  <text
-     x="265.19211"
-     y="474.95187"
-     text-anchor="middle"
-     class="section"
-     id="text811-3"
-     style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;fill:#334155">ax^1_t,ay1t</text>
-  <text
-     x="775.92932"
-     y="251.58319"
-     text-anchor="middle"
-     class="section"
-     id="text811-3-3"
-     style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;fill:#334155">u_t =ax_t,ayt</text>
-  <text
-     x="415.7287"
-     y="444.19101"
-     text-anchor="middle"
-     class="section"
-     id="text811-3-6"
-     style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;fill:#334155">TCP</text>
-  <text
-     x="347.68817"
-     y="714.12134"
-     text-anchor="middle"
-     class="section"
-     id="text811-2"
-     style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;fill:#334155">x^1_t</text>
-  <text
-     x="279.60596"
-     y="681.56531"
-     text-anchor="middle"
-     class="section"
-     id="text811-2-1"
-     style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;fill:#334155">ROS</text>
-  <text
-     x="422.32224"
-     y="474.09628"
-     text-anchor="middle"
-     class="section"
-     id="text811-2-7"
-     style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;fill:#334155">x^1_t</text>
-  <text
-     x="776.28241"
-     y="165.67798"
-     text-anchor="middle"
-     class="section"
-     id="text811-2-7-1"
-     style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;fill:#334155">x_t</text>
-  <image
-     x="-56.72345"
-     y="797.63367"
-     width="152"
-     height="156.36887"
-     xlink:href="robot.png"
-     preserveAspectRatio="xMidYMid"
-     transform="rotate(-4)"
-     id="image817" />
-  <text
-     xml:space="preserve"
-     style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
-     x="86.952087"
-     y="804.25"
-     id="text1966"><tspan
-       sodipodi:role="line"
-       id="tspan1964"
-       x="86.952087"
-       y="804.25"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';stroke:none">robot control</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
-     x="153.85205"
-     y="622.30554"
-     id="text1966-8"><tspan
-       sodipodi:role="line"
-       id="tspan1964-9"
-       x="153.85205"
-       y="622.30554"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';stroke:none">adapter</tspan></text>
-  <path
-     style="fill:#0b1b2b;stroke:#040201;stroke-width:1.708;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44495399, 1.44495399;stroke-opacity:1;stroke-dashoffset:0;marker-end:url(#Arrow1)"
-     d="m 222.62158,644.93605 -0.68216,103.48643"
-     id="path6135" />
-  <path
-     style="fill:#0b1b2b;stroke:#040201;stroke-width:1.708;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44495, 1.44495;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6670)"
-     d="M 342.02348,750.68364 341.46544,640.67881"
-     id="path6642" />
-  <path
-     style="fill:#0b1b2b;stroke:#040201;stroke-width:1.708;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44495, 1.44495;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#marker6670)"
-     d="M 221.79539,555.34164 531.90303,288.13104"
-     id="path6768" />
-  <path
-     style="fill:#0b1b2b;stroke:#040201;stroke-width:1.708;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44495, 1.44495;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6900)"
-     d="M 363.49009,563.75193 605.04935,293.20097"
-     id="path6866" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Robot 1"
+     style="display:inline"
+     transform="translate(0,7.859855)"
+     sodipodi:insensitive="true">
+    <rect
+       x="35.085781"
+       y="520.72607"
+       width="440.138"
+       height="396.26276"
+       rx="32.776234"
+       fill="#fff8f3"
+       stroke="#f0ddd0"
+       stroke-width="3.56588"
+       id="rect805"
+       inkscape:label="background" />
+    <text
+       x="195.39342"
+       y="724.07471"
+       text-anchor="middle"
+       class="section"
+       id="text811"
+       inkscape:label="ControlIn">\small $\mathsf{u^1_t=(v^1_t,w^1_t)}$</text>
+    <text
+       x="360.55432"
+       y="724.16895"
+       text-anchor="middle"
+       class="section"
+       id="text811-2"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:start;text-anchor:start;fill:#334155"
+       inkscape:label="ControlOut">\small $\mathsf{\hat{x}^1_t}$</text>
+    <rect
+       x="86.163239"
+       y="771.05933"
+       width="337.98309"
+       height="111.45908"
+       rx="36.212475"
+       fill="#ffffff"
+       stroke="#dbe4ff"
+       stroke-width="2.94092"
+       id="rect769-8-4"
+       inkscape:label="controlRect"
+       style="stroke:#f0ddd0;stroke-width:2.941;stroke-dasharray:none;stroke-opacity:1" />
+    <image
+       x="-56.72345"
+       y="797.63367"
+       width="152"
+       height="156.36887"
+       xlink:href="robot.png"
+       preserveAspectRatio="xMidYMid"
+       transform="rotate(-4)"
+       id="image817"
+       inkscape:label="robot" />
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="257.17343"
+       y="848.51611"
+       id="text1966"
+       inkscape:label="CONTROL"><tspan
+         sodipodi:role="line"
+         id="tspan1964"
+         x="257.17346"
+         y="848.51611"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{Control}</tspan></text>
+    <path
+       style="fill:#0b1b2b;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3)"
+       d="M 307.99269,671.98178 V 761.759"
+       id="path6135"
+       inkscape:label="ControlInArrow"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:#0b1b2b;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-1)"
+       d="M 347.44916,762.90177 V 673.12455"
+       id="path6135-6"
+       inkscape:label="ControlOutArrow"
+       sodipodi:nodetypes="cc" />
+    <rect
+       x="86.163239"
+       y="553.53802"
+       width="337.98309"
+       height="111.45908"
+       rx="36.212475"
+       fill="#ffffff"
+       stroke="#dbe4ff"
+       stroke-width="2.94092"
+       id="rect769-8"
+       inkscape:label="adapterRect"
+       style="stroke:#f0ddd0;stroke-width:2.941;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;display:inline;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="257.17343"
+       y="632.49207"
+       id="text1966-3"
+       inkscape:label="Adapter"><tspan
+         sodipodi:role="line"
+         id="tspan1964-6"
+         x="257.17343"
+         y="632.49207"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{Adapter}</tspan></text>
+    <text
+       x="-721.44434"
+       y="335.70056"
+       text-anchor="middle"
+       class="section"
+       id="text811-2-1"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;opacity:0.600309;fill:#334155"
+       transform="rotate(-90)"
+       inkscape:label="ROS"><tspan
+         sodipodi:role="line"
+         id="tspan37074"
+         x="-721.44434"
+         y="335.70056">\tiny{\textsf{ROS}}</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1-1"
+     inkscape:label="Robot 2"
+     style="display:inline"
+     transform="translate(486.97042,7.859855)"
+     sodipodi:insensitive="true">
+    <rect
+       x="35.085781"
+       y="520.72607"
+       width="440.138"
+       height="396.26276"
+       rx="32.776234"
+       fill="#fff8f3"
+       stroke="#f0ddd0"
+       stroke-width="3.56588"
+       id="rect805-5"
+       inkscape:label="background" />
+    <text
+       x="195.39342"
+       y="724.07471"
+       text-anchor="middle"
+       class="section"
+       id="text811-5"
+       inkscape:label="ControlIn"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^2_t=(v^2_t,w^2_t)}$</text>
+    <text
+       x="360.55432"
+       y="724.16895"
+       text-anchor="middle"
+       class="section"
+       id="text811-2-47"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:start;text-anchor:start;display:inline;fill:#334155"
+       inkscape:label="ControlOut">\small $\mathsf{\hat{x}^2_t}$</text>
+    <rect
+       x="86.163239"
+       y="771.05933"
+       width="337.98309"
+       height="111.45908"
+       rx="36.212475"
+       fill="#ffffff"
+       stroke="#dbe4ff"
+       stroke-width="2.94092"
+       id="rect769-8-4-6"
+       inkscape:label="controlRect"
+       style="stroke:#f0ddd0;stroke-width:2.941;stroke-dasharray:none;stroke-opacity:1" />
+    <image
+       x="-56.72345"
+       y="797.63367"
+       width="152"
+       height="156.36887"
+       xlink:href="robot.png"
+       preserveAspectRatio="xMidYMid"
+       transform="rotate(-4)"
+       id="image817-5"
+       inkscape:label="robot" />
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="257.17343"
+       y="848.51611"
+       id="text1966-6"
+       inkscape:label="CONTROL"><tspan
+         sodipodi:role="line"
+         id="tspan1964-9"
+         x="257.17346"
+         y="848.51611"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{Control}</tspan></text>
+    <path
+       style="display:inline;fill:#0b1b2b;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-3)"
+       d="M 307.99269,671.98178 V 761.759"
+       id="path6135-3"
+       inkscape:label="ControlInArrow"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:#0b1b2b;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-1-0)"
+       d="M 347.44916,762.90177 V 673.12455"
+       id="path6135-6-7"
+       inkscape:label="ControlOutArrow"
+       sodipodi:nodetypes="cc" />
+    <rect
+       x="86.163239"
+       y="553.53802"
+       width="337.98309"
+       height="111.45908"
+       rx="36.212475"
+       fill="#ffffff"
+       stroke="#dbe4ff"
+       stroke-width="2.94092"
+       id="rect769-8-45"
+       inkscape:label="adapterRect"
+       style="stroke:#f0ddd0;stroke-width:2.941;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;display:inline;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="257.17343"
+       y="632.49207"
+       id="text1966-3-2"
+       inkscape:label="Adapter"><tspan
+         sodipodi:role="line"
+         id="tspan1964-6-5"
+         x="257.17343"
+         y="632.49207"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{Adapter}</tspan></text>
+    <text
+       x="-721.44434"
+       y="335.70056"
+       text-anchor="middle"
+       class="section"
+       id="text811-2-1-4"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;opacity:0.600309;fill:#334155"
+       transform="rotate(-90)"
+       inkscape:label="ROS"><tspan
+         sodipodi:role="line"
+         id="tspan37074-7"
+         x="-721.44434"
+         y="335.70056">\tiny{\textsf{ROS}}</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1-1-7"
+     inkscape:label="Robot N"
+     style="display:inline"
+     transform="translate(1097.7181,7.859855)"
+     sodipodi:insensitive="true">
+    <rect
+       x="35.085781"
+       y="520.72607"
+       width="440.138"
+       height="396.26276"
+       rx="32.776234"
+       fill="#fff8f3"
+       stroke="#f0ddd0"
+       stroke-width="3.56588"
+       id="rect805-5-8"
+       inkscape:label="background" />
+    <text
+       x="195.39342"
+       y="724.07471"
+       text-anchor="middle"
+       class="section"
+       id="text811-5-6"
+       inkscape:label="ControlIn"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^N_t=(v^N_t,w^N_t)}$</text>
+    <text
+       x="360.55432"
+       y="724.16895"
+       text-anchor="middle"
+       class="section"
+       id="text811-2-47-8"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:start;text-anchor:start;display:inline;fill:#334155"
+       inkscape:label="ControlOut">\small $\mathsf{\hat{x}^N_t}$</text>
+    <rect
+       x="86.163239"
+       y="771.05933"
+       width="337.98309"
+       height="111.45908"
+       rx="36.212475"
+       fill="#ffffff"
+       stroke="#dbe4ff"
+       stroke-width="2.94092"
+       id="rect769-8-4-6-8"
+       inkscape:label="controlRect"
+       style="stroke:#f0ddd0;stroke-width:2.941;stroke-dasharray:none;stroke-opacity:1" />
+    <image
+       x="-56.72345"
+       y="797.63367"
+       width="152"
+       height="156.36887"
+       xlink:href="robot.png"
+       preserveAspectRatio="xMidYMid"
+       transform="rotate(-4)"
+       id="image817-5-4"
+       inkscape:label="robot" />
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="257.17343"
+       y="848.51611"
+       id="text1966-6-3"
+       inkscape:label="CONTROL"><tspan
+         sodipodi:role="line"
+         id="tspan1964-9-1"
+         x="257.17346"
+         y="848.51611"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{Control}</tspan></text>
+    <path
+       style="fill:#0b1b2b;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-3-4)"
+       d="M 307.99269,671.98178 V 761.759"
+       id="path6135-3-4"
+       inkscape:label="ControlInArrow"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:#0b1b2b;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-1-0-3)"
+       d="M 347.44916,762.90177 V 673.12455"
+       id="path6135-6-7-9"
+       inkscape:label="ControlOutArrow"
+       sodipodi:nodetypes="cc" />
+    <rect
+       x="86.163239"
+       y="553.53802"
+       width="337.98309"
+       height="111.45908"
+       rx="36.212475"
+       fill="#ffffff"
+       stroke="#dbe4ff"
+       stroke-width="2.94092"
+       id="rect769-8-45-2"
+       inkscape:label="adapterRect"
+       style="stroke:#f0ddd0;stroke-width:2.941;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;display:inline;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="257.17343"
+       y="632.49207"
+       id="text1966-3-2-0"
+       inkscape:label="Adapter"><tspan
+         sodipodi:role="line"
+         id="tspan1964-6-5-6"
+         x="257.17343"
+         y="632.49207"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{Adapter}</tspan></text>
+    <text
+       x="-721.44434"
+       y="335.70056"
+       text-anchor="middle"
+       class="section"
+       id="text811-2-1-4-8"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;opacity:0.600309;fill:#334155"
+       transform="rotate(-90)"
+       inkscape:label="ROS"><tspan
+         sodipodi:role="line"
+         id="tspan37074-7-9"
+         x="-721.44434"
+         y="335.70056">\tiny{\textsf{ROS}}</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Manager"
+     sodipodi:insensitive="true">
+    <rect
+       x="242.72044"
+       y="28.195108"
+       width="1115.4249"
+       height="347.22397"
+       rx="23.565313"
+       fill="#f6f8ff"
+       stroke="#d9e2ff"
+       stroke-width="2.71916"
+       id="rect765"
+       inkscape:label="background" />
+    <image
+       x="188.71819"
+       y="294.38831"
+       width="125.69061"
+       height="125.69061"
+       xlink:href="laptop.svg"
+       preserveAspectRatio="xMidYMid"
+       id="image789"
+       inkscape:label="LaptopImage" />
+    <rect
+       x="841.21661"
+       y="54.843578"
+       width="488.99631"
+       height="106.6143"
+       rx="24"
+       fill="#ffffff"
+       stroke="#e7e5ff"
+       stroke-width="2.4"
+       id="rect771-9"
+       inkscape:label="LexIBROTRect"
+       style="display:inline" />
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;display:inline;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="1087.7334"
+       y="126.41166"
+       id="text1966-3-2-6"
+       inkscape:label="LexIBROverTime.jl"><tspan
+         sodipodi:role="line"
+         id="tspan1964-6-5-4"
+         x="1087.7334"
+         y="126.41166"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{LexIBROverTime.jl}</tspan></text>
+    <rect
+       x="271.68768"
+       y="54.843578"
+       width="488.99631"
+       height="106.6143"
+       rx="24"
+       fill="#ffffff"
+       stroke="#e7e5ff"
+       stroke-width="2.4"
+       id="rect771-9-5"
+       inkscape:label="UIRect"
+       style="display:inline" />
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;display:inline;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="518.20447"
+       y="126.41166"
+       id="text1966-3-2-6-0"
+       inkscape:label="UI"><tspan
+         sodipodi:role="line"
+         id="tspan1964-6-5-4-4"
+         x="518.20447"
+         y="126.41166"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{User Interface}</tspan></text>
+    <rect
+       x="557.17584"
+       y="239.50533"
+       width="488.99631"
+       height="106.6143"
+       rx="24"
+       fill="#ffffff"
+       stroke="#e7e5ff"
+       stroke-width="2.4"
+       id="rect771-9-5-8"
+       inkscape:label="ManagerRect"
+       style="display:inline" />
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;display:inline;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="803.69263"
+       y="311.07339"
+       id="text1966-3-2-6-0-7"
+       inkscape:label="Manager"><tspan
+         sodipodi:role="line"
+         id="tspan1964-6-5-4-4-1"
+         x="803.69263"
+         y="311.07339"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{Manager}</tspan></text>
+    <path
+       style="display:inline;fill:#0b1b2b;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-7)"
+       d="m 955.8571,168.36874 v 66.26729"
+       id="path6135-61"
+       inkscape:label="SolverOutArrow"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:#0b1b2b;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-7-4)"
+       d="M 995.19215,235.7788 V 169.51151"
+       id="path6135-61-0"
+       inkscape:label="SolverInArrow"
+       sodipodi:nodetypes="cc" />
+    <text
+       x="-201.1158"
+       y="983.56494"
+       text-anchor="middle"
+       class="section"
+       id="text811-2-1-6"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;opacity:0.600309;fill:#334155"
+       transform="rotate(-90)"
+       inkscape:label="TCP"><tspan
+         sodipodi:role="line"
+         id="tspan37074-1"
+         x="-201.1158"
+         y="983.56494">\tiny{\textsf{TCP}}</tspan></text>
+    <path
+       style="display:inline;fill:#0b1b2b;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-7-9)"
+       d="M 611.7277,165.65711 V 231.9244"
+       id="path6135-61-7"
+       inkscape:label="StartArrow"
+       sodipodi:nodetypes="cc" />
+    <text
+       x="-198.40417"
+       y="639.43555"
+       text-anchor="middle"
+       class="section"
+       id="text811-2-1-6-7"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;opacity:0.600309;fill:#334155"
+       transform="rotate(-90)"
+       inkscape:label="START"><tspan
+         sodipodi:role="line"
+         id="tspan37074-1-1"
+         x="-198.40417"
+         y="639.43555">\tiny{\textsf{START}}</tspan></text>
+    <text
+       x="1013.6049"
+       y="211.81061"
+       text-anchor="middle"
+       class="section"
+       id="text811-2-5"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:start;text-anchor:start;display:inline;fill:#334155"
+       inkscape:label="solverIn">\small $\mathsf{\hat{X}_t}$</text>
+    <text
+       x="837.42535"
+       y="209.50096"
+       text-anchor="middle"
+       class="section"
+       id="text811-9"
+       inkscape:label="solverout"
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u_t=(a_{x,t},a_{y,t})}$</text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Comms"
+     style="display:inline">
+    <g
+       inkscape:groupmode="layer"
+       id="layer4-6"
+       inkscape:label="Robot N"
+       style="display:inline"
+       transform="translate(654.44319)"
+       sodipodi:insensitive="true">
+      <text
+         x="478.15564"
+         y="429.36655"
+         text-anchor="middle"
+         class="section"
+         id="text811-9-6-3"
+         inkscape:label="ControlIn"
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^N_t=(a^N_{x,t},a^N_{y,t})}$</text>
+      <text
+         x="478.15564"
+         y="519.04718"
+         text-anchor="middle"
+         class="section"
+         id="text811-2-5-5-8"
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:center;text-anchor:middle;display:inline;fill:#334155"
+         inkscape:label="ControlOut">\small $\mathsf{\hat{x}^N_t}$</text>
+      <text
+         x="478.75549"
+         y="471.26071"
+         text-anchor="middle"
+         class="section"
+         id="text811-2-1-6-3-5"
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;opacity:0.600309;fill:#334155"
+         inkscape:label="TCP"><tspan
+           sodipodi:role="line"
+           id="tspan37074-1-6-6"
+           x="478.75549"
+           y="471.26071">\tiny{\textsf{TCP+WiFi}}</tspan></text>
+      <path
+         style="display:inline;fill:none;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-7-1-0)"
+         d="M 606.00828,550.00958 V 479.15952 H 307.85118 V 355.4918"
+         id="path6135-61-0-7-1"
+         inkscape:label="ControlInArrow"
+         sodipodi:nodetypes="cccc" />
+      <path
+         style="display:inline;fill:none;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-start:;marker-end:url(#Arrow3-7-1-0)"
+         d="m 345.50023,354.61002 v 93.53913 h 300.11768 v 100.71766"
+         id="path6135-61-76-1"
+         inkscape:label="ControlInArrow"
+         sodipodi:nodetypes="cccc" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer4-1"
+       inkscape:label="Robot 2"
+       style="display:inline"
+       transform="translate(324.99906)">
+      <text
+         x="355.0311"
+         y="513.05249"
+         text-anchor="middle"
+         class="section"
+         id="text811-9-6-2"
+         inkscape:label="ControlIn"
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^2_t=(a^2_{x,t},a^2_{y,t})}$</text>
+      <text
+         x="541.96362"
+         y="468.27203"
+         text-anchor="middle"
+         class="section"
+         id="text811-2-5-5-9"
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:center;text-anchor:middle;display:inline;fill:#334155"
+         inkscape:label="ControlOut">\small $\mathsf{\hat{x}^2_t}$</text>
+      <text
+         x="-452.23679"
+         y="499.15442"
+         text-anchor="middle"
+         class="section"
+         id="text811-2-1-6-3-3"
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;opacity:0.600309;fill:#334155"
+         inkscape:label="TCP"
+         transform="rotate(-90)"><tspan
+           sodipodi:role="line"
+           id="tspan37074-1-6-9"
+           x="-452.23679"
+           y="499.15442">\tiny{\textsf{TCP+WiFi}}</tspan></text>
+      <path
+         style="display:inline;fill:none;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-7-4-9-3)"
+         d="M 512.53936,550.00958 V 355.4918"
+         id="path6135-61-0-7-0"
+         inkscape:label="ControlInArrow"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="display:inline;fill:none;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-7-1-4)"
+         d="M 473.91002,354.61002 V 548.86681"
+         id="path6135-61-76-8"
+         inkscape:label="ControlInArrow"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer4"
+       inkscape:label="Robot 1"
+       style="display:inline"
+       sodipodi:insensitive="true">
+      <text
+         x="478.15564"
+         y="429.36655"
+         text-anchor="middle"
+         class="section"
+         id="text811-9-6"
+         inkscape:label="ControlIn"
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^1_t=(a^1_{x,t},a^1_{y,t})}$</text>
+      <text
+         x="478.15564"
+         y="519.04718"
+         text-anchor="middle"
+         class="section"
+         id="text811-2-5-5"
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:center;text-anchor:middle;display:inline;fill:#334155"
+         inkscape:label="ControlOut">\small $\mathsf{\hat{x}^1_t}$</text>
+      <text
+         x="478.75549"
+         y="471.26071"
+         text-anchor="middle"
+         class="section"
+         id="text811-2-1-6-3"
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;opacity:0.600309;fill:#334155"
+         inkscape:label="TCP"><tspan
+           sodipodi:role="line"
+           id="tspan37074-1-6"
+           x="478.75549"
+           y="471.26071">\tiny{\textsf{TCP+WiFi}}</tspan></text>
+      <path
+         style="display:inline;fill:none;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-7-4-9)"
+         d="m 347.46081,550.00958 v -70.85006 h 298.1571 V 355.4918"
+         id="path6135-61-0-7"
+         inkscape:label="ControlInArrow"
+         sodipodi:nodetypes="cccc" />
+      <path
+         style="display:inline;fill:none;stroke:#040201;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow3-7-1)"
+         d="m 607.96886,354.61002 v 93.53913 H 307.85118 v 100.71766"
+         id="path6135-61-76"
+         inkscape:label="ControlInArrow"
+         sodipodi:nodetypes="cccc" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:62.112px;font-family:'Gramophone Shaded NF';-inkscape-font-specification:'Gramophone Shaded NF, Normal';text-align:center;text-anchor:middle;display:inline;fill:#0b1b2b;stroke:#680f12;stroke-width:1.70835;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.44525, 1.44525"
+       x="-41.445583"
+       y="735.31812"
+       id="text1966-3-2-0-2"
+       inkscape:label="DOTS"
+       transform="translate(1097.7181,7.859855)"
+       sodipodi:insensitive="true"><tspan
+         sodipodi:role="line"
+         id="tspan1964-6-5-6-6"
+         x="0"
+         y="0"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Ubuntu Sans';-inkscape-font-specification:'Ubuntu Sans';text-align:center;text-anchor:middle;stroke:none">\Large \textsf{\dots}</tspan></text>
+  </g>
 </svg>
