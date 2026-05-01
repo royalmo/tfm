@@ -2,8 +2,8 @@
 \label{ch:duckietown}
 
 The previous chapters established the modeling and computational foundations of games of ordered preference.
-This chapter turns that machinery into a concrete experimental framework on Duckietown, a low-cost platform
-widely used for autonomous driving experiments \cite{duckietown:2017}.
+This chapter turns that machinery into a concrete experimental setup using DB21J Duckiebots on the
+standardized Duckietown road layout \cite{duckietown:2017}.
 The goal is not to introduce a different planner, but to close the loop between the receding-horizon solver
 and physical robots in a way that preserves the structure of the optimization problem while respecting the
 constraints of a real deployment.
@@ -14,18 +14,18 @@ In simulation, the solver can query the current state, solve a receding-horizon 
 control input without worrying about network delays, actuator saturation, watchdog timeouts, or sensor
 dropouts.
 On real robots, every one of those effects matters.
-The purpose of the Duckietown framework is therefore to preserve the structure of the solution method while
+The purpose of this experimental stack is therefore to preserve the structure of the solution method while
 making its execution observable and safe enough for physical trials.
 
-Duckietown is particularly convenient for that purpose because it provides a standard low-cost platform with
-common software interfaces, common vehicle geometry, and a ROS-based development workflow.
-In this thesis, the platform is used as a validation scaffold for \cref{ch:lex-ibr-ot}: the same
+Duckietown is particularly convenient for that purpose because it standardizes the small-scale road geometry,
+the DB21J vehicle footprint, and the ROS-based workflow used around the robots.
+In this thesis, that standardized environment is used as a validation scaffold for \cref{ch:lex-ibr-ot}: the same
 lexicographic IBR over time logic is executed, but the state and command loop is mediated by the
 robotics stack shown in \cref{fig:duckietown_architecture}.
 
 This validation setup is not fully decentralized.
-The sensing available in our environment is not sufficient for each Duckiebot to reliably estimate the
-position and velocity of the other vehicles on its own.
+The sensing available on our DB21J units is not sufficient for each robot to reliably estimate the position
+and velocity of the other vehicles on its own.
 In particular, with a simple onboard webcam, detecting and tracking the surrounding robots robustly enough
 for closed-loop game execution is not currently realistic.
 For that reason, the experiments use a centralized runtime loop that aggregates the state information needed
@@ -34,9 +34,9 @@ by the solver before redistributing the resulting commands.
 \section{System architecture}
 \label{sec:duckietown-architecture}
 
-The setup involves the robots being connected to a central computer that will
-coordinate the runtime loop and solve the games, while each robot will manage
-their actuation and sensing interface.
+The setup uses three DB21J Duckiebots connected to a central computer that
+coordinates the runtime loop and solves the games, while each robot manages its
+own actuation and sensing interface.
 This keeps the optimization layer independent from the transport and control
 details of the physical platform.\footnote{The code used for the experiments in this chapter is available at \url{https://codeberg.org/ericroy/ordered-preferences-duckietown}. We mainly used the multi-robot interface.}
 
@@ -46,8 +46,8 @@ details of the physical platform.\footnote{The code used for the experiments in 
     \def\svgwidth{\textwidth}
     \subimport{figures/duckietown/}{duckietown_architecture.pdf_tex}
     }
-    \caption{High-level execution path of the Duckietown validation framework with one central manager and
-    three robots. The runtime manager aggregates the robot state streams into
+    \caption{High-level execution path of the DB21J-based validation stack on the Duckietown road layout,
+    with one central manager and three robots. The runtime manager aggregates the robot state streams into
     \(\hat{\mathbf{X}}_k = (\hat{\mathbf{x}}_k^1,\hat{\mathbf{x}}_k^2,\dots,\hat{\mathbf{x}}_k^N)\), forwards the solve
     request through the local bridge, and receives the receding-horizon solution over the TCP solver link.
     The resulting per-robot samples are sent back over ROS to the robot-side adapters, which map them to
@@ -87,7 +87,7 @@ Initialize the manager--robot communication and the state / command interfaces\;
     }
     Wait until the next tick \(\Delta t\)\;
 }
-\caption{Closed-loop manager cycle in the Duckietown validation framework.}
+\caption{Closed-loop manager cycle in the DB21J Duckietown validation stack.}
 \label{alg:duckietown_manager_loop}
 \end{algorithm}
 
@@ -100,7 +100,7 @@ stationary (\cref{alg:duckietown_manager_loop}).
 \label{sec:duckietown-control}
 
 The control variable used throughout \cref{ch:goop,ch:lex-ibr-ot} is a planar
-acceleration, whereas the Duckiebot does not accept acceleration commands directly.
+acceleration, whereas the DB21J Duckiebot does not accept acceleration commands directly.
 Its native interface is the low-level pair \((v,\omega)\), so the solver output must be converted before it
 can be executed on the robot.
 
@@ -183,12 +183,13 @@ TODO
 
 This chapter shows that the acceleration-based receding-horizon game formulation developed in the previous
 chapters can be embedded in a physical robotic loop without altering its basic mathematical structure.
-The Duckietown implementation integrates the solver, the centralized runtime manager, and the robot-side
-adapter into a coherent closed-loop system, thereby providing an experimental validation beyond simulation.
+The experimental implementation integrates the solver, the centralized runtime manager, and the robot-side
+adapter into a coherent closed-loop system on DB21J Duckiebots and standardized Duckietown infrastructure,
+thereby providing an experimental validation beyond simulation.
 
 However, the scope of this validation remains limited.
-The platform and sensing configuration motivate a centralized architecture and a conservative control stack,
-and do not support a fully decentralized treatment of multi-robot interaction.
+The DB21J sensing stack and the chosen deployment configuration motivate a centralized architecture and a
+conservative control stack, and do not support a fully decentralized treatment of multi-robot interaction.
 Accordingly, the contribution of this chapter is methodological rather than definitive: it establishes the
 practical executability of the proposed formulation under real timing, actuation, and safety constraints,
 while a more comprehensive assessment would require richer perception, less centralized execution, and
