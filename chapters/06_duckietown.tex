@@ -47,11 +47,11 @@ details of the physical platform.\footnote{The code used for the experiments in 
     \subimport{figures/duckietown/}{duckietown_architecture.pdf_tex}
     }
     \caption{High-level execution path of the DB21J-based validation stack on the Duckietown road layout,
-    with one central manager and three robots. The runtime manager aggregates the robot state streams into
+    with one central manager and robots. The runtime manager aggregates the robot state streams into
     \(\hat{\mathbf{X}}_k = (\hat{\mathbf{x}}_k^1,\hat{\mathbf{x}}_k^2,\dots,\hat{\mathbf{x}}_k^N)\), forwards the solve
     request through the local bridge, and receives the receding-horizon solution over the TCP solver link.
-    The resulting per-robot samples are sent back over ROS to the robot-side adapters, which map them to
-    low-level drive inputs \(u_k^i = (v_k^i,\omega_k^i)\), with watchdog fallback \(0\).}
+    The resulting per-robot samples are sent back over TCP to the robot-side adapters, which map them to
+    low-level drive inputs \(u_k^i = (v_k^i,\omega_k^i)\) and send them over ROS to robot control.}
     \label{fig:duckietown_architecture}
 \end{figure}
 
