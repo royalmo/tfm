@@ -38,29 +38,31 @@ The setup involves the robots being connected to a central computer that will
 coordinate the runtime loop and solve the games, while each robot will manage
 their actuation and sensing interface.
 This keeps the optimization layer independent from the transport and control
-details of the physical platform.
+details of the physical platform.\footnote{The code used for the experiments in this chapter is available at \url{https://codeberg.org/ericroy/ordered-preferences-duckietown}. We mainly used the multi-robot interface.}
 
-% TODO REDO
 \begin{figure}[t]
     \centering
     {\footnotesize
     \def\svgwidth{\textwidth}
     \subimport{figures/duckietown/}{duckietown_architecture.pdf_tex}
     }
-    \caption{High-level execution path of the Duckietown validation framework. State estimates
-    \(\mathbf{x}_k\) flow from the robot to the laptop-side game solver, which returns planar acceleration
-    commands \(\mathbf{a}_k^\star\); the robot-side adapter maps them to low-level drive commands
-    \(u_k = (v_k,\omega_k)\), while a watchdog keeps the failure mode at a conservative stop.}
+    \caption{High-level execution path of the Duckietown validation framework with one central manager and
+    three robots. The runtime manager aggregates the robot state streams into
+    \(\hat{\mathbf{X}}_k = (\hat{\mathbf{x}}_k^1,\hat{\mathbf{x}}_k^2,\dots,\hat{\mathbf{x}}_k^N)\), forwards the solve
+    request through the local bridge, and receives the receding-horizon solution over the TCP solver link.
+    The resulting per-robot samples are sent back over ROS to the robot-side adapters, which map them to
+    low-level drive inputs \(u_k^i = (v_k^i,\omega_k^i)\), with watchdog fallback \(0\).}
     \label{fig:duckietown_architecture}
 \end{figure}
 
 \Cref{fig:duckietown_architecture} summarizes the closed-loop execution path.
-At each sampling instant \(\Delta t\), the runtime loop collects the latest state estimate
-\(\mathbf{x}_k = (x,y,v_x,v_y,\theta)\) and queries the laptop-side bridge for the next control sample.
-The underlying receding-horizon strategy replans only after the current open-loop plan has executed for
-\(T_l\) steps; otherwise, the bridge returns the next command from the existing plan.
-The robot-side adapter then maps that command to the low-level drive input
-\(u_k = (v_k,\omega_k)\) that can be executed by the Duckiebot.
+At each sampling instant \(\Delta t\), the runtime manager receives the latest per-robot state estimates
+\(\hat{\mathbf{x}}_k^i\) over ROS, bundles them into \(\hat{\mathbf{X}}_k\), and queries the bridge.
+The bridge issues the local TCP call to the solver, which replans only after the current open-loop plan has
+executed for \(T_l\) steps and otherwise returns the next command from the existing plan.
+Each robot-side adapter then maps the returned sample to the low-level drive input
+\(u_k^i = (v_k^i,\omega_k^i)\), while the watchdog enforces the zero-input fallback if the command stream is
+interrupted.
 
 % The same split also fixes the failure mode.
 % If no valid command is returned in time, the watchdog falls back to a zero command rather than leaving a
@@ -70,7 +72,7 @@ The robot-side adapter then maps that command to the low-level drive input
 \KwData{Solver bridge, sampling period \(\Delta t\), turn length \(T_l\), robot set, goal set}
 \KwResult{Closed-loop acceleration commands \(\mathbf{a}_k^\star\)}
 \medskip
-Initialize the laptop--robot communication and the state / command interfaces\;
+Initialize the manager--robot communication and the state / command interfaces\;
 \While{the experiment is running}{
     Read the latest state estimate \(\mathbf{x}_k\)\;
     Query the bridge for the next control sample; replan only after \(T_l\) executed steps\;
