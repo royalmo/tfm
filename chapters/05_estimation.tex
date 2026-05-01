@@ -672,7 +672,7 @@ solve-success rate $1.000$.
 City remains near the clearance boundary, with clearance $10^{-6}$, ego completion $0.741$, and minimum
 solve-success rate $0.625$.
 
-\Cref{fig:program6_city_discrimination} explains why the city case locks onto the correct profile immediately.
+\Cref{fig:online_discrimination} explains why the city case locks onto the correct profile immediately.
 Even a single first-priority swap in one non-ego player bends the predicted short-horizon trajectory away from the
 observed window enough to create a clear raw-score gap, and the later updates preserve that ordering even as the
 interaction approaches the feasibility boundary.
@@ -681,21 +681,21 @@ interaction approaches the feasibility boundary.
     \centering
     \begin{subfigure}[t]{0.485\linewidth}
         \centering
-        \input{figures/inverse_goop/program6_city_discrimination_left_tikz.tex}
+        \input{figures/inverse_goop/online_discrimination_left_tikz.tex}
         \caption{First update window on separated y-bands.}
-        \label{fig:program6_city_discrimination_a}
+        \label{fig:online_discrimination_a}
     \end{subfigure}\hfill
     \begin{subfigure}[t]{0.485\linewidth}
         \centering
-        \input{figures/inverse_goop/program6_city_discrimination_right_tikz.tex}
+        \input{figures/inverse_goop/online_discrimination_right_tikz.tex}
         \caption{Candidate mismatch score over later windows.}
-        \label{fig:program6_city_discrimination_b}
+        \label{fig:online_discrimination_b}
     \end{subfigure}
     \caption{City-scenario mechanism of the online score.
-    (\subref{fig:program6_city_discrimination_a}) shows the first update window with both side players on separated y-bands.
-    (\subref{fig:program6_city_discrimination_b}) shows the corresponding candidate mismatch scores over later windows, where lower is better within each update.
+    (\subref{fig:online_discrimination_a}) shows the first update window with both side players on separated y-bands.
+    (\subref{fig:online_discrimination_b}) shows the corresponding candidate mismatch scores over later windows, where lower is better within each update.
     The selected profile remains below the two single-swap perturbations from the first update onward.}
-    \label{fig:program6_city_discrimination}
+    \label{fig:online_discrimination}
 \end{figure}
 
 Even in the tighter city interaction, the inference layer still identifies the correct joint profile from the first

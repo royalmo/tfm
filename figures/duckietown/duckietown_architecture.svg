@@ -1,18 +1,79 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="1600" height="960" viewBox="0 0 1600 960">
-  <defs>
-    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7290e7"/>
+<svg
+   width="1600"
+   height="960"
+   viewBox="0 0 1600 960"
+   version="1.1"
+   id="svg907"
+   sodipodi:docname="duckietown_architecture.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview909"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.691875"
+     inkscape:cx="852.75519"
+     inkscape:cy="482.02349"
+     inkscape:window-width="1854"
+     inkscape:window-height="1011"
+     inkscape:window-x="66"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg907" />
+  <defs
+     id="defs763">
+    <marker
+       id="arrow-blue"
+       markerWidth="10"
+       markerHeight="10"
+       refX="8.5"
+       refY="5"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="#7290e7"
+         id="path752" />
     </marker>
-    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#58b59a"/>
+    <marker
+       id="arrow-green"
+       markerWidth="10"
+       markerHeight="10"
+       refX="8.5"
+       refY="5"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="#58b59a"
+         id="path755" />
     </marker>
-    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8.5" refY="5" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e6a29a"/>
+    <marker
+       id="arrow-red"
+       markerWidth="10"
+       markerHeight="10"
+       refX="8.5"
+       refY="5"
+       orient="auto"
+       markerUnits="userSpaceOnUse">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="#e6a29a"
+         id="path758" />
     </marker>
-    <style>
+    <style
+       id="style761">
       .title {
         fill: #0f172a;
         font-size: 32px;
@@ -45,163 +106,558 @@
       }
     </style>
   </defs>
-
-  <rect x="90" y="78" width="1420" height="332" rx="30"
-        fill="#f6f8ff" stroke="#d9e2ff" stroke-width="3"/>
-  <text x="150" y="122" class="title">Laptop</text>
-
-  <rect x="220" y="152" width="224" height="112" rx="24"
-        fill="#ffffff" stroke="#dbe4ff" stroke-width="2.4"/>
-  <rect x="518" y="152" width="224" height="112" rx="24"
-        fill="#ffffff" stroke="#e7e5ff" stroke-width="2.4"/>
-  <rect x="816" y="152" width="224" height="112" rx="24"
-        fill="#ffffff" stroke="#d8eee7" stroke-width="2.4"/>
-  <rect x="1120" y="124" width="248" height="212" rx="26"
-        fill="#ffffff" stroke="#dbe4ff" stroke-width="2.4"/>
-
-  <text x="332" y="195" text-anchor="middle" class="section">manager</text>
-  <text x="332" y="230" text-anchor="middle" class="math">$ \Delta t,\; T_l $</text>
-
-  <text x="630" y="195" text-anchor="middle" class="section">bridge</text>
-  <text x="630" y="230" text-anchor="middle" class="word">ROS</text>
-
-  <text x="928" y="195" text-anchor="middle" class="section">solver</text>
-  <text x="928" y="230" text-anchor="middle" class="math">$ \pi_{\mathrm{rh}} $</text>
-
-  <image x="1148" y="140" width="192" height="178"
-         xlink:href="laptop_photo.png" preserveAspectRatio="xMidYMid meet"/>
-
-  <text x="58" y="206" class="word">START</text>
-  <path d="M 110 198 C 146 198, 176 198, 208 204"
-        fill="none" stroke="#94a3b8" stroke-width="4.2" stroke-linecap="round"
-        marker-end="url(#arrow-blue)"/>
-
-  <path d="M 446 186 L 506 186"
-        fill="none" stroke="#7290e7" stroke-width="5.4" stroke-linecap="round"
-        marker-end="url(#arrow-blue)"/>
-  <path d="M 506 230 L 446 230"
-        fill="none" stroke="#58b59a" stroke-width="5.4" stroke-linecap="round"
-        marker-end="url(#arrow-green)"/>
-
-  <path d="M 744 186 L 804 186"
-        fill="none" stroke="#7290e7" stroke-width="5.4" stroke-linecap="round"
-        marker-end="url(#arrow-blue)"/>
-  <path d="M 804 230 L 744 230"
-        fill="none" stroke="#58b59a" stroke-width="5.4" stroke-linecap="round"
-        marker-end="url(#arrow-green)"/>
-  <text x="774" y="166" text-anchor="middle" class="tag">TCP</text>
-
-  <rect x="132" y="486" width="376" height="286" rx="28"
-        fill="#fff8f3" stroke="#f0ddd0" stroke-width="2.8"/>
-  <rect x="612" y="486" width="376" height="286" rx="28"
-        fill="#fff8f3" stroke="#f0ddd0" stroke-width="2.8"/>
-  <rect x="1092" y="486" width="376" height="286" rx="28"
-        fill="#fff8f3" stroke="#f0ddd0" stroke-width="2.8"/>
-
-  <text x="320" y="530" text-anchor="middle" class="section">$ r_1 $</text>
-  <text x="800" y="530" text-anchor="middle" class="section">$ r_2 $</text>
-  <text x="1280" y="530" text-anchor="middle" class="section">$ r_3 $</text>
-
-  <image x="164" y="598" width="152" height="86"
-         xlink:href="robot_photo.png" preserveAspectRatio="xMidYMid meet"
-         transform="rotate(-4 240 641)"/>
-  <image x="644" y="598" width="152" height="86"
-         xlink:href="robot_photo.png" preserveAspectRatio="xMidYMid meet"/>
-  <image x="1124" y="598" width="152" height="86"
-         xlink:href="robot_photo.png" preserveAspectRatio="xMidYMid meet"
-         transform="rotate(4 1200 641)"/>
-
-  <rect x="314" y="560" width="150" height="50" rx="18"
-        fill="#e8f1ff" stroke="#d2e3ff" stroke-width="1.8"/>
-  <rect x="794" y="560" width="150" height="50" rx="18"
-        fill="#e8f1ff" stroke="#d2e3ff" stroke-width="1.8"/>
-  <rect x="1274" y="560" width="150" height="50" rx="18"
-        fill="#e8f1ff" stroke="#d2e3ff" stroke-width="1.8"/>
-  <text x="389" y="592" text-anchor="middle" class="math">$ \hat{\mathbf{x}}_k^1 $</text>
-  <text x="869" y="592" text-anchor="middle" class="math">$ \hat{\mathbf{x}}_k^2 $</text>
-  <text x="1349" y="592" text-anchor="middle" class="math">$ \hat{\mathbf{x}}_k^3 $</text>
-
-  <rect x="314" y="628" width="150" height="50" rx="18"
-        fill="#e5f6ef" stroke="#d0edde" stroke-width="1.8"/>
-  <rect x="794" y="628" width="150" height="50" rx="18"
-        fill="#e5f6ef" stroke="#d0edde" stroke-width="1.8"/>
-  <rect x="1274" y="628" width="150" height="50" rx="18"
-        fill="#e5f6ef" stroke="#d0edde" stroke-width="1.8"/>
-  <text x="389" y="660" text-anchor="middle" class="math">$ u_k^1 $</text>
-  <text x="869" y="660" text-anchor="middle" class="math">$ u_k^2 $</text>
-  <text x="1349" y="660" text-anchor="middle" class="math">$ u_k^3 $</text>
-
-  <rect x="198" y="700" width="234" height="48" rx="18"
-        fill="#fff1e9" stroke="#f0ddd0" stroke-width="1.8"/>
-  <rect x="678" y="700" width="234" height="48" rx="18"
-        fill="#fff1e9" stroke="#f0ddd0" stroke-width="1.8"/>
-  <rect x="1158" y="700" width="234" height="48" rx="18"
-        fill="#fff1e9" stroke="#f0ddd0" stroke-width="1.8"/>
-  <text x="286" y="731" text-anchor="middle" class="word">watchdog</text>
-  <text x="766" y="731" text-anchor="middle" class="word">watchdog</text>
-  <text x="1246" y="731" text-anchor="middle" class="word">watchdog</text>
-
-  <rect x="352" y="711" width="52" height="26" rx="10"
-        fill="#ffe2dc" stroke="#ffd0c8" stroke-width="1.4"/>
-  <rect x="832" y="711" width="52" height="26" rx="10"
-        fill="#ffe2dc" stroke="#ffd0c8" stroke-width="1.4"/>
-  <rect x="1312" y="711" width="52" height="26" rx="10"
-        fill="#ffe2dc" stroke="#ffd0c8" stroke-width="1.4"/>
-  <text x="378" y="730" text-anchor="middle" class="math">$ 0 $</text>
-  <text x="858" y="730" text-anchor="middle" class="math">$ 0 $</text>
-  <text x="1338" y="730" text-anchor="middle" class="math">$ 0 $</text>
-
-  <path d="M 284 641 C 320 624, 344 614, 364 606"
-        fill="none" stroke="#7290e7" stroke-width="4.6" stroke-linecap="round"
-        marker-end="url(#arrow-blue)"/>
-  <path d="M 370 630 C 328 636, 302 642, 274 652"
-        fill="none" stroke="#58b59a" stroke-width="4.6" stroke-linecap="round"
-        marker-end="url(#arrow-green)"/>
-  <path d="M 315 700 L 360 678"
-        fill="none" stroke="#e6a29a" stroke-width="4.2" stroke-linecap="round"
-        marker-end="url(#arrow-red)"/>
-
-  <path d="M 764 641 C 800 624, 824 614, 844 606"
-        fill="none" stroke="#7290e7" stroke-width="4.6" stroke-linecap="round"
-        marker-end="url(#arrow-blue)"/>
-  <path d="M 850 630 C 808 636, 782 642, 754 652"
-        fill="none" stroke="#58b59a" stroke-width="4.6" stroke-linecap="round"
-        marker-end="url(#arrow-green)"/>
-  <path d="M 795 700 L 840 678"
-        fill="none" stroke="#e6a29a" stroke-width="4.2" stroke-linecap="round"
-        marker-end="url(#arrow-red)"/>
-
-  <path d="M 1244 641 C 1280 624, 1304 614, 1324 606"
-        fill="none" stroke="#7290e7" stroke-width="4.6" stroke-linecap="round"
-        marker-end="url(#arrow-blue)"/>
-  <path d="M 1330 630 C 1288 636, 1262 642, 1234 652"
-        fill="none" stroke="#58b59a" stroke-width="4.6" stroke-linecap="round"
-        marker-end="url(#arrow-green)"/>
-  <path d="M 1275 700 L 1320 678"
-        fill="none" stroke="#e6a29a" stroke-width="4.2" stroke-linecap="round"
-        marker-end="url(#arrow-red)"/>
-
-  <path d="M 389 560 C 420 470, 510 350, 578 264"
-        fill="none" stroke="#7290e7" stroke-width="5.2" stroke-linecap="round"
-        marker-end="url(#arrow-blue)"/>
-  <path d="M 620 264 C 555 352, 474 470, 431 628"
-        fill="none" stroke="#58b59a" stroke-width="5.2" stroke-linecap="round"
-        marker-end="url(#arrow-green)"/>
-  <text x="484" y="388" text-anchor="middle" class="tag">ROS</text>
-
-  <path d="M 869 560 C 848 470, 770 350, 662 264"
-        fill="none" stroke="#7290e7" stroke-width="5.2" stroke-linecap="round"
-        marker-end="url(#arrow-blue)"/>
-  <path d="M 674 264 C 776 350, 846 470, 911 628"
-        fill="none" stroke="#58b59a" stroke-width="5.2" stroke-linecap="round"
-        marker-end="url(#arrow-green)"/>
-  <text x="770" y="392" text-anchor="middle" class="tag">ROS</text>
-
-  <path d="M 1349 560 C 1278 470, 1094 352, 682 264"
-        fill="none" stroke="#7290e7" stroke-width="5.2" stroke-linecap="round"
-        marker-end="url(#arrow-blue)"/>
-  <path d="M 686 264 C 1100 352, 1258 470, 1391 628"
-        fill="none" stroke="#58b59a" stroke-width="5.2" stroke-linecap="round"
-        marker-end="url(#arrow-green)"/>
-  <text x="1096" y="378" text-anchor="middle" class="tag">ROS</text>
+  <rect
+     x="90"
+     y="78"
+     width="1420"
+     height="332"
+     rx="30"
+     fill="#f6f8ff"
+     stroke="#d9e2ff"
+     stroke-width="3"
+     id="rect765" />
+  <text
+     x="150"
+     y="122"
+     class="title"
+     id="text767">Laptop</text>
+  <rect
+     x="220"
+     y="152"
+     width="224"
+     height="112"
+     rx="24"
+     fill="#ffffff"
+     stroke="#dbe4ff"
+     stroke-width="2.4"
+     id="rect769" />
+  <rect
+     x="518"
+     y="152"
+     width="224"
+     height="112"
+     rx="24"
+     fill="#ffffff"
+     stroke="#e7e5ff"
+     stroke-width="2.4"
+     id="rect771" />
+  <rect
+     x="816"
+     y="152"
+     width="224"
+     height="112"
+     rx="24"
+     fill="#ffffff"
+     stroke="#d8eee7"
+     stroke-width="2.4"
+     id="rect773" />
+  <rect
+     x="1120"
+     y="124"
+     width="248"
+     height="212"
+     rx="26"
+     fill="#ffffff"
+     stroke="#dbe4ff"
+     stroke-width="2.4"
+     id="rect775" />
+  <text
+     x="332"
+     y="195"
+     text-anchor="middle"
+     class="section"
+     id="text777">manager</text>
+  <text
+     x="332"
+     y="230"
+     text-anchor="middle"
+     class="math"
+     id="text779">$ \Delta t,\; T_l $</text>
+  <text
+     x="630"
+     y="195"
+     text-anchor="middle"
+     class="section"
+     id="text781">bridge</text>
+  <text
+     x="630"
+     y="230"
+     text-anchor="middle"
+     class="word"
+     id="text783">ROS</text>
+  <text
+     x="928"
+     y="195"
+     text-anchor="middle"
+     class="section"
+     id="text785">solver</text>
+  <text
+     x="928"
+     y="230"
+     text-anchor="middle"
+     class="math"
+     id="text787">$ \pi_{\mathrm{rh}} $</text>
+  <image
+     x="1148"
+     y="140"
+     width="192"
+     height="192"
+     xlink:href="laptop.svg"
+     preserveAspectRatio="xMidYMid meet"
+     id="image789" />
+  <text
+     x="58"
+     y="206"
+     class="word"
+     id="text791">START</text>
+  <path
+     d="M 110 198 C 146 198, 176 198, 208 204"
+     fill="none"
+     stroke="#94a3b8"
+     stroke-width="4.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-blue)"
+     id="path793" />
+  <path
+     d="M 446 186 L 506 186"
+     fill="none"
+     stroke="#7290e7"
+     stroke-width="5.4"
+     stroke-linecap="round"
+     marker-end="url(#arrow-blue)"
+     id="path795" />
+  <path
+     d="M 506 230 L 446 230"
+     fill="none"
+     stroke="#58b59a"
+     stroke-width="5.4"
+     stroke-linecap="round"
+     marker-end="url(#arrow-green)"
+     id="path797" />
+  <path
+     d="M 744 186 L 804 186"
+     fill="none"
+     stroke="#7290e7"
+     stroke-width="5.4"
+     stroke-linecap="round"
+     marker-end="url(#arrow-blue)"
+     id="path799" />
+  <path
+     d="M 804 230 L 744 230"
+     fill="none"
+     stroke="#58b59a"
+     stroke-width="5.4"
+     stroke-linecap="round"
+     marker-end="url(#arrow-green)"
+     id="path801" />
+  <text
+     x="774"
+     y="166"
+     text-anchor="middle"
+     class="tag"
+     id="text803">TCP</text>
+  <rect
+     x="132"
+     y="486"
+     width="376"
+     height="286"
+     rx="28"
+     fill="#fff8f3"
+     stroke="#f0ddd0"
+     stroke-width="2.8"
+     id="rect805" />
+  <rect
+     x="612"
+     y="486"
+     width="376"
+     height="286"
+     rx="28"
+     fill="#fff8f3"
+     stroke="#f0ddd0"
+     stroke-width="2.8"
+     id="rect807" />
+  <rect
+     x="1092"
+     y="486"
+     width="376"
+     height="286"
+     rx="28"
+     fill="#fff8f3"
+     stroke="#f0ddd0"
+     stroke-width="2.8"
+     id="rect809" />
+  <text
+     x="320"
+     y="530"
+     text-anchor="middle"
+     class="section"
+     id="text811">$ r_1 $</text>
+  <text
+     x="800"
+     y="530"
+     text-anchor="middle"
+     class="section"
+     id="text813">$ r_2 $</text>
+  <text
+     x="1280"
+     y="530"
+     text-anchor="middle"
+     class="section"
+     id="text815">$ r_3 $</text>
+  <image
+     x="164"
+     y="598"
+     width="152"
+     height="156.36886"
+     xlink:href="robot.png"
+     preserveAspectRatio="xMidYMid meet"
+     transform="rotate(-4 240 641)"
+     id="image817" />
+  <image
+     x="626.68652"
+     y="598.07465"
+     width="152"
+     height="156.36887"
+     xlink:href="robot.png"
+     preserveAspectRatio="xMidYMid"
+     id="image819" />
+  <image
+     x="1124"
+     y="598"
+     width="152"
+     height="156.36886"
+     xlink:href="robot.png"
+     preserveAspectRatio="xMidYMid meet"
+     transform="rotate(4 1200 641)"
+     id="image821" />
+  <rect
+     x="314"
+     y="560"
+     width="150"
+     height="50"
+     rx="18"
+     fill="#e8f1ff"
+     stroke="#d2e3ff"
+     stroke-width="1.8"
+     id="rect823" />
+  <rect
+     x="794"
+     y="560"
+     width="150"
+     height="50"
+     rx="18"
+     fill="#e8f1ff"
+     stroke="#d2e3ff"
+     stroke-width="1.8"
+     id="rect825" />
+  <rect
+     x="1274"
+     y="560"
+     width="150"
+     height="50"
+     rx="18"
+     fill="#e8f1ff"
+     stroke="#d2e3ff"
+     stroke-width="1.8"
+     id="rect827" />
+  <text
+     x="389"
+     y="592"
+     text-anchor="middle"
+     class="math"
+     id="text829">$ \hat{\mathbf{x}}_k^1 $</text>
+  <text
+     x="869"
+     y="592"
+     text-anchor="middle"
+     class="math"
+     id="text831">$ \hat{\mathbf{x}}_k^2 $</text>
+  <text
+     x="1349"
+     y="592"
+     text-anchor="middle"
+     class="math"
+     id="text833">$ \hat{\mathbf{x}}_k^3 $</text>
+  <rect
+     x="314"
+     y="628"
+     width="150"
+     height="50"
+     rx="18"
+     fill="#e5f6ef"
+     stroke="#d0edde"
+     stroke-width="1.8"
+     id="rect835" />
+  <rect
+     x="794"
+     y="628"
+     width="150"
+     height="50"
+     rx="18"
+     fill="#e5f6ef"
+     stroke="#d0edde"
+     stroke-width="1.8"
+     id="rect837" />
+  <rect
+     x="1274"
+     y="628"
+     width="150"
+     height="50"
+     rx="18"
+     fill="#e5f6ef"
+     stroke="#d0edde"
+     stroke-width="1.8"
+     id="rect839" />
+  <text
+     x="389"
+     y="660"
+     text-anchor="middle"
+     class="math"
+     id="text841">$ u_k^1 $</text>
+  <text
+     x="869"
+     y="660"
+     text-anchor="middle"
+     class="math"
+     id="text843">$ u_k^2 $</text>
+  <text
+     x="1349"
+     y="660"
+     text-anchor="middle"
+     class="math"
+     id="text845">$ u_k^3 $</text>
+  <rect
+     x="198"
+     y="700"
+     width="234"
+     height="48"
+     rx="18"
+     fill="#fff1e9"
+     stroke="#f0ddd0"
+     stroke-width="1.8"
+     id="rect847" />
+  <rect
+     x="678"
+     y="700"
+     width="234"
+     height="48"
+     rx="18"
+     fill="#fff1e9"
+     stroke="#f0ddd0"
+     stroke-width="1.8"
+     id="rect849" />
+  <rect
+     x="1158"
+     y="700"
+     width="234"
+     height="48"
+     rx="18"
+     fill="#fff1e9"
+     stroke="#f0ddd0"
+     stroke-width="1.8"
+     id="rect851" />
+  <text
+     x="286"
+     y="731"
+     text-anchor="middle"
+     class="word"
+     id="text853">watchdog</text>
+  <text
+     x="766"
+     y="731"
+     text-anchor="middle"
+     class="word"
+     id="text855">watchdog</text>
+  <text
+     x="1246"
+     y="731"
+     text-anchor="middle"
+     class="word"
+     id="text857">watchdog</text>
+  <rect
+     x="352"
+     y="711"
+     width="52"
+     height="26"
+     rx="10"
+     fill="#ffe2dc"
+     stroke="#ffd0c8"
+     stroke-width="1.4"
+     id="rect859" />
+  <rect
+     x="832"
+     y="711"
+     width="52"
+     height="26"
+     rx="10"
+     fill="#ffe2dc"
+     stroke="#ffd0c8"
+     stroke-width="1.4"
+     id="rect861" />
+  <rect
+     x="1312"
+     y="711"
+     width="52"
+     height="26"
+     rx="10"
+     fill="#ffe2dc"
+     stroke="#ffd0c8"
+     stroke-width="1.4"
+     id="rect863" />
+  <text
+     x="378"
+     y="730"
+     text-anchor="middle"
+     class="math"
+     id="text865">$ 0 $</text>
+  <text
+     x="858"
+     y="730"
+     text-anchor="middle"
+     class="math"
+     id="text867">$ 0 $</text>
+  <text
+     x="1338"
+     y="730"
+     text-anchor="middle"
+     class="math"
+     id="text869">$ 0 $</text>
+  <path
+     d="M 284 641 C 320 624, 344 614, 364 606"
+     fill="none"
+     stroke="#7290e7"
+     stroke-width="4.6"
+     stroke-linecap="round"
+     marker-end="url(#arrow-blue)"
+     id="path871" />
+  <path
+     d="M 370 630 C 328 636, 302 642, 274 652"
+     fill="none"
+     stroke="#58b59a"
+     stroke-width="4.6"
+     stroke-linecap="round"
+     marker-end="url(#arrow-green)"
+     id="path873" />
+  <path
+     d="M 315 700 L 360 678"
+     fill="none"
+     stroke="#e6a29a"
+     stroke-width="4.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-red)"
+     id="path875" />
+  <path
+     d="M 764 641 C 800 624, 824 614, 844 606"
+     fill="none"
+     stroke="#7290e7"
+     stroke-width="4.6"
+     stroke-linecap="round"
+     marker-end="url(#arrow-blue)"
+     id="path877" />
+  <path
+     d="M 850 630 C 808 636, 782 642, 754 652"
+     fill="none"
+     stroke="#58b59a"
+     stroke-width="4.6"
+     stroke-linecap="round"
+     marker-end="url(#arrow-green)"
+     id="path879" />
+  <path
+     d="M 795 700 L 840 678"
+     fill="none"
+     stroke="#e6a29a"
+     stroke-width="4.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-red)"
+     id="path881" />
+  <path
+     d="M 1244 641 C 1280 624, 1304 614, 1324 606"
+     fill="none"
+     stroke="#7290e7"
+     stroke-width="4.6"
+     stroke-linecap="round"
+     marker-end="url(#arrow-blue)"
+     id="path883" />
+  <path
+     d="M 1330 630 C 1288 636, 1262 642, 1234 652"
+     fill="none"
+     stroke="#58b59a"
+     stroke-width="4.6"
+     stroke-linecap="round"
+     marker-end="url(#arrow-green)"
+     id="path885" />
+  <path
+     d="M 1275 700 L 1320 678"
+     fill="none"
+     stroke="#e6a29a"
+     stroke-width="4.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-red)"
+     id="path887" />
+  <path
+     d="M 389 560 C 420 470, 510 350, 578 264"
+     fill="none"
+     stroke="#7290e7"
+     stroke-width="5.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-blue)"
+     id="path889" />
+  <path
+     d="M 620 264 C 555 352, 474 470, 431 628"
+     fill="none"
+     stroke="#58b59a"
+     stroke-width="5.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-green)"
+     id="path891" />
+  <text
+     x="484"
+     y="388"
+     text-anchor="middle"
+     class="tag"
+     id="text893">ROS</text>
+  <path
+     d="M 869 560 C 848 470, 770 350, 662 264"
+     fill="none"
+     stroke="#7290e7"
+     stroke-width="5.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-blue)"
+     id="path895" />
+  <path
+     d="M 674 264 C 776 350, 846 470, 911 628"
+     fill="none"
+     stroke="#58b59a"
+     stroke-width="5.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-green)"
+     id="path897" />
+  <text
+     x="770"
+     y="392"
+     text-anchor="middle"
+     class="tag"
+     id="text899">ROS</text>
+  <path
+     d="M 1349 560 C 1278 470, 1094 352, 682 264"
+     fill="none"
+     stroke="#7290e7"
+     stroke-width="5.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-blue)"
+     id="path901" />
+  <path
+     d="M 686 264 C 1100 352, 1258 470, 1391 628"
+     fill="none"
+     stroke="#58b59a"
+     stroke-width="5.2"
+     stroke-linecap="round"
+     marker-end="url(#arrow-green)"
+     id="path903" />
+  <text
+     x="1096"
+     y="378"
+     text-anchor="middle"
+     class="tag"
+     id="text905">ROS</text>
 </svg>
