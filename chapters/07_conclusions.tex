@@ -56,15 +56,23 @@ discovery.
 \textsc{experimental validation} \quad
 The third contribution of the thesis is the inclusion of experimental
 validation on the Duckietown platform. The work presented in
-\cref{ch:duckietown} is intentionally modest in its current scope, but it
-establishes an important link between simulation and physical
-experimentation. This is relevant because the significance of
-preference-aware planning does not depend only on formal models and
-simulation results, but also on how those methods behave under sensing
-noise, actuation errors, synchronization issues, and partial
-observability. The Duckietown platform should therefore be understood as
-an enabling step towards a more complete sim-to-real evaluation of games
-of ordered preference and preference estimation.
+\cref{ch:duckietown} is intentionally modest in scope, but it already
+makes the sim-to-real bottlenecks more concrete.
+The experiments show that the framework can be executed in a near-real-time
+physical loop, although not with large timing margin: solves often take
+longer than one sampling period and therefore rely on the remaining
+turn-length buffer to finish before the next mandatory refresh.
+They also reveal a systematic gap between planned acceleration-domain
+trajectories and executed robot motion, because the DB21J platform must
+realize those commands through its native \((v,\omega)\) interface.
+This is relevant because the significance of preference-aware planning
+does not depend only on formal models and simulation results, but also on
+how those methods behave under sensing noise, actuation errors,
+synchronization issues, and partial observability.
+The Duckietown platform should therefore be understood not only as an
+enabling step, but also as an initial empirical demonstration of where
+the current implementation already works and where it still needs tighter
+execution.
 
 Taken together, the results of the thesis indicate that games of ordered
 preference constitute a promising framework for representing interactive
@@ -122,6 +130,9 @@ robust and substantially broader. This involves conducting a larger
 number of experiments, considering richer interaction scenarios,
 incorporating additional sensing modalities, and combining the proposed
 methods with other existing works in perception, estimation, and
-planning. Extending the use of the Duckietown platform in this way would
-provide a more complete assessment of how games of ordered preference
-behave under realistic sim-to-real conditions.
+planning. It also involves tightening the execution stack itself, in
+particular by reducing solver latency and by improving the map from
+planned accelerations to the robot's low-level control interface.
+Extending the use of the Duckietown platform in this way would provide a
+more complete assessment of how games of ordered preference behave under
+realistic sim-to-real conditions.
