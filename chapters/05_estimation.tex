@@ -4,7 +4,7 @@
 Chapter~\ref{ch:lex-ibr-ot} assumed that each agent knows the ordered objectives of the others.
 This assumption is restrictive in traffic scenes, where vehicles do not explicitly communicate
 which objectives they prioritize or how they rank them.
-We therefore consider the inverse problem for games of ordered preference.
+We now consider the inverse problem for games of ordered preference.
 Given a short window of observed behavior and a known set of candidate objectives, the task is to
 infer the non-ego preference orders that jointly best explain the observed trajectories.
 This chapter develops two offline estimators for that problem and then extends the same idea to
@@ -14,7 +14,7 @@ The presentation follows the modeling assumptions of the previous chapters.
 The dynamics, shared constraints, and objective library are assumed known, while the ordering of
 those objectives is not.
 This places the estimation problem close to inverse formulations studied in trajectory games
-with unknown opponents \cite{liu:2023}, but here the unknown quantity is discrete, namely the
+with unknown opponents \cite{liu:2023}, but here the unknown quantity is the discrete
 profile of lexicographic orderings. Existing inverse-game methods can recover
 latent goals in trajectory games \cite{liu:2023}, reward or cost parameters from
 observed interactions \cite{li:2023,wang:2018,yu:2019}, utility functions in
@@ -414,7 +414,7 @@ $\hat{\boldsymbol{\pi}}^{-e} \gets
 The offline estimators infer a single non-ego preference profile before a
 closed-loop rollout begins.
 In practice, however, an ego agent should update its beliefs while the interaction unfolds.
-The implementation therefore includes an adaptive extension in which inference and control are
+The implementation also includes an adaptive extension in which inference and control are
 performed simultaneously.
 The closed-loop structure is summarized in \cref{fig:inverse_online_loop}.
 
@@ -425,20 +425,20 @@ $\mathcal{C}^{-e} = \prod_{j \in \mathcal{U}} \mathcal{C}^j$.
 Unlike the offline case, these sets are not full permutation spaces.
 In the implementation used here, each $\mathcal{C}^j$ is formed from a nominal order by a small
 number of simple perturbations, such as swapping the first two priorities or reversing the list.
-The resulting Cartesian product is therefore a small menu of plausible joint profiles rather than
-the full permutation space, which keeps the online computations tractable.
+The resulting Cartesian product is a small menu of plausible joint profiles rather than the full
+permutation space, which keeps the online computations tractable.
 Let $W$ be the observation-window length, expressed in executed control steps.
 At update index $m$, each candidate profile $\mathbf{c}^{-e} \in \mathcal{C}^{-e}$ is evaluated by
 starting from the observed state at the beginning of the current window, rolling out a short
 forward prediction under $\mathbf{c}^{-e}$, and matching the predicted non-ego trajectories
 against the measurements collected over that same window.
-Each online update therefore requires $|\mathcal{C}^{-e}|$ short forward rollouts over the current
+Each online update requires $|\mathcal{C}^{-e}|$ short forward rollouts over the current
 window, followed by one additional refresh rollout for the selected profile before the ego replan.
 In the benchmarked implementation, these candidate rollouts are intentionally restarted from the
 observed window state rather than carrying candidate-local solver state across windows.
 Under the tight relaxation budgets used here, more aggressive warm-start reuse was found to alter
-the resulting closed-loop trajectories materially and was therefore not retained in the reported
-online estimator.
+the resulting closed-loop trajectories enough that it was not retained in the reported online
+estimator.
 The raw score of candidate profile
 $\mathbf{c}^{-e} \in \mathcal{C}^{-e}$ is
 \begin{equation}
@@ -518,8 +518,8 @@ hand-designed candidate sets built from nominal orders and simple perturbations.
 Its second limitation is statistical. For the sake of repeated closed-loop updates, the online layer does not
 reuse the full score construction of \cref{sec:inverse-bayesian}, but instead adopts a cheaper windowed
 trajectory-matching surrogate with smoothing and a switching rule.
-The online layer should therefore be read as a tractable online approximation of the richer estimator
-introduced in \cref{sec:inverse-bayesian}.
+The online layer is thus a tractable online approximation of the richer estimator introduced in
+\cref{sec:inverse-bayesian}.
 
 \section{Experiments}
 \label{sec:inverse-experiments}
@@ -532,7 +532,7 @@ closed-loop replanning?
 To answer them, the exhaustive baseline of \cref{sec:inverse-baseline} and the richer offline diagnostic of
 \cref{sec:inverse-bayesian} are first compared on the same controlled inverse task, and the joint online updater of
 \cref{sec:inverse-online} is then evaluated in closed loop.
-In all cases, the observations are state-action trajectories generated by the centralized ordered-preference solve of
+Throughout, the observations are state-action trajectories generated by the centralized ordered-preference solve of
 \cref{ch:lex-ibr-ot}, so the true non-ego orders are used only for evaluation and are never shown to the inverse method.
 
 \subsection{Experimental setup}
@@ -569,7 +569,7 @@ We then define the weighted order-agreement score $a_{\mathrm{ord}}^j$ as
     a_{\mathrm{ord}}^j = 1 - d_{\mathrm{ord}}^j.
 \end{equation*}
 The score $a_{\mathrm{ord}}^j$ equals $1$ for an exact match and decreases as higher-priority pairs are inverted.
-We average it over the non-ego players and denote the result again by $a_{\mathrm{ord}}$.
+We average it over the non-ego players and denote the average by $a_{\mathrm{ord}}$.
 We also report $r_1$, the fraction of non-ego players whose highest-priority objective is recovered exactly.
 For the reduced offline sweeps below, $K_j = 3$ because only the first three priorities are permuted; for the online
 results, the score is evaluated on the full candidate order.
@@ -584,7 +584,7 @@ A full exhaustive offline search over the two six-level non-ego hierarchies woul
 $720 \times 720$ joint profiles per scenario.
 For the offline comparison below, both non-ego players are treated as unknown, but only the first three priorities of
 each side vehicle are permuted while the lower-priority tail is kept fixed in its nominal order.
-This yields six candidates per non-ego player and therefore $6 \times 6 = 36$ implied joint hypotheses.
+This yields six candidates per non-ego player, hence $6 \times 6 = 36$ implied joint hypotheses.
 The reduced offline comparison now evaluates those $36$ profiles jointly at each of the
 $T_{\mathrm{id}} = 3$ observation starts, for a total of $108$ joint window fits per method.
 The control-only baseline rolls each candidate for one executed step, whereas the richer offline score rolls each
@@ -598,13 +598,15 @@ For each non-ego player, the four online candidates are the nominal environment-
 by swapping the first two priorities, a one-step left rotation, and the reversed list.
 The estimator scores the Cartesian product of those sets.
 With two non-ego players, this yields $4 \times 4 = 16$ joint hypotheses per update.
-Because the nominal orders generate the benchmark rollouts, the online experiment should be read as local
-discrimination around a correct prior rather than as exhaustive discovery over arbitrary joint profiles.
+Because the nominal orders also generate the benchmark rollouts, the online experiment only tests
+local discrimination around a correct prior rather than exhaustive discovery over arbitrary joint
+profiles.
 With observation window $W = 6$, each rollout performs six online updates at executed steps $6, 12, \ldots, 36$.
 Additional robustness batches apply small perturbations to longitudinal spacing, ambulance offset,
 and lateral starting position.
-Besides identification accuracy, the online runs report three closed-loop diagnostics: minimum
-clearance over the rollout, an ego-completion score, and the minimum per-player solve-success rate.
+Besides identification accuracy, the online runs report three closed-loop diagnostics. These are
+minimum clearance over the rollout, an ego-completion score, and the minimum per-player
+solve-success rate.
 Here, \emph{minimum clearance} is the smallest slack of the pairwise collision-avoidance constraints
 along the executed rollout, so values near zero indicate feasible motion close to the safety boundary.
 The \emph{ego-completion score} is the final value of the ego's normalized progress-to-goal metric, with
@@ -653,7 +655,7 @@ weighted order score $a_{\mathrm{ord}}$ and the first-priority recovery rate $r_
 
 Exact reduced-profile recovery is too strict to summarize the offline behavior on its own.
 Under that metric, none of the four reduced joint sweeps recovers the full two-player profile.
-The useful distinction is therefore between partial recovery and misleadingly stable errors.
+What matters here is the difference between partial recovery and misleadingly stable errors.
 In highway, both offline methods remain weak. They end at $a_{\mathrm{ord}} = 0.4$ and $r_1 = 0$, so the short
 window does not reliably identify even the highest-priority non-ego objective.
 In city, the control-only baseline is much more informative, reaching $a_{\mathrm{ord}} = 0.9$ and $r_1 = 1.0$.
@@ -667,8 +669,8 @@ $216$ joint window fits without changing the selected reduced profile in any of 
 Likewise, the nearby weight settings
 $(w_x, w_p, \lambda) = (1.5, 0.25, 0.60)$ and $(2.5, 0.45, 0.75)$
 leave the multi-step endpoints unchanged in both scenarios.
-The main offline limitation is therefore not search size or narrow tuning, but lack of identifying signal in these
-short windows.
+The main offline limitation is thus not search size or narrow tuning, but the lack of identifying
+signal in these short windows.
 
 \subsection{Online Joint Inference and Control}
 
@@ -677,7 +679,7 @@ In both scenarios, the correct joint profile is already selected at the first up
 switch is triggered, so the online metric attains $a_{\mathrm{ord}} = 1$ in both cases.
 In this local setting, the updater confirms the nominal prior early enough for the ego controller to keep replanning.
 
-The two nominal scenarios should still be interpreted differently.
+The two nominal scenarios still differ in an important way.
 Under those diagnostics, highway is the easier case, with minimum clearance $0.027$, ego-completion score
 $0.926$, and minimum per-player solve-success rate $1.000$.
 City is much tighter, with minimum clearance $10^{-6}$, ego-completion score $0.741$, and minimum per-player
@@ -722,8 +724,8 @@ What changes is again the control difficulty.
 Highway remains the easier case, with worst-case minimum clearance $0.025$ and minimum solve-success rate $1.000$.
 City is much tighter, since even though inference remains exact across the four perturbations, the worst run drops below the
 nominal clearance margin and the minimum solve-success rate falls to $0.600$.
-This leads to the conclusion that within a local hypothesis set around a good nominal prior, profile identification is robust to small geometric
-perturbations, but closed-loop safety margins are not.
+Within a local hypothesis set around a good nominal prior, profile identification is robust to
+small geometric perturbations, but closed-loop safety margins are not.
 
 \section{Discussion}
 \label{sec:inverse-discussion}
@@ -731,10 +733,10 @@ perturbations, but closed-loop safety margins are not.
 This chapter extends the forward ordered-preference solvers of the previous chapters to the
 incomplete-information setting.
 The exhaustive estimator provides a reference, the multi-step score indicates when a
-candidate profile explains more than the next control action, and the online updater carries the same idea into
-closed-loop interaction.
-It is therefore concluded that preference-order information can be recovered and used online, but only within the identifiability limits of the
-available observation window and candidate set.
+candidate profile explains more than the next control action, and the online updater carries the
+same idea into closed-loop interaction. Taken together, the experiments show that
+preference-order information can be recovered and used online, but only within the
+identifiability limits of the available observation window and candidate set.
 
 % The same experiments also make those limits clear.
 % Highway remains ambiguous offline even when the identification window is doubled from $T_{\mathrm{id}} = 3$ to
@@ -753,13 +755,14 @@ remain observationally indistinguishable. In the present benchmarks, this is exa
 steps. Before the interaction becomes constraining, one cannot reliably tell whether a side vehicle is following the
 highway or city ordering from its trajectory alone.
 
-The online result is therefore best interpreted as local discrimination rather than unconstrained preference
-discovery. Its success depends not only on the windowed score, but also on the quality of the finite candidate set that
-is presented to the updater. In the experiments of \cref{sec:inverse-online}, that set is built around a good nominal
-order and a few nearby reorderings, so the method only needs to reject plausible local alternatives. If the true order
-were absent from that set, or if the nominal prior were poor, the updater could still rank the available candidates
-consistently and yet converge to the wrong profile. The online estimator is therefore robust within its local
-hypothesis set, but it is not a substitute for exhaustive search over the full permutation space.
+The online result is best understood as local discrimination rather than unconstrained preference
+discovery. Its success depends not only on the windowed score, but also on the quality of the
+finite candidate set presented to the updater. In the experiments of \cref{sec:inverse-online},
+that set is built around a good nominal order and a few nearby reorderings, so the method only
+needs to reject plausible local alternatives. If the true order were absent from that set, or if
+the nominal prior were poor, the updater could still rank the available candidates consistently and
+yet converge to the wrong profile. The online estimator is robust within its local hypothesis set,
+but it is not a substitute for exhaustive search over the full permutation space.
 
 Even with those limitations, the chapter shows that inverse games of ordered preference can recover meaningful
 preference-order information and use it to support closed-loop interaction when ordered objectives are not known

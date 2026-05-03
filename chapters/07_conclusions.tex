@@ -36,8 +36,8 @@ of preference-aware planning in interactive traffic scenarios.
 \textsc{preference order estimation} \quad
 The second contribution of the thesis concerns the inverse problem of
 games of ordered preference. Although this part remains less developed
-than the computational contribution, it goes beyond identifying a missing
-problem formulation. The experiments in \cref{ch:estimation} show that
+than the computational contribution, it goes beyond merely stating the
+problem. The experiments in \cref{ch:estimation} show that
 exact offline recovery is difficult under short observation windows,
 mainly because lower-priority objectives may never become active strongly
 enough to reveal the underlying order. In that sense, the main bottleneck
@@ -59,7 +59,7 @@ validation of the receding-horizon planning stack on the Duckietown
 platform. The work presented in
 \cref{ch:duckietown} is modest in scope, but it makes the sim-to-real
 bottlenecks more concrete.
-The experiments show that the framework can be executed in a near-real-time
+The experiments show that the framework can run in a near-real-time
 physical loop. In the reported runtime logs, all but one of the solves
 finish within one sampling period and all recorded solves finish before the
 next replanning deadline imposed by the turn length, although the
@@ -70,13 +70,12 @@ slowest replans still leave limited slack.
 The experiments also reveal a systematic gap between planned acceleration-domain
 trajectories and executed robot motion, because the DB21J platform must
 realize those commands through its native \((v,\omega)\) interface.
-This is relevant because the significance of preference-aware planning
-does not depend only on formal models and simulation results, but also on
-how those methods behave under sensing noise, actuation errors,
-synchronization issues, and partial observability.
-Duckietown therefore serves not only as an enabling platform, but also
-as a first empirical check of where the current implementation already
-works and where execution still needs to improve.
+This matters because preference-aware planning is not judged only by
+formal models and simulation results, but also by how the methods behave
+under sensing noise, actuation errors, synchronization issues, and
+partial observability.
+Duckietown thus serves as a first empirical check of what the current
+implementation can already do and where execution still needs to improve.
 
 The results of the thesis indicate that games of ordered
 preference constitute a promising framework for representing interactive

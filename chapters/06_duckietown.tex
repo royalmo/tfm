@@ -14,7 +14,7 @@ In simulation, the solver can query the current state, solve a receding-horizon 
 control input without worrying about network delays, actuator saturation, watchdog timeouts, or sensor
 dropouts.
 On real robots, every one of those effects matters.
-The purpose of this experimental stack is therefore to preserve the structure of the solution method while
+The purpose of this experimental stack is to preserve the structure of the solution method while
 making its execution observable and safe enough for physical trials.
 
 Duckietown is particularly convenient for that purpose because it standardizes the small-scale road geometry,
@@ -91,7 +91,7 @@ Initialize the manager--robot communication and the state / command interfaces\;
 \label{alg:duckietown_manager_loop}
 \end{algorithm}
 
-The manager therefore advances the closed loop every \(\Delta t\), while the underlying receding-horizon
+The manager advances the closed loop every \(\Delta t\), while the underlying receding-horizon
 game is refreshed only every \(T_l\) steps and otherwise continues along the current plan.
 The explicit safety boundary remains the same. Until a feasible command is available, the robots remain
 stationary (\cref{alg:duckietown_manager_loop}).
@@ -169,8 +169,9 @@ producing requests that the robot cannot track reliably.
 
 The published \texttt{RobotStateStamped} message is richer than a simple pose estimate.
 In addition to \(x\), \(y\), \(\theta\), \(v_x\), and \(v_y\), it carries the command pair
-\(v^{\mathrm{cmd}}\) and \(\omega^{\mathrm{cmd}}\), the encoder-based estimates when available, and the
-wheel command feedback when the robot firmware exposes it, to allow a more precise position estimate for the next solve step.
+\(v^{\mathrm{cmd}}\) and \(\omega^{\mathrm{cmd}}\), encoder-based estimates when available, and wheel
+command feedback when the robot firmware exposes it. This supports a more precise state estimate
+at the next solve step.
 The adapter also includes a watchdog timer that zeros the command when no fresh acceleration message has been
 received within a configured timeout.
 % This makes the message suitable not only for feedback control but also for runtime introspection and log
@@ -189,9 +190,8 @@ First, can the ordered-preference solver return a fresh plan fast enough for the
 Second, once the planned planar accelerations are converted to the native Duckiebot commands \((v,\omega)\), how
 closely does the executed motion follow the intended one?
 Since \cref{ch:lex-ibr-ot} already evaluates how lexicographic IBR over time reproduces different
-preference-induced behaviors, this chapter does not compare alternative preference orders again, and
-focuses on one representative interaction setting.
-Accordingly, the chapter focuses on executability rather than on broad
+preference-induced behaviors, this chapter does not compare alternative preference orders again.
+It focuses instead on one representative interaction setting and on executability rather than broad
 experimental comparison.
 
 For the reported runs, the manager uses turn length \(T_l = 2\) and sampling period \(\Delta t = 0.3\,\mathrm{s}\).
@@ -202,7 +202,7 @@ the next mandatory replan.
 As the overtaking maneuver resolves, the collision-avoidance constraints relax, so later replans are often
 solved faster.
 All but one of the logged solves finish before \(\Delta t\), and more than half finish below \(30\,\mathrm{ms}\).
-The platform therefore runs near real time, but with limited timing slack.
+The platform runs near real time, but with limited timing slack.
 
 \begin{figure}[h]
     \centering
@@ -218,7 +218,7 @@ The second result concerns trajectory tracking.
 \Cref{fig:duckietown_trajectory} compares the motion planned by the acceleration-domain solver with the motion
 actually executed by the robots in the reported physical interaction.
 In this experiment, the robots preserve the qualitative maneuver predicted by the game solution, since they still follow
-the intended negotiation pattern and remain compatible with the ordered-preference plan.
+the intended negotiation pattern and remain qualitatively consistent with the ordered-preference plan.
 However, the realized trajectories do not coincide exactly with the planned ones.
 This mismatch is expected, because the optimizer reasons directly in planar accelerations, whereas the robots act
 through the intermediate velocity-integration and heading-control map of \cref{sec:duckietown-control}.
@@ -244,8 +244,9 @@ interface.}
 
 \section{Discussion}
 
-This chapter shows that the acceleration-based receding-horizon game formulation developed in the previous
-chapters can be embedded in a physical robotic loop without altering its basic mathematical structure.
+This chapter shows that the acceleration-based receding-horizon game formulation developed in the
+previous chapters can be embedded in a physical robotic loop without altering its basic
+mathematical structure.
 The experimental implementation integrates the solver, the centralized runtime manager, and the robot-side
 adapter into a coherent closed-loop system on DB21J Duckiebots and standardized Duckietown infrastructure,
 thereby providing an experimental validation beyond simulation.
@@ -253,8 +254,8 @@ thereby providing an experimental validation beyond simulation.
 In the reported setup, the physical loop runs near real time.
 With \(T_l = 2\), only one logged solve in the tested runs slightly exceeds a single sampling period
 \(\Delta t\), and none exceed the two-sample deadline \(2\Delta t\).
-The framework can therefore be executed in a physical loop while preserving the qualitative interaction pattern
-predicted by the ordered-preference plan.
+The framework can be executed in a physical loop while preserving the qualitative interaction
+pattern predicted by the ordered-preference plan.
 
 This result should still be interpreted cautiously.
 The timing margin is not yet large, since the slowest replans leave only limited slack before the next mandatory
@@ -265,11 +266,12 @@ maneuver, but do not reproduce the planned motion exactly.
 The scope of the validation is also limited.
 Only one interaction setting is reported, so the chapter remains a proof of executability in a
 physical loop rather than a broad comparative experimental study.
-The DB21J sensing stack and the chosen deployment configuration motivate a centralized architecture and a
-conservative control stack, and do not support a fully decentralized treatment of multi-robot interaction.
-The contribution is therefore methodological rather than definitive. It establishes the
-practical executability of the proposed formulation under real timing, actuation, and safety constraints, while
-also making the main deployment bottlenecks explicit, namely solver latency, the gap between acceleration-domain plans
+The DB21J sensing stack and the chosen deployment configuration also motivate a centralized
+architecture and a conservative control stack, and do not support a fully decentralized treatment
+of multi-robot interaction.
+The contribution is methodological rather than definitive. It establishes the
+practical executability of the proposed formulation under real timing, actuation, and safety constraints, while also making
+the main deployment bottlenecks explicit, namely solver latency, the gap between acceleration-domain plans
 and low-level drive execution, and the still narrow experimental scope.
 A broader assessment would require both richer perception and tighter execution, in particular
 faster replanning and a better-matched actuation interface, in addition to less centralized execution and broader
