@@ -182,61 +182,58 @@ previous chapters.
 First, can the ordered-preference solver return a fresh plan fast enough for the robot loop to keep moving?
 Second, once the planned planar accelerations are converted to the native Duckiebot commands \((v,\omega)\), how
 closely does the executed motion follow the intended one?
+Since the quality of Lexicographic IBR Over Time has already been proven in \cref{ch:lex-ibr-ot},
+in this chapter we will not compare different preference orders.
 
-For the reported runs, the manager keeps the same turn length \(T_l = 3\) used in the simulated benchmark.
+For the reported runs, the manager uses turn length \(T_l = 2\) and sampling period \(\Delta t = 0.3\,\mathrm{s}\).
 A solve that finishes within one sampling period \(\Delta t\) can be applied immediately at the next update, whereas
 a solve that finishes between \(\Delta t\) and \(2\Delta t\) still leaves one executed control step in reserve before
 the next mandatory replan.
 \Cref{fig:duckietown_solve_times} summarizes the timing results in that budgeted form.
-The main pattern is that the current implementation is not comfortably real time: most solves do not complete within
-a single sampling period, and the denser city interaction tends to remain closer to the \(2\Delta t\) boundary than
-the highway case.
-Even so, the majority of solves still fit below \(2\Delta t\), so the robots can usually keep following the current
-open-loop segment while the next plan is being computed.
-The platform therefore operates in a near-real-time regime, but with limited timing slack.
+The runtime spread is wide enough that a logarithmic vertical axis is more informative than a linear one: the fastest
+solves are a few milliseconds, while the slowest one reaches \(0.325\,\mathrm{s}\).
+Across the two logs and up to executed step \(30\), \(28\) of the \(29\) recorded solves finish within one sampling
+period, and the remaining one exceeds \(\Delta t\) only slightly, by \(0.025\,\mathrm{s}\).
+No recorded solve exceeds \(2\Delta t\), so the next replanning deadline is always met in the reported runs.
+The platform therefore operates in a near-real-time regime with a generally adequate, though not large, timing margin.
 
 \begin{figure}[t]
     \centering
     \input{figures/duckietown/duckietown_solve_times_tikz.tex}
-    \caption{Wall-clock solve times at different replanning instants in representative highway and city
-    runs. The horizontal dashed lines at \(\Delta t\) and \(2\Delta t\) mark the one-sample budget and the latest
-    finish time that still leaves one executed control step in reserve when \(T_l = 3\).}
+    \caption{Wall-clock solve times at different replanning instants in two runs of the same Duckietown interaction,
+    trimmed to executed step \(30\). The vertical axis is logarithmic. The horizontal dashed lines at \(\Delta t\)
+    and \(2\Delta t\) mark the one-sample budget and the latest finish time that still meets the next replanning
+    deadline when \(T_l = 2\).}
     \label{fig:duckietown_solve_times}
 \end{figure}
 
 The second result concerns trajectory tracking.
 \Cref{fig:duckietown_trajectory} compares the motion planned by the acceleration-domain solver with the motion
-actually executed by the robots in representative highway and city interactions.
-In both scenarios, the robots preserve the qualitative maneuver predicted by the game solution: they still follow
+actually executed by the robots in the reported physical interaction.
+In this experiment, the robots preserve the qualitative maneuver predicted by the game solution: they still follow
 the intended negotiation pattern and remain compatible with the ordered-preference plan.
 However, the realized trajectories do not coincide exactly with the planned ones.
 This mismatch is expected, because the optimizer reasons directly in planar accelerations, whereas the robots act
 through the intermediate velocity-integration and heading-control map of \cref{sec:duckietown-control}.
 That conversion smooths abrupt changes in magnitude and direction, so the executed path becomes a filtered version
 of the nominal one rather than an exact replay.
+For visual clarity, the dashed reference path shown in \cref{fig:duckietown_trajectory} is not a pointwise raw
+export of every solver waypoint.
+Instead, it is a readability-oriented rendering derived from the solver output and slightly regularized by hand so
+that the intended maneuver can be understood directly from the figure.
+This chapter is therefore not meant to re-establish the correctness of the solver itself, which was already studied
+in \cref{ch:lex-ibr-ot}, but to show how the commanded motion is transformed and executed in the physical loop.
 
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-    \begin{subfigure}[t]{0.8\linewidth}
-        \def\svgwidth{\linewidth}
-        \subimport{figures/duckietown/}{duckietown_trajectory_highway.pdf_tex}
-        \caption{Highway.}
-        \label{fig:duckietown_trajectory_highway}
-    \end{subfigure}
-
-    \medskip
-
-    \begin{subfigure}[t]{0.8\linewidth}
-        \def\svgwidth{\linewidth}
-        \subimport{figures/duckietown/}{duckietown_trajectory_city.pdf_tex}
-        \caption{City.}
-        \label{fig:duckietown_trajectory_city}
-    \end{subfigure}
-\caption{Comparison between the commanded and executed robot motion on the Duckietown platform. In each subplot,
-the dashed trajectories are the motion planned by the ordered-preference solver and the solid trajectories are the
-paths actually followed by the robots after conversion to the low-level \((v,\omega)\) interface.}
+    \def\svgwidth{0.86\linewidth}
+    \subimport{figures/duckietown/}{duckietown_trajectory_highway.pdf_tex}
+\caption{Comparison between the commanded and executed robot motion in the reported Duckietown interaction.
+The dashed trajectory is a readability-oriented rendering derived from the ordered-preference solver output, and the
+solid trajectories are the paths actually followed by the robots after conversion to the low-level \((v,\omega)\)
+interface.}
 \label{fig:duckietown_trajectory}
-\end{figure*}
+\end{figure}
 
 Taken together, the timing and tracking results give a mixed but positive picture.
 The current deployment is not yet a high-margin robotic implementation: the solver remains relatively slow, and the
@@ -252,15 +249,18 @@ The experimental implementation integrates the solver, the centralized runtime m
 adapter into a coherent closed-loop system on DB21J Duckiebots and standardized Duckietown infrastructure,
 thereby providing an experimental validation beyond simulation.
 
-The main empirical outcome is that this validation currently belongs to a near-real-time regime rather than to a
-comfortably real-time one.
-With \(T_l = 3\), solves often exceed a single sampling period \(\Delta t\) and therefore rely on the remaining
-buffered commands of the current turn to finish before the next mandatory refresh.
+The main empirical outcome is that this validation reaches a usable near-real-time regime in the reported setup.
+With \(T_l = 2\), only one logged solve up to executed step \(30\) slightly exceeds a single sampling period
+\(\Delta t\), and none exceed the two-sample deadline \(2\Delta t\).
+The remaining timing concern is therefore not outright deadline violation, but limited slack in the occasional
+slowest replans.
 The second practical limitation is actuation mismatch: because the optimizer works in planar accelerations while the
 DB21J interface executes the derived pair \((v,\omega)\), the realized trajectories remain close to the intended
 maneuver but do not reproduce it exactly.
 
 However, the scope of this validation remains limited.
+Only one interaction setting is reported, so this chapter should be read as a proof of executability in a
+physical loop rather than as a broad comparative experimental campaign.
 The DB21J sensing stack and the chosen deployment configuration motivate a centralized architecture and a
 conservative control stack, and do not support a fully decentralized treatment of multi-robot interaction.
 Accordingly, the contribution of this chapter is methodological rather than definitive: it establishes the

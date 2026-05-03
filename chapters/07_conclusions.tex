@@ -59,9 +59,10 @@ validation on the Duckietown platform. The work presented in
 \cref{ch:duckietown} is intentionally modest in scope, but it already
 makes the sim-to-real bottlenecks more concrete.
 The experiments show that the framework can be executed in a near-real-time
-physical loop, although not with large timing margin: solves often take
-longer than one sampling period and therefore rely on the remaining
-turn-length buffer to finish before the next mandatory refresh.
+physical loop. In the reported runtime logs, almost all solves finish
+within one sampling period and all recorded solves finish before the
+next replanning deadline imposed by the turn length, although the
+slowest replans still leave limited slack.
 They also reveal a systematic gap between planned acceleration-domain
 trajectories and executed robot motion, because the DB21J platform must
 realize those commands through its native \((v,\omega)\) interface.
