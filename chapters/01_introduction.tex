@@ -106,11 +106,12 @@ Simulation is essential for developing game-theoretic planning methods,
 but its assumptions do not automatically survive on physical platforms.
 Sensing noise, imperfect actuation, synchronization delays, and partial
 observability all affect how interactive behavior unfolds in practice. A
-convincing account of preference-aware planning and preference estimation
-therefore requires experimental validation beyond simulation. For this
-purpose, the thesis uses Duckietown, a low-cost robotic platform for
-autonomous driving experiments \cite{duckietown:2017}, as a testbed for
-small-scale interaction scenarios.
+convincing account of the overall framework therefore requires
+experimental validation beyond simulation. For this purpose, the thesis
+uses Duckietown, a low-cost robotic platform for autonomous driving
+experiments \cite{duckietown:2017}, as a testbed for small-scale
+interaction scenarios, with the physical experiments in this thesis
+focusing on the receding-horizon planning stack.
 
 \section{Objectives}
 
@@ -121,7 +122,7 @@ This goal is addressed through the following specific objectives:
 \begin{enumerate}
     \item To improve the computational tractability of solving games of ordered preference in receding-horizon settings through efficient approximate methods.
     \item To investigate the inverse problem of games of ordered preference, including methods and identifiability limits for estimating the preference order of other agents from observations.
-    \item To assess the practical relevance of the proposed methods through simulation and experiments on a physical robotic platform.
+    \item To assess the practical relevance of the proposed methods in simulation and to validate the receding-horizon planning stack on a physical robotic platform.
 \end{enumerate}
 
 To achieve these objectives, this thesis makes the following contributions:
@@ -129,7 +130,7 @@ To achieve these objectives, this thesis makes the following contributions:
 \begin{enumerate}
     \item It develops lexicographic IBR over time as an approximate solution method for receding-horizon games of ordered preference.
     \item It formulates the inverse problem of games of ordered preference and studies initial offline and online methods for estimating the preference order of other agents from observations.
-    \item It evaluates the proposed methods in simulated traffic scenarios and in Duckietown experiments with small-scale robots.
+    \item It evaluates the proposed methods in simulated traffic scenarios and validates the receding-horizon planning stack in Duckietown experiments with small-scale robots.
 \end{enumerate}
 
 \section{Thesis structure}
@@ -142,6 +143,6 @@ computation, estimation, and experimental validation.
     \item In \cref{ch:goop}, we formalize games of ordered preference and introduce the notation and optimization structure used throughout the thesis.
     \item In \cref{ch:lex-ibr-ot}, we formulate games of ordered preference in receding horizon and present lexicographic IBR over time as an efficient approximate solution method.
     \item In \cref{ch:estimation}, we study the inverse problem, develop initial methods for estimating preference orders from observations of other agents, and analyze their limitations.
-    \item In \cref{ch:duckietown}, we describe the Duckietown platform and the experimental setting used to evaluate the proposed methods in a physical environment.
+    \item In \cref{ch:duckietown}, we describe the Duckietown platform and the experimental setting used to validate the planning stack in a physical environment.
     \item In \cref{ch:conclusions}, we summarize the main findings of the thesis and discuss directions for future work.
 \end{itemize}

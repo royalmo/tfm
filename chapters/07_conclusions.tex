@@ -6,15 +6,15 @@ promising directions for continuing this line of research.
 
 \section{Conclusions}
 
-This thesis has studied autonomous decision making in interactive
-environments through the framework of games of ordered preference,
-since many autonomous systems, and especially
-autonomous vehicles, must satisfy multiple objectives whose relative
-importance cannot be represented satisfactorily through a single
-scalarized cost. Preference relations provide a suitable formalism for
-capturing such prioritized objectives, but their practical value depends
-on whether they can be solved efficiently, inferred from observations, and
-evaluated beyond purely idealized simulation settings.
+This thesis studied autonomous decision making in interactive
+environments through the framework of games of ordered preference. The
+motivation is that many autonomous systems, and especially autonomous
+vehicles, must satisfy multiple objectives whose relative importance
+cannot be represented satisfactorily by a single scalarized cost.
+Preference relations provide a suitable formalism for capturing such
+prioritized objectives, but their practical value depends on whether
+they can be solved efficiently, inferred from observations, and
+validated beyond purely idealized simulation settings.
 
 \smallskip \noindent
 \textsc{computational tractability} \quad
@@ -55,15 +55,19 @@ discovery.
 \smallskip \noindent
 \textsc{experimental validation} \quad
 The third contribution of the thesis is the inclusion of experimental
-validation on the Duckietown platform. The work presented in
+validation of the receding-horizon planning stack on the Duckietown
+platform. The work presented in
 \cref{ch:duckietown} is intentionally modest in scope, but it already
 makes the sim-to-real bottlenecks more concrete.
 The experiments show that the framework can be executed in a near-real-time
-physical loop. In the reported runtime logs, almost all solves finish
-within one sampling period and all recorded solves finish before the
+physical loop. In the reported runtime logs, all but one of the solves
+finish within one sampling period and all recorded solves finish before the
 next replanning deadline imposed by the turn length, although the
 slowest replans still leave limited slack.
-They also reveal a systematic gap between planned acceleration-domain
+% At the same time, the reported physical study covers only one interaction
+% setting, so it should be interpreted as a proof of executability rather
+% than as a broad comparative campaign.
+The experiments also reveal a systematic gap between planned acceleration-domain
 trajectories and executed robot motion, because the DB21J platform must
 realize those commands through its native \((v,\omega)\) interface.
 This is relevant because the significance of preference-aware planning
@@ -98,9 +102,10 @@ of the proposed framework.
 \smallskip \noindent
 \textsc{computational tractability} \quad
 While this thesis achieved a considerable efficiency improvement by
-presenting Lexicographic IBR over time, the obtained trajectories are
-an approximation of the optimal solution. Future works can search for
-optimizations that don't compromise accuracy. 
+introducing lexicographic IBR over time, the obtained trajectories
+remain approximations of the optimal solution. Future work should
+therefore look for further accelerations that preserve solution
+quality.
 In particular, the tractable
 reformulation proposed by Lee et al. \cite{lee:2026} replaces the
 exponentially growing complete KKT system with a reduced system whose
@@ -108,8 +113,8 @@ size grows polynomially with the number of players and preference levels, all
 while obtaining optimal solutions.
 These results suggest that structural reformulations and temporal
 approximation schemes may be combined to obtain methods that are both
-efficient and accurate, while still requiring care in more general
-nonlinear settings.
+efficient and accurate, although doing so will still require care in
+more general nonlinear settings.
 
 \smallskip \noindent
 \textsc{preference order estimation} \quad

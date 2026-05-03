@@ -47,7 +47,7 @@ details of the physical platform.\footnote{The code used for the experiments in 
     \subimport{figures/duckietown/}{duckietown_architecture.pdf_tex}
     }
     \caption{High-level execution path of the DB21J-based validation stack on the Duckietown road layout,
-    with one central manager and robots. The runtime manager aggregates the robot state streams into
+    with one central manager and three robots. The runtime manager aggregates the robot state streams into
     \(\hat{\mathbf{X}}_k = (\hat{\mathbf{x}}_k^1,\hat{\mathbf{x}}_k^2,\dots,\hat{\mathbf{x}}_k^N)\), forwards the solve
     request through the local bridge, and receives the receding-horizon solution over the TCP solver link.
     The resulting per-robot samples are sent back over TCP to the robot-side adapters, which map them to
@@ -107,8 +107,8 @@ repeatedly reset the physical robots to their initial positions.
 
 The control variable used throughout \cref{ch:goop,ch:lex-ibr-ot} is a planar
 acceleration, whereas the DB21J Duckiebot does not accept acceleration commands directly.
-Its native interface is the low-level pair of pitch and yawn \((v,\omega)\), so the solver output must be converted before it
-can be executed on the robot.
+Its native interface is the low-level linear and angular velocity pair \((v,\omega)\), so the solver output
+must be converted before it can be executed on the robot.
 
 % \begin{figure}[t]
 %     \centering
@@ -188,18 +188,20 @@ previous chapters.
 First, can the ordered-preference solver return a fresh plan fast enough for the robot loop to keep moving?
 Second, once the planned planar accelerations are converted to the native Duckiebot commands \((v,\omega)\), how
 closely does the executed motion follow the intended one?
-Since the quality of Lexicographic IBR Over Time has already been proven in \cref{ch:lex-ibr-ot},
-in this chapter we will not compare different preference orders.
+Since \cref{ch:lex-ibr-ot} already evaluates how lexicographic IBR over time reproduces different
+preference-induced behaviors, this chapter does not compare alternative preference orders again, and
+focuses on one representative interaction setting.
+It should therefore be read as an executability study
+rather than as a broad experimental campaign.
 
 For the reported runs, the manager uses turn length \(T_l = 2\) and sampling period \(\Delta t = 0.3\,\mathrm{s}\).
 A solve that finishes within one sampling period \(\Delta t\) can be applied immediately at the next update, whereas
 a solve that finishes between \(\Delta t\) and \(2\Delta t\) still leaves one executed control step in reserve before
 the next mandatory replan.
 \Cref{fig:duckietown_solve_times} summarizes the timing results in that budgeted form.
-After some time steps the collision risk minimizes (since vehicles finish the overtake),
-which allow the solver to find approximate-optimal trajectories faster.
-Almost all the solves finished before $\Delta t$, and a significant part of them
-were solved in less than \(30\,\mathrm{ms}\).
+As the overtaking maneuver resolves, the collision-avoidance constraints relax, so later replans are often
+solved faster.
+All but one of the logged solves finish before \(\Delta t\), and more than half finish below \(30\,\mathrm{ms}\).
 The platform therefore operates in a near-real-time regime with a generally adequate, though not large, timing margin.
 
 \begin{figure}[h]
@@ -224,8 +226,8 @@ That conversion smooths abrupt changes in magnitude and direction, so the execut
 of the nominal one rather than an exact replay.
 For visual clarity, the dashed reference path shown in \cref{fig:duckietown_trajectory} is not a pointwise raw
 export of every solver waypoint.
-Instead, it is a readability-oriented rendering derived from the solver output and slightly regularized by hand so
-that the intended maneuver can be understood directly from the figure.
+Instead, it is a smoothed rendering derived from the solver output so that the intended maneuver can be read
+directly from the figure.
 This chapter is therefore not meant to re-establish the correctness of the solver itself, which was already studied
 in \cref{ch:lex-ibr-ot}, but to show how the commanded motion is transformed and executed in the physical loop.
 

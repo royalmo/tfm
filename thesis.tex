@@ -99,16 +99,16 @@ d'observacions. A diferència de treballs previs que poden inferir
 posicions objectiu o funcions objectiu latents, aquesta tesi se centra en
 estimar l'ordre de preferències mateix, que és l'element definitori dels
 jocs de preferència ordenada, i avalua mètodes inicials \emph{offline} i
-\emph{online}.
-%Els experiments mostren que la recuperació exhaustiva
-%\emph{offline} està fortament limitada pel poder identificador de
-%finestres curtes d'observació, mentre que un actualitzador \emph{online}
-%pot discriminar correctament dins d'un petit conjunt local de candidats
-%plausibles.
+\emph{online}. Els experiments mostren que la recuperació exhaustiva
+\emph{offline} està fortament limitada pel poder identificador de
+finestres curtes d'observació, mentre que un actualitzador \emph{online}
+pot discriminar de manera fiable dins d'un petit conjunt local de
+candidats al voltant d'un bon prior nominal.
 Finalment, es
 presenta Duckietown com a plataforma experimental de baix cost per
-validar físicament els mètodes proposats sota soroll de mesura, errors
-d'actuació i altres imperfeccions del món real. Els experiments mostren
+validar físicament el bucle de planificació en horitzó lliscant sota
+soroll de mesura, errors d'actuació i altres imperfeccions del món real.
+Els experiments mostren
 que el marc ja es pot executar en un bucle físic quasi en temps real,
 tot i que encara amb marge temporal limitat i amb una desviació visible
 entre les trajectòries planificades en l'espai d'acceleracions i el
@@ -147,18 +147,18 @@ order of other agents from observations. Whereas prior inverse-game
 methods can recover latent goals or objective functions, this thesis
 targets the ordering of objectives itself, which is the defining
 information in games of ordered preference, and evaluates initial offline
-and online estimators.
-% The experiments show that exhaustive offline
-% recovery is strongly limited by the identifying content of short
-% observation windows, whereas an online updater can still discriminate
-% correctly among a small local set of plausible candidates.
+and online estimators. The experiments show that exhaustive offline
+recovery is strongly limited by the identifying content of short
+observation windows, whereas the online updater can reliably discriminate
+within a small local candidate set around a good nominal prior.
 Third, it introduces
-Duckietown as a low-cost robotic platform for experimental validation
-under sensing noise, actuation errors, and other real-world
-imperfections. The experiments show that the framework can already run
-in a near-real-time physical loop, although with limited timing slack
-and a visible gap between planned acceleration-domain trajectories and
-the motion executed through the robot's native interface.
+Duckietown as a low-cost robotic platform for experimental validation of
+the receding-horizon planning stack under sensing noise, actuation
+errors, and other real-world imperfections. The experiments show that the
+framework can already run in a near-real-time physical loop, although
+with limited timing slack and a visible gap between planned
+acceleration-domain trajectories and the motion executed through the
+robot's native interface.
 
 Taken together, the thesis shows that games of ordered preference provide
 a promising framework for modelling interactive decision making with
