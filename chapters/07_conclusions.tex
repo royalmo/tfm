@@ -27,8 +27,8 @@ effect of different preference relations on agent behavior while
 substantially reducing compilation and solution times with respect to the
 baseline formulation. This advantage becomes particularly significant as
 the number of preference levels increases, which is precisely the regime
-in which the standard formulation becomes least practical. The results of
-this chapter therefore support the conclusion that approximate solutions
+in which the standard formulation becomes least practical. These results
+support the conclusion that approximate solutions
 can be obtained efficiently enough to strengthen the practical viability
 of preference-aware planning in interactive traffic scenarios.
 
@@ -42,8 +42,8 @@ exact offline recovery is difficult under short observation windows,
 mainly because lower-priority objectives may never become active strongly
 enough to reveal the underlying order. In that sense, the main bottleneck
 of the offline study is not merely the size of the search space, but the
-limited identifying signal available in the observed interaction. At the
-same time, the chapter also shows a more positive result: when the true
+limited identifying signal available in the observed interaction. The
+online study is more encouraging: when the true
 profile belongs to a small candidate set around a good nominal prior, the
 online updater can identify the correct joint non-ego order from the
 first update onward, even in the tighter city scenario. This clarifies
@@ -57,8 +57,8 @@ discovery.
 The third contribution of the thesis is the inclusion of experimental
 validation of the receding-horizon planning stack on the Duckietown
 platform. The work presented in
-\cref{ch:duckietown} is intentionally modest in scope, but it already
-makes the sim-to-real bottlenecks more concrete.
+\cref{ch:duckietown} is modest in scope, but it makes the sim-to-real
+bottlenecks more concrete.
 The experiments show that the framework can be executed in a near-real-time
 physical loop. In the reported runtime logs, all but one of the solves
 finish within one sampling period and all recorded solves finish before the
@@ -74,16 +74,15 @@ This is relevant because the significance of preference-aware planning
 does not depend only on formal models and simulation results, but also on
 how those methods behave under sensing noise, actuation errors,
 synchronization issues, and partial observability.
-The Duckietown platform should therefore be understood not only as an
-enabling step, but also as an initial empirical demonstration of where
-the current implementation already works and where it still needs tighter
-execution.
+Duckietown therefore serves not only as an enabling platform, but also
+as a first empirical check of where the current implementation already
+works and where execution still needs to improve.
 
-Taken together, the results of the thesis indicate that games of ordered
+The results of the thesis indicate that games of ordered
 preference constitute a promising framework for representing interactive
 decision making with prioritized objectives, and that their use can be
 made considerably more practical through receding-horizon approximations.
-At the same time, the thesis also shows that further progress in
+They also show that further progress in
 preference estimation and experimental validation is needed if the
 framework is to become fully useful in realistic autonomous-driving
 settings. In particular, the estimation results suggest that practical
@@ -93,11 +92,11 @@ are tested.
 
 \section{Future work}
 
-Future work follows naturally from the three main axes of the thesis.
-The most immediate opportunities lie in improving the tractability of
-games of ordered preference further, broadening the methodological basis
-for preference estimation, and strengthening the experimental validation
-of the proposed framework.
+Future work follows the three main axes of the thesis. The most immediate
+next steps are to improve the tractability of games of ordered
+preference further, broaden the methodological basis for preference
+estimation, and strengthen the experimental validation of the proposed
+framework.
 
 \smallskip \noindent
 \textsc{computational tractability} \quad

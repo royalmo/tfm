@@ -88,8 +88,8 @@ aquest problema mitjançant els jocs de preferència ordenada, un marc de
 teoria de jocs en què cada agent ordena lexicogràficament els
 seus objectius.
 
-La tesi se centra en tres aspectes necessaris per fer aquest marc més útil
-a la pràctica. En primer lloc, es desenvolupa \emph{lexicographic IBR over
+La tesi aborda tres qüestions per fer aquest marc més útil a la
+pràctica. En primer lloc, es desenvolupa \emph{lexicographic IBR over
 time}, un mètode aproximat de resolució en horitzó lliscant que aprofita
 la continuïtat temporal per reduir el cost computacional de resoldre jocs
 de preferència ordenada, mantenint l'efecte qualitatiu de l'ordre de
@@ -104,8 +104,8 @@ jocs de preferència ordenada, i avalua mètodes inicials \emph{offline} i
 finestres curtes d'observació, mentre que un actualitzador \emph{online}
 pot discriminar de manera fiable dins d'un petit conjunt local de
 candidats al voltant d'un bon prior nominal.
-Finalment, es
-presenta Duckietown com a plataforma experimental de baix cost per
+Finalment, es fa servir Duckietown com a plataforma experimental de baix
+cost per
 validar físicament el bucle de planificació en horitzó lliscant sota
 soroll de mesura, errors d'actuació i altres imperfeccions del món real.
 Els experiments mostren
@@ -114,14 +114,14 @@ tot i que encara amb marge temporal limitat i amb una desviació visible
 entre les trajectòries planificades en l'espai d'acceleracions i el
 moviment final executat pels robots.
 
-En conjunt, els resultats mostren que els jocs de preferència ordenada
+Els resultats indiquen que els jocs de preferència ordenada
 constitueixen un marc prometedor per modelar la presa de decisions
 interactiva amb objectius jerarquitzats, i que les aproximacions en
 horitzó lliscant poden fer-lo considerablement més tractable. Alhora, la
 tesi mostra que l'estimació pràctica de preferències depèn tant de la
-riquesa observacional com de la qualitat del conjunt de candidats, i
-identifica una validació \emph{sim-to-real} més àmplia, juntament amb
-millores en latència i execució, com una línia essencial de treball
+riquesa observacional com de la qualitat del conjunt de candidats.
+També assenyala una validació \emph{sim-to-real} més àmplia, juntament
+amb millores en latència i execució, com una línia essencial de treball
 futur.
 \end{resum}
 
@@ -134,8 +134,8 @@ on the situation. This thesis studies that problem through games of
 ordered preference, a game-theoretic framework in which each agent ranks
 its objectives lexicographically.
 
-The thesis focuses on three aspects required for the practical use of this
-framework. First, it develops \emph{lexicographic IBR over time}, an
+The thesis addresses three practical issues. First, it develops
+\emph{lexicographic IBR over time}, an
 approximate receding-horizon solution method that exploits temporal
 continuity to reduce the computational burden of solving games of ordered
 preference while preserving the qualitative influence of preference order
@@ -149,25 +149,24 @@ targets the ordering of objectives itself, which is the defining
 information in games of ordered preference, and evaluates initial offline
 and online estimators. The experiments show that exhaustive offline
 recovery is strongly limited by the identifying content of short
-observation windows, whereas the online updater can reliably discriminate
+observation windows, whereas the online updater can still discriminate
 within a small local candidate set around a good nominal prior.
-Third, it introduces
-Duckietown as a low-cost robotic platform for experimental validation of
-the receding-horizon planning stack under sensing noise, actuation
+Third, it uses Duckietown as a low-cost robotic platform to validate the
+receding-horizon planning stack under sensing noise, actuation
 errors, and other real-world imperfections. The experiments show that the
 framework can already run in a near-real-time physical loop, although
 with limited timing slack and a visible gap between planned
 acceleration-domain trajectories and the motion executed through the
 robot's native interface.
 
-Taken together, the thesis shows that games of ordered preference provide
-a promising framework for modelling interactive decision making with
+The results indicate that games of ordered preference provide a
+promising framework for modelling interactive decision making with
 prioritized objectives, and that receding-horizon approximations can make
-their use considerably more tractable. At the same time, it shows that
-practical preference-order estimation depends on both observation richness
-and candidate quality, and identifies broader sim-to-real validation,
-faster replanning, and tighter actuation matching as essential
-directions for future work.
+them considerably more tractable. They also show that practical
+preference-order estimation depends on both observation richness and
+candidate quality. Broader sim-to-real validation, faster replanning,
+and tighter actuation matching remain essential directions for future
+work.
 \end{abstract}
 
 \begin{document}

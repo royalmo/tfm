@@ -47,7 +47,7 @@ details of the physical platform.\footnote{The code used for the experiments in 
     \subimport{figures/duckietown/}{duckietown_architecture.pdf_tex}
     }
     \caption{High-level execution path of the DB21J-based validation stack on the Duckietown road layout,
-    with one central manager and three robots. The runtime manager aggregates the robot state streams into
+    with one central manager and $N$ robots. The runtime manager aggregates the robot state streams into
     \(\hat{\mathbf{X}}_k = (\hat{\mathbf{x}}_k^1,\hat{\mathbf{x}}_k^2,\dots,\hat{\mathbf{x}}_k^N)\), forwards the solve
     request through the local bridge, and receives the receding-horizon solution over the TCP solver link.
     The resulting per-robot samples are sent back over TCP to the robot-side adapters, which map them to
@@ -183,7 +183,7 @@ received within a configured timeout.
 \section{Results}
 \label{sec:duckietown-results}
 
-The experiments answer two practical questions that do not arise in the idealized simulations of the
+The experiments address two practical questions that do not arise in the idealized simulations of the
 previous chapters.
 First, can the ordered-preference solver return a fresh plan fast enough for the robot loop to keep moving?
 Second, once the planned planar accelerations are converted to the native Duckiebot commands \((v,\omega)\), how
@@ -191,8 +191,8 @@ closely does the executed motion follow the intended one?
 Since \cref{ch:lex-ibr-ot} already evaluates how lexicographic IBR over time reproduces different
 preference-induced behaviors, this chapter does not compare alternative preference orders again, and
 focuses on one representative interaction setting.
-It should therefore be read as an executability study
-rather than as a broad experimental campaign.
+Accordingly, the chapter focuses on executability rather than on broad
+experimental comparison.
 
 For the reported runs, the manager uses turn length \(T_l = 2\) and sampling period \(\Delta t = 0.3\,\mathrm{s}\).
 A solve that finishes within one sampling period \(\Delta t\) can be applied immediately at the next update, whereas
@@ -202,7 +202,7 @@ the next mandatory replan.
 As the overtaking maneuver resolves, the collision-avoidance constraints relax, so later replans are often
 solved faster.
 All but one of the logged solves finish before \(\Delta t\), and more than half finish below \(30\,\mathrm{ms}\).
-The platform therefore operates in a near-real-time regime with a generally adequate, though not large, timing margin.
+The platform therefore runs near real time, but with limited timing slack.
 
 \begin{figure}[h]
     \centering
@@ -226,17 +226,17 @@ That conversion smooths abrupt changes in magnitude and direction, so the execut
 of the nominal one rather than an exact replay.
 For visual clarity, the dashed reference path shown in \cref{fig:duckietown_trajectory} is not a pointwise raw
 export of every solver waypoint.
-Instead, it is a smoothed rendering derived from the solver output so that the intended maneuver can be read
+Instead, it is a smoothed rendering of the solver output so that the intended maneuver can be read
 directly from the figure.
-This chapter is therefore not meant to re-establish the correctness of the solver itself, which was already studied
+The aim here is not to re-establish the correctness of the solver itself, which was already studied
 in \cref{ch:lex-ibr-ot}, but to show how the commanded motion is transformed and executed in the physical loop.
 
 \begin{figure}[!t]
 \centering
     \def\svgwidth{0.86\linewidth}
     \subimport{figures/duckietown/}{duckietown_trajectory_highway.pdf_tex}
-\caption{Comparison between the commanded and executed robot motion in the reported Duckietown interaction.
-The dashed trajectory is a readability-oriented rendering derived from the ordered-preference solver output, and the
+\caption{Commanded and executed robot motion in the reported Duckietown interaction.
+The dashed trajectory is a smoothed reference path derived from the ordered-preference solver output, and the
 solid trajectories are the paths actually followed by the robots after conversion to the low-level \((v,\omega)\)
 interface.}
 \label{fig:duckietown_trajectory}
@@ -250,27 +250,27 @@ The experimental implementation integrates the solver, the centralized runtime m
 adapter into a coherent closed-loop system on DB21J Duckiebots and standardized Duckietown infrastructure,
 thereby providing an experimental validation beyond simulation.
 
-The main empirical outcome is that this validation reaches a usable near-real-time regime in the reported setup.
+In the reported setup, the physical loop runs near real time.
 With \(T_l = 2\), only one logged solve in the tested runs slightly exceeds a single sampling period
 \(\Delta t\), and none exceed the two-sample deadline \(2\Delta t\).
 The framework can therefore be executed in a physical loop while preserving the qualitative interaction pattern
 predicted by the ordered-preference plan.
 
-This positive result should nevertheless be interpreted with some caution.
+This result should still be interpreted cautiously.
 The timing margin is not yet large, since the slowest replans leave only limited slack before the next mandatory
 update, and there is also an actuation mismatch: because the optimizer works in planar accelerations while the
 DB21J interface executes the derived pair \((v,\omega)\), the realized trajectories remain close to the intended
 maneuver, but do not reproduce the planned motion exactly.
 
-In addition, the scope of this validation remains limited.
-Only one interaction setting is reported, so this chapter should be read as a proof of executability in a
-physical loop rather than as a broad comparative experimental campaign.
+The scope of the validation is also limited.
+Only one interaction setting is reported, so the chapter remains a proof of executability in a
+physical loop rather than a broad comparative experimental study.
 The DB21J sensing stack and the chosen deployment configuration motivate a centralized architecture and a
 conservative control stack, and do not support a fully decentralized treatment of multi-robot interaction.
-Accordingly, the contribution of this chapter is methodological rather than definitive: it establishes the
+The contribution is therefore methodological rather than definitive. It establishes the
 practical executability of the proposed formulation under real timing, actuation, and safety constraints, while
 also making the main deployment bottlenecks explicit: solver latency, the gap between acceleration-domain plans
 and low-level drive execution, and the still narrow experimental scope.
-A more comprehensive assessment would therefore require both richer perception and tighter execution, in particular
+A broader assessment would require both richer perception and tighter execution, in particular
 faster replanning and a better-matched actuation interface, in addition to less centralized execution and broader
 experimental campaigns.
