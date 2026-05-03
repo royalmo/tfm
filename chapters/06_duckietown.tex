@@ -96,12 +96,18 @@ game is refreshed only every \(T_l\) steps and otherwise continues along the cur
 The explicit safety boundary remains the same: until a feasible command is available, the robots remain
 stationary (\cref{alg:duckietown_manager_loop}).
 
+This modular decomposition is also methodologically useful because it allows different parts of the
+experimental stack to be evaluated in isolation.
+For instance, command-tracking tests can replace the live solver output by prescribed reference inputs,
+whereas solver runtime benchmarks can be carried out against simulated robot adapters, avoiding the need to
+repeatedly reset the physical robots to their initial positions.
+
 \section{Robot-side control and telemetry}
 \label{sec:duckietown-control}
 
 The control variable used throughout \cref{ch:goop,ch:lex-ibr-ot} is a planar
 acceleration, whereas the DB21J Duckiebot does not accept acceleration commands directly.
-Its native interface is the low-level pair \((v,\omega)\), so the solver output must be converted before it
+Its native interface is the low-level pair of pitch and yawn \((v,\omega)\), so the solver output must be converted before it
 can be executed on the robot.
 
 % \begin{figure}[t]
@@ -190,18 +196,17 @@ A solve that finishes within one sampling period \(\Delta t\) can be applied imm
 a solve that finishes between \(\Delta t\) and \(2\Delta t\) still leaves one executed control step in reserve before
 the next mandatory replan.
 \Cref{fig:duckietown_solve_times} summarizes the timing results in that budgeted form.
-The runtime spread is wide enough that a logarithmic vertical axis is more informative than a linear one: the fastest
-solves are a few milliseconds, while the slowest one reaches \(0.325\,\mathrm{s}\).
-Across the two logs and up to executed step \(30\), \(28\) of the \(29\) recorded solves finish within one sampling
-period, and the remaining one exceeds \(\Delta t\) only slightly, by \(0.025\,\mathrm{s}\).
-No recorded solve exceeds \(2\Delta t\), so the next replanning deadline is always met in the reported runs.
+After some time steps the collision risk minimizes (since vehicles finish the overtake),
+which allow the solver to find approximate-optimal trajectories faster.
+Almost all the solves finished before $\Delta t$, and a significant part of them
+were solved in less than \(30\,\mathrm{ms}\).
 The platform therefore operates in a near-real-time regime with a generally adequate, though not large, timing margin.
 
-\begin{figure}[t]
+\begin{figure}[h]
     \centering
     \input{figures/duckietown/duckietown_solve_times_tikz.tex}
-    \caption{Wall-clock solve times at different replanning instants in two runs of the same Duckietown interaction,
-    trimmed to executed step \(30\). The vertical axis is logarithmic. The horizontal dashed lines at \(\Delta t\)
+    \caption{Solve times at different replanning instants in two runs of the same Duckietown interaction.
+    The vertical axis is logarithmic. The horizontal dashed lines at \(\Delta t\)
     and \(2\Delta t\) mark the one-sample budget and the latest finish time that still meets the next replanning
     deadline when \(T_l = 2\).}
     \label{fig:duckietown_solve_times}
@@ -235,12 +240,6 @@ interface.}
 \label{fig:duckietown_trajectory}
 \end{figure}
 
-Taken together, the timing and tracking results give a mixed but positive picture.
-The current deployment is not yet a high-margin robotic implementation: the solver remains relatively slow, and the
-acceleration-to-drive conversion introduces visible execution error.
-Nonetheless, the framework can already be executed in a physical loop tightly enough to preserve the intended
-interaction pattern, provided that the controller retains some slack inside the turn-length budget.
-
 \section{Discussion}
 
 This chapter shows that the acceleration-based receding-horizon game formulation developed in the previous
@@ -250,23 +249,26 @@ adapter into a coherent closed-loop system on DB21J Duckiebots and standardized 
 thereby providing an experimental validation beyond simulation.
 
 The main empirical outcome is that this validation reaches a usable near-real-time regime in the reported setup.
-With \(T_l = 2\), only one logged solve up to executed step \(30\) slightly exceeds a single sampling period
+With \(T_l = 2\), only one logged solve in the tested runs slightly exceeds a single sampling period
 \(\Delta t\), and none exceed the two-sample deadline \(2\Delta t\).
-The remaining timing concern is therefore not outright deadline violation, but limited slack in the occasional
-slowest replans.
-The second practical limitation is actuation mismatch: because the optimizer works in planar accelerations while the
-DB21J interface executes the derived pair \((v,\omega)\), the realized trajectories remain close to the intended
-maneuver but do not reproduce it exactly.
+The framework can therefore be executed in a physical loop while preserving the qualitative interaction pattern
+predicted by the ordered-preference plan.
 
-However, the scope of this validation remains limited.
+This positive result should nevertheless be interpreted with some caution.
+The timing margin is not yet large, since the slowest replans leave only limited slack before the next mandatory
+update, and there is also an actuation mismatch: because the optimizer works in planar accelerations while the
+DB21J interface executes the derived pair \((v,\omega)\), the realized trajectories remain close to the intended
+maneuver, but do not reproduce the planned motion exactly.
+
+In addition, the scope of this validation remains limited.
 Only one interaction setting is reported, so this chapter should be read as a proof of executability in a
 physical loop rather than as a broad comparative experimental campaign.
 The DB21J sensing stack and the chosen deployment configuration motivate a centralized architecture and a
 conservative control stack, and do not support a fully decentralized treatment of multi-robot interaction.
 Accordingly, the contribution of this chapter is methodological rather than definitive: it establishes the
 practical executability of the proposed formulation under real timing, actuation, and safety constraints, while
-also making the two main deployment bottlenecks explicit: solver latency and the gap between acceleration-domain
-plans and low-level drive execution.
+also making the main deployment bottlenecks explicit: solver latency, the gap between acceleration-domain plans
+and low-level drive execution, and the still narrow experimental scope.
 A more comprehensive assessment would therefore require both richer perception and tighter execution, in particular
 faster replanning and a better-matched actuation interface, in addition to less centralized execution and broader
 experimental campaigns.
