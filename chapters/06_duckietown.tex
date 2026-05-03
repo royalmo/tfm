@@ -19,7 +19,7 @@ making its execution observable and safe enough for physical trials.
 
 Duckietown is particularly convenient for that purpose because it standardizes the small-scale road geometry,
 the DB21J vehicle footprint, and the ROS-based workflow used around the robots.
-In this thesis, that standardized environment is used as a validation scaffold for \cref{ch:lex-ibr-ot}: the same
+In this thesis, that standardized environment is used as a validation scaffold for \cref{ch:lex-ibr-ot}. The same
 lexicographic IBR over time logic is executed, but the state and command loop is mediated by the
 robotics stack shown in \cref{fig:duckietown_architecture}.
 
@@ -93,7 +93,7 @@ Initialize the manager--robot communication and the state / command interfaces\;
 
 The manager therefore advances the closed loop every \(\Delta t\), while the underlying receding-horizon
 game is refreshed only every \(T_l\) steps and otherwise continues along the current plan.
-The explicit safety boundary remains the same: until a feasible command is available, the robots remain
+The explicit safety boundary remains the same. Until a feasible command is available, the robots remain
 stationary (\cref{alg:duckietown_manager_loop}).
 
 This modular decomposition is also methodologically useful because it allows different parts of the
@@ -217,7 +217,7 @@ The platform therefore runs near real time, but with limited timing slack.
 The second result concerns trajectory tracking.
 \Cref{fig:duckietown_trajectory} compares the motion planned by the acceleration-domain solver with the motion
 actually executed by the robots in the reported physical interaction.
-In this experiment, the robots preserve the qualitative maneuver predicted by the game solution: they still follow
+In this experiment, the robots preserve the qualitative maneuver predicted by the game solution, since they still follow
 the intended negotiation pattern and remain compatible with the ordered-preference plan.
 However, the realized trajectories do not coincide exactly with the planned ones.
 This mismatch is expected, because the optimizer reasons directly in planar accelerations, whereas the robots act
@@ -258,7 +258,7 @@ predicted by the ordered-preference plan.
 
 This result should still be interpreted cautiously.
 The timing margin is not yet large, since the slowest replans leave only limited slack before the next mandatory
-update, and there is also an actuation mismatch: because the optimizer works in planar accelerations while the
+update. There is also an actuation mismatch: because the optimizer works in planar accelerations while the
 DB21J interface executes the derived pair \((v,\omega)\), the realized trajectories remain close to the intended
 maneuver, but do not reproduce the planned motion exactly.
 
@@ -269,7 +269,7 @@ The DB21J sensing stack and the chosen deployment configuration motivate a centr
 conservative control stack, and do not support a fully decentralized treatment of multi-robot interaction.
 The contribution is therefore methodological rather than definitive. It establishes the
 practical executability of the proposed formulation under real timing, actuation, and safety constraints, while
-also making the main deployment bottlenecks explicit: solver latency, the gap between acceleration-domain plans
+also making the main deployment bottlenecks explicit, namely solver latency, the gap between acceleration-domain plans
 and low-level drive execution, and the still narrow experimental scope.
 A broader assessment would require both richer perception and tighter execution, in particular
 faster replanning and a better-matched actuation interface, in addition to less centralized execution and broader
