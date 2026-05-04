@@ -21,15 +21,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="1.1333333"
-     inkscape:cx="540"
-     inkscape:cy="190.14706"
+     inkscape:zoom="3.1666615"
+     inkscape:cx="150.63183"
+     inkscape:cy="129.94758"
      inkscape:window-width="1854"
      inkscape:window-height="1011"
      inkscape:window-x="66"
      inkscape:window-y="32"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg346" />
+     inkscape:current-layer="observation-panel" />
   <defs
      id="defs260">
     <marker
@@ -94,9 +94,10 @@
        style="fill:none;stroke:#329a55;stroke-width:3.8;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8"
        id="path274" />
     <path
-       d="M 254 105 C 213 99, 169 97, 127 101 C 101 104, 80 107, 62 112"
-       style="fill:none;stroke:#2f78c4;stroke-width:3.8;stroke-linecap:round;stroke-dasharray:7,6;stroke-opacity:0.8"
-       id="path276" />
+       d="m 254,105 c -65.58019,-1.31097 -127.65061,0.72697 -192,7"
+       style="fill:none;stroke:#2f78c4;stroke-width:3.8;stroke-linecap:round;stroke-dasharray:7, 6;stroke-opacity:0.8"
+       id="path276"
+       sodipodi:nodetypes="cc" />
     <circle
        cx="62"
        cy="143"

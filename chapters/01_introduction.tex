@@ -65,8 +65,19 @@ explicitly reveal their priorities, and should remain meaningful when it
 is transferred from simulation to physical systems. These three aspects
 define the scope of this thesis.
 
-\smallskip \noindent
-\textsc{computational tractability} \quad
+\section{Research challenges}
+
+The practical development of games of ordered preference raises three
+main research challenges, each of which is addressed in this thesis.
+First, the resulting planning problems must be solved with sufficient
+computational efficiency for receding-horizon operation. Second, the
+preference ordering of other agents must be inferred when it is not
+directly observable. Third, the proposed framework must be validated
+experimentally to assess whether its assumptions remain meaningful
+beyond simulation.
+
+\subsection{Computational tractability}
+
 Games of ordered preference are expensive to solve because lexicographic
 optimization generates nested subproblems, and the coupling between agents
 prevents the overall game from being decomposed without approximation.
@@ -79,8 +90,8 @@ changes. To address this issue, the thesis develops
 that exploits temporal continuity in receding horizon to produce efficient
 approximate solutions.
 
-\smallskip \noindent
-\textsc{preference order estimation} \quad
+\subsection{Preference order estimation}
+
 Efficient solvers alone are not sufficient in non-cooperative settings.
 Most formulations assume that the objectives of the other agents are known
 in advance, or at least that the parameters required to predict their
@@ -100,8 +111,8 @@ limited communication, agents must be able to infer the preference order
 of others from observations. This motivates the second line of work in
 the thesis, which studies inverse games of ordered preference.
 
-\smallskip \noindent
-\textsc{experimental validation} \quad
+\subsection{Experimental validation}
+
 Simulation is essential for developing game-theoretic planning methods,
 but its assumptions do not automatically survive on physical platforms.
 Sensing noise, imperfect actuation, synchronization delays, and partial
@@ -123,6 +134,8 @@ This goal is addressed through the following specific objectives:
     \item To investigate the inverse problem of games of ordered preference, including methods and identifiability limits for estimating the preference order of other agents from observations.
     \item To assess the practical relevance of the proposed methods in simulation and to validate the receding-horizon planning stack on a physical robotic platform.
 \end{enumerate}
+
+\section{Contributions}
 
 To achieve these objectives, this thesis makes the following contributions:
 
