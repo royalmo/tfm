@@ -410,7 +410,7 @@
        text-anchor="middle"
        class="section"
        id="text811"
-       inkscape:label="ControlIn">\small $\mathsf{u^1_t=(v^1_t,w^1_t)}$</text>
+       inkscape:label="ControlIn">\small $\mathsf{u_k^1=(v_k^1,\omega_k^1)}$</text>
     <text
        x="360.55432"
        y="724.16895"
@@ -418,7 +418,7 @@
        class="section"
        id="text811-2"
        style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:start;text-anchor:start;fill:#334155"
-       inkscape:label="ControlOut">\small $\mathsf{\hat{x}^1_t}$</text>
+       inkscape:label="ControlOut">\small $\mathsf{\hat{x}_k^1}$</text>
     <rect
        x="86.163239"
        y="771.05933"
@@ -528,7 +528,7 @@
        class="section"
        id="text811-5"
        inkscape:label="ControlIn"
-       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^2_t=(v^2_t,w^2_t)}$</text>
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u_k^2=(v_k^2,\omega_k^2)}$</text>
     <text
        x="360.55432"
        y="724.16895"
@@ -536,7 +536,7 @@
        class="section"
        id="text811-2-47"
        style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:start;text-anchor:start;display:inline;fill:#334155"
-       inkscape:label="ControlOut">\small $\mathsf{\hat{x}^2_t}$</text>
+       inkscape:label="ControlOut">\small $\mathsf{\hat{x}_k^2}$</text>
     <rect
        x="86.163239"
        y="771.05933"
@@ -646,7 +646,7 @@
        class="section"
        id="text811-5-6"
        inkscape:label="ControlIn"
-       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^N_t=(v^N_t,w^N_t)}$</text>
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u_k^N=(v_k^N,\omega_k^N)}$</text>
     <text
        x="360.55432"
        y="724.16895"
@@ -654,7 +654,7 @@
        class="section"
        id="text811-2-47-8"
        style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:start;text-anchor:start;display:inline;fill:#334155"
-       inkscape:label="ControlOut">\small $\mathsf{\hat{x}^N_t}$</text>
+       inkscape:label="ControlOut">\small $\mathsf{\hat{x}_k^N}$</text>
     <rect
        x="86.163239"
        y="771.05933"
@@ -887,7 +887,7 @@
        class="section"
        id="text811-2-5"
        style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:start;text-anchor:start;display:inline;fill:#334155"
-       inkscape:label="solverIn">\small $\mathsf{\hat{X}_t}$</text>
+       inkscape:label="solverIn">\small $\mathsf{\hat{\mathbf{x}}_k}$</text>
     <text
        x="837.42535"
        y="209.50096"
@@ -895,7 +895,7 @@
        class="section"
        id="text811-9"
        inkscape:label="solverout"
-       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u_t=(a_{x,t},a_{y,t})}$</text>
+       style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u_k=(a_{x,k},a_{y,k})}$</text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -916,7 +916,7 @@
          class="section"
          id="text811-9-6-3"
          inkscape:label="ControlIn"
-         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^N_t=(a^N_{x,t},a^N_{y,t})}$</text>
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u_k^N=(a^N_{x,k},a^N_{y,k})}$</text>
       <text
          x="478.15564"
          y="519.04718"
@@ -924,7 +924,7 @@
          class="section"
          id="text811-2-5-5-8"
          style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:center;text-anchor:middle;display:inline;fill:#334155"
-         inkscape:label="ControlOut">\small $\mathsf{\hat{x}^N_t}$</text>
+         inkscape:label="ControlOut">\small $\mathsf{\hat{x}_k^N}$</text>
       <text
          x="478.75549"
          y="471.26071"
@@ -963,7 +963,7 @@
          class="section"
          id="text811-9-6-2"
          inkscape:label="ControlIn"
-         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^2_t=(a^2_{x,t},a^2_{y,t})}$</text>
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u_k^2=(a^2_{x,k},a^2_{y,k})}$</text>
       <text
          x="541.96362"
          y="468.27203"
@@ -971,7 +971,7 @@
          class="section"
          id="text811-2-5-5-9"
          style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:center;text-anchor:middle;display:inline;fill:#334155"
-         inkscape:label="ControlOut">\small $\mathsf{\hat{x}^2_t}$</text>
+         inkscape:label="ControlOut">\small $\mathsf{\hat{x}_k^2}$</text>
       <text
          x="-452.23679"
          y="499.15442"
@@ -1011,7 +1011,7 @@
          class="section"
          id="text811-9-6"
          inkscape:label="ControlIn"
-         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u^1_t=(a^1_{x,t},a^1_{y,t})}$</text>
+         style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;display:inline;fill:#334155">\small $\mathsf{u_k^1=(a^1_{x,k},a^1_{y,k})}$</text>
       <text
          x="478.15564"
          y="519.04718"
@@ -1019,7 +1019,7 @@
          class="section"
          id="text811-2-5-5"
          style="font-weight:700;font-size:21px;font-family:'DejaVu Sans', 'Liberation Sans', sans-serif;text-align:center;text-anchor:middle;display:inline;fill:#334155"
-         inkscape:label="ControlOut">\small $\mathsf{\hat{x}^1_t}$</text>
+         inkscape:label="ControlOut">\small $\mathsf{\hat{x}_k^1}$</text>
       <text
          x="478.75549"
          y="471.26071"

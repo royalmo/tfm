@@ -42,13 +42,16 @@ details of the physical platform.\footnote{The code used for the experiments in 
 
 \begin{figure}[t]
     \centering
-    {
-    \def\svgwidth{\textwidth}
-    \subimport{figures/duckietown/}{duckietown_architecture.pdf_tex}
+    \scalebox{0.94}{%
+        \begin{minipage}{\textwidth}
+            \centering
+            \def\svgwidth{\textwidth}
+            \subimport{figures/duckietown/}{duckietown_architecture.pdf_tex}
+        \end{minipage}%
     }
     \caption{High-level execution path of the DB21J-based validation stack on the Duckietown road layout,
     with one central manager and $N$ robots. The runtime manager aggregates the robot state streams into
-    \(\hat{\mathbf{X}}_k = (\hat{\mathbf{x}}_k^1,\hat{\mathbf{x}}_k^2,\dots,\hat{\mathbf{x}}_k^N)\), forwards the solve
+    \(\hat{\mathbf{x}}_k = (\hat{x}_k^1,\hat{x}_k^2,\dots,\hat{x}_k^N)\), forwards the solve
     request through the local bridge, and receives the receding-horizon solution over the TCP solver link.
     The resulting per-robot samples are sent back over TCP to the robot-side adapters, which map them to
     low-level drive inputs \(u_k^i = (v_k^i,\omega_k^i)\) and send them over ROS to robot control.}
@@ -57,7 +60,7 @@ details of the physical platform.\footnote{The code used for the experiments in 
 
 \Cref{fig:duckietown_architecture} summarizes the closed-loop execution path.
 At each sampling instant \(\Delta t\), the runtime manager receives the latest per-robot state estimates
-\(\hat{\mathbf{x}}_k^i\) over ROS, bundles them into \(\hat{\mathbf{X}}_k\), and queries the bridge.
+\(\hat{x}_k^i\) over ROS, bundles them into \(\hat{\mathbf{x}}_k\), and queries the bridge.
 The bridge issues the local TCP call to the solver, which replans only after the current open-loop plan has
 executed for \(T_l\) steps and otherwise returns the next command from the existing plan.
 Each robot-side adapter then maps the returned sample to the low-level drive input
@@ -74,7 +77,7 @@ interrupted.
 \medskip
 Initialize the manager--robot communication and the state / command interfaces\;
 \While{the experiment is running}{
-    Read the latest state estimate \(\mathbf{x}_k\)\;
+    Read the latest joint state estimate \(\hat{\mathbf{x}}_k\)\;
     Query the bridge for the next control sample; replan only after \(T_l\) executed steps\;
     \If{a valid command is available}{
         Publish the returned acceleration command \(\mathbf{a}_k^\star\)\;

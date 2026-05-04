@@ -21,29 +21,42 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="3.1666615"
-     inkscape:cx="150.63183"
-     inkscape:cy="129.94758"
+     inkscape:zoom="1.2700276"
+     inkscape:cx="400.77869"
+     inkscape:cy="140.54813"
      inkscape:window-width="1854"
      inkscape:window-height="1011"
      inkscape:window-x="66"
      inkscape:window-y="32"
      inkscape:window-maximized="1"
-     inkscape:current-layer="observation-panel" />
+     inkscape:current-layer="solve-panel" />
   <defs
      id="defs260">
     <marker
        id="arrow"
        markerWidth="8"
        markerHeight="8"
-       refX="6.2"
+       refX="6.1999998"
        refY="4"
        orient="auto"
        markerUnits="strokeWidth">
       <path
-         d="M 0 0 L 6.8 4 L 0 8"
+         d="M 0,0 6.8,4 0,8"
          style="fill:none;stroke:#000000;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round"
          id="path257" />
+    </marker>
+    <marker
+       id="arrow-3"
+       markerWidth="8"
+       markerHeight="8"
+       refX="6.1999998"
+       refY="4"
+       orient="auto"
+       markerUnits="strokeWidth">
+      <path
+         d="M 0,0 6.8,4 0,8"
+         style="fill:none;stroke:#000000;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round"
+         id="path257-6" />
     </marker>
   </defs>
   <g
@@ -166,13 +179,13 @@
        y="286"
        text-anchor="middle"
        style="font-family:Sans;font-size:17px"
-       id="text295">\footnotesize{$\boldsymbol{\pi}^{-e}_1$}</text>
+       id="text295">\footnotesize{$\boldsymbol{\sigma}^{-e}_1$}</text>
     <text
        x="148"
        y="286"
        text-anchor="middle"
        style="font-family:Sans;font-size:17px"
-       id="text297">\footnotesize{$\boldsymbol{\pi}^{-e}_2$}</text>
+       id="text297">\footnotesize{$\boldsymbol{\sigma}^{-e}_2$}</text>
     <text
        x="197"
        y="285"
@@ -184,52 +197,53 @@
        y="286"
        text-anchor="middle"
        style="font-family:Sans;font-size:17px"
-       id="text301">\footnotesize{$\boldsymbol{\pi}^{-e}_M$}</text>
+       id="text301">\footnotesize{$\boldsymbol{\sigma}^{-e}_M$}</text>
   </g>
   <g
      id="solve-panel">
     <rect
-       x="350"
-       y="26"
-       width="300"
-       height="300"
-       rx="20"
-       ry="20"
-       style="fill:#f7f7f7;stroke:#000000;stroke-width:1.6"
+       x="349.84546"
+       y="78.453117"
+       width="300.30905"
+       height="195.09377"
+       rx="20.020605"
+       ry="13.00625"
+       style="fill:#f7f7f7;stroke:#000000;stroke-width:1.29094"
        id="rect304" />
     <text
        x="500"
-       y="58"
+       y="112"
        text-anchor="middle"
        style="font-size:18px;font-family:Sans"
        id="text306">\footnotesize{joint prediction}</text>
     <rect
-       x="363.97131"
-       y="121.96401"
-       width="272.05737"
-       height="135.19089"
-       rx="16.003376"
-       ry="14.615232"
-       style="fill:#ffffff;fill-opacity:0.62;stroke:#6f6f6f;stroke-width:1.2426;stroke-dasharray:1.2426, 1.2426;stroke-dashoffset:0"
+       x="363.92941"
+       y="139.65645"
+       width="272.14117"
+       height="117.54036"
+       rx="16.008307"
+       ry="12.707067"
+       style="fill:#ffffff;fill-opacity:0.62;stroke:#6f6f6f;stroke-width:1.15883;stroke-dasharray:1.15883, 1.15883;stroke-dashoffset:0"
        id="rect308" />
     <text
-       x="374.89255"
-       y="162"
+       x="378.37985"
+       y="181.39056"
        style="font-size:17px;font-family:Sans"
-       id="text310">\footnotesize{for each $t$ and $\boldsymbol{\pi}^{-e}$}</text>
+       id="text310">\footnotesize{for each $(t,\boldsymbol{\sigma}^{-e})$}</text>
     <text
-       x="390.89255"
-       y="200"
-       style="font-size:16px;font-family:Sans"
-       id="text312">\footnotesize{$\tilde{\mathbf{z}}^{-e}_{t:t+T-1} =$}</text>
+       x="407"
+       y="223.22795"
+       style="font-size:14px;font-family:Sans"
+       id="text312">\footnotesize{$\tilde{\mathbf{z}}_{\mathbb{T}_t}=\mathbf{z}^{*}_{\mathbb{T}_t}(\hat{\mathbf{x}}_t;\sigma^e,\boldsymbol{\sigma}^{-e})$}</text>
     <text
        x="406.89255"
        y="230"
-       style="font-size:14px;font-family:Sans"
-       id="text314">\footnotesize{$\operatorname{Pred}_{\mathrm{ord}}(\hat{\mathbf{x}}_t,\ \pi^e,\ \boldsymbol{\pi}^{-e})$}</text>
+       style="font-size:14px;font-family:Sans;display:none"
+       id="text314">\footnotesize{$\tilde{\mathbf{z}}_{\mathbb{T}_t}$}</text>
   </g>
   <g
-     id="score-panel">
+     id="score-panel"
+     style="display:inline">
     <rect
        x="704"
        y="26"
@@ -243,7 +257,7 @@
        x="883"
        y="58"
        text-anchor="middle"
-       style="font-family:Sans;font-size:18px"
+       style="font-size:18px;font-family:Sans"
        id="text319">\footnotesize{compare and select}</text>
     <rect
        x="760"
@@ -258,29 +272,29 @@
        x="883"
        y="122"
        text-anchor="middle"
-       style="font-family:Sans;font-size:17px"
+       style="font-size:17px;font-family:Sans"
        id="text323">\footnotesize{trajectory comparison}</text>
     <text
        x="883"
        y="145"
        text-anchor="middle"
-       style="font-family:Sans;font-size:17px"
-       id="text325">\footnotesize{$\tilde{\mathbf{z}}^{-e}$ vs. $\hat{\mathbf{z}}^{-e}$}</text>
+       style="font-size:17px;font-family:Sans"
+       id="text325">\footnotesize{$\tilde{\mathbf{z}}^{-e}_{\mathbb{T}_t}$ vs.} \footnotesize{$\hat{\mathbf{z}}^{-e}_{\mathbb{T}_t}$}</text>
     <rect
-       x="790"
-       y="180"
-       width="186"
-       height="40"
-       rx="10"
-       ry="10"
-       style="fill:#fbfbfb;stroke:#000000;stroke-width:1.2"
+       x="789.5611"
+       y="180.00139"
+       width="186.87785"
+       height="39.997215"
+       rx="10.047196"
+       ry="9.9993038"
+       style="fill:#fbfbfb;stroke:#000000;stroke-width:1.20279"
        id="rect327" />
     <text
        x="883"
        y="205"
        text-anchor="middle"
-       style="font-family:Sans;font-size:17px"
-       id="text329">\footnotesize{score $S(\boldsymbol{\pi}^{-e})$}</text>
+       style="font-size:17px;font-family:Sans"
+       id="text329">\footnotesize{score $S(\boldsymbol{\sigma}^{-e})$}</text>
     <rect
        x="790"
        y="246"
@@ -294,17 +308,17 @@
        x="883"
        y="271"
        text-anchor="middle"
-       style="font-family:Sans;font-size:17px"
-       id="text333">\footnotesize{best profile $\hat{\boldsymbol{\pi}}^{-e}$}</text>
+       style="font-size:17px;font-family:Sans"
+       id="text333">\footnotesize{best profile $\boldsymbol{\sigma}^{-e,*}$}</text>
   </g>
   <path
-     d="M 298 108 L 348 135"
+     d="m 298,105.46104 50,27"
      style="fill:none;stroke:#000000;stroke-width:1.6;stroke-linecap:round;marker-end:url(#arrow)"
      id="path336" />
   <path
-     d="M 298 266 L 348 205"
-     style="fill:none;stroke:#000000;stroke-width:1.6;stroke-linecap:round;marker-end:url(#arrow)"
-     id="path338" />
+     d="m 298,263.53896 50,-27"
+     style="fill:none;stroke:#000000;stroke-width:1.6;stroke-linecap:round;marker-end:url(#arrow-3)"
+     id="path336-7" />
   <path
      d="M 650 176 L 702 176"
      style="fill:none;stroke:#000000;stroke-width:1.6;stroke-linecap:round;marker-end:url(#arrow)"
