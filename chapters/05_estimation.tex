@@ -49,49 +49,38 @@ which has
 \(M \coloneq |\mathfrak{S}^{-e}|\)
 admissible joint candidate profiles.
 
-For a measured joint state $\hat{\mathbf{x}}_t$ over a receding horizon of length $T$,
-we define the associated short-horizon index range
-\(\mathbb{T}_t \coloneq t:t+T-1\).
-For the fixed and known ego order \(\sigma^e\), a candidate profile
-\(\boldsymbol{\sigma}^{-e}\) induces the short-horizon prediction
+Given a measured state $\hat{\mathbf{x}}_t = \left[\hat{x}^1_t,\dots,\hat{x}^N_t\right]$,
+a candidate profile \(\boldsymbol{\sigma}^{-e}\), and the fixed and known ego order
+\(\sigma^e\), we can obtain 
+the joint optimal strategy returned by the forward ordered-preference solve
+of Chapter~\ref{ch:lex-ibr-ot},
 \begin{equation}
 \tilde{\mathbf{z}}_{\mathbb{T}_t}(\boldsymbol{\sigma}^{-e})
 =
 \mathbf{z}^{*}_{\mathbb{T}_t}\!\left(\hat{\mathbf{x}}_t; \sigma^e, \boldsymbol{\sigma}^{-e}\right),
 \label{eq:inverse_prediction}
 \end{equation}
-where \(\mathbf{z}^{*}_{\mathbb{T}_t}\!\left(\hat{\mathbf{x}}_t; \sigma^e, \boldsymbol{\sigma}^{-e}\right)\)
-denotes the joint optimal strategy returned by the forward ordered-preference solve
-of Chapter~\ref{ch:lex-ibr-ot} on the horizon \(\mathbb{T}_t\), with the ego order
-fixed to \(\sigma^e\) and the non-ego orders fixed to \(\boldsymbol{\sigma}^{-e}\).
+on the short-horizon index range \(\mathbb{T}_t \coloneq t:t+T-1\).
+% over a receding horizon of length $T$,
+This prediction step must be evaluated at the profile level (i.e. for all
+non-ego players $\left[N\right]^{e}$ at once), since
+estimating one non-ego order while holding the other unknown players outside the
+candidate profile would generally score a different game from the one that generated
+the observations.
+
 Here and throughout the chapter, hats denote quantities observed in the data window,
 such as \(\hat{\mathbf{x}}_t\) and \(\hat{\mathbf{z}}_{\mathbb{T}_t}\), while tildes
 denote the corresponding short-horizon predictions generated under a candidate
 profile, such as \(\tilde{\mathbf{z}}_{\mathbb{T}_t}(\boldsymbol{\sigma}^{-e})\).
 
-This prediction step must be evaluated at the profile level, since
-estimating one non-ego order while holding the other unknown players outside the
-candidate profile would generally score a different game from the one that generated
-the observations.
-
 Let $T_{\mathrm{id}}$ denote the identification window.
 Given the observed trajectory window
 $\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$,
 let
-\[
+\(
 S\!\left(\,\cdot\,; \hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}\right) : \mathfrak{S}^{-e} \to \mathbb{R}
-\]
+\)
 denote a profile-level consistency score.
-The inverse estimation problem then consists of selecting the non-ego profile that minimizes
-this score,
-\begin{equation}
-\boldsymbol{\sigma}^{-e,*}
-=
-\argmin_{\boldsymbol{\sigma}^{-e} \in \mathfrak{S}^{-e}}
-S\left(\boldsymbol{\sigma}^{-e}; \hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}\right).
-\label{eq:inverse_problem}
-\end{equation}
-
 The score function $S$ compares the predicted non-ego motion
 $\tilde{\mathbf{z}}^{-e}_{\mathbb{T}_t}(\boldsymbol{\sigma}^{-e})$ with the observed
 motion $\hat{\mathbf{z}}^{-e}_{\mathbb{T}_t}$.
@@ -101,6 +90,16 @@ identification window.
 The specific choices used in this chapter are the baseline score
 $S_{\mathrm{base}}$ in \cref{sec:inverse-baseline} and the combined multi-step
 score $S_{\mathrm{comb}}$ in \cref{sec:inverse-bayesian}.
+
+The inverse estimation problem then consists of selecting the non-ego profile that minimizes
+this score,
+\begin{equation}
+\boldsymbol{\sigma}^{-e,*}
+=
+\argmin_{\boldsymbol{\sigma}^{-e} \in \mathfrak{S}^{-e}}
+S\left(\boldsymbol{\sigma}^{-e}; \hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}\right).
+\label{eq:inverse_problem}
+\end{equation}
 
 \begin{figure}[t]
     \centering
@@ -114,8 +113,7 @@ score $S_{\mathrm{comb}}$ in \cref{sec:inverse-bayesian}.
     \label{fig:inverse_pipeline}
 \end{figure}
 
-The inverse layer does not introduce a new game solution concept.
-Its role is to wrap the forward ordered-preference solver in a discrete hypothesis test over
+The inverse layer's role is to wrap the forward ordered-preference solver in a discrete hypothesis test over
 joint non-ego profiles.
 Once a candidate profile $\boldsymbol{\sigma}^{-e}$ is fixed, the remaining task is to evaluate
 how well the resulting predicted motion matches the observations.
@@ -238,30 +236,27 @@ where $\bar{H}_p = \max\{H_p - 1, 1\}$, and empty sums are taken as zero.
 The weights $w_u$, $w_x$, and $w_p$ scale the immediate control fit, the next-position fit, and the
 continuation fit, respectively.
 The term $\rho_t(\boldsymbol{\sigma}^{-e})$ penalizes optimization failures and large solver residuals.
+
 In the implementation, $\rho_t(\boldsymbol{\sigma}^{-e})$ is set to a fixed failure penalty when the prediction does not converge
 and to a residual-weighted penalty otherwise.
 This preserves a preference for candidates that not only match the observed motion, but also produce
 numerically consistent ordered-preference predictions.
-Geometrically, a candidate profile is preferred when the predicted short-horizon
-motion remains close to the observed trajectory, and penalized when the prediction diverges even if the
+
+Intuitively, a candidate profile is preferred when the predicted short-horizon
+motion remains close to the observed trajectory, and penalized when the prediction diverges -- even if the
 first action is locally plausible.
+Separating the per-step loss into different
+weighted elements allows gaining modularity and fine-tuning afterwards.
 
 Accumulating \cref{eq:inverse_step_loss} over the identification window yields the trajectory score
 \begin{equation*}
 S_{\mathrm{traj}}(\boldsymbol{\sigma}^{-e}) =
 \sum_{t=0}^{T_{\mathrm{id}}-1} L_t(\boldsymbol{\sigma}^{-e}).
 \end{equation*}
-We also retain the control-only score
-\begin{equation*}
-S_u(\boldsymbol{\sigma}^{-e})
-=
-\sum_{t=0}^{T_{\mathrm{id}}-1}
-\sum_{i \in [N]^{-e}}
-\left\lVert
-\tilde{u}^i_t(\boldsymbol{\sigma}^{-e}) - \hat{u}^i_t
-\right\rVert_2^2,
-\end{equation*}
-which coincides with the baseline score in \cref{eq:inverse_baseline_score}.
+
+To sill give a higher importance to the immediate control steps,
+we also retain the control-only score $S_u(\boldsymbol{\sigma}^{-e}) = S_base(\boldsymbol{\sigma}^{-e})$,
+from the baseline score in \cref{eq:inverse_baseline_score}.
 After min-max normalization over the candidate set,
 \begin{equation}
 \bar{S}(\boldsymbol{\sigma}^{-e}; S)
@@ -270,16 +265,17 @@ After min-max normalization over the candidate set,
 {\max_{\boldsymbol{\sigma} \in \mathfrak{S}^{-e}} S(\boldsymbol{\sigma}) - \min_{\boldsymbol{\sigma} \in \mathfrak{S}^{-e}} S(\boldsymbol{\sigma})},
 \label{eq:inverse_normalized_score}
 \end{equation}
-we combine both criteria as
+we combine both criteria by balancing immediate control agreement against multi-step
+trajectory agreement using $\lambda \in [0,1]$,
 \begin{equation}
 S_{\mathrm{comb}}(\boldsymbol{\sigma}^{-e})
 =
 \lambda \bar{S}(\boldsymbol{\sigma}^{-e}; S_u)
 +
-(1-\lambda)\bar{S}(\boldsymbol{\sigma}^{-e}; S_{\mathrm{traj}}),
+(1-\lambda)\bar{S}(\boldsymbol{\sigma}^{-e}; S_{\mathrm{traj}}).
 \label{eq:inverse_combined_score}
 \end{equation}
-where $\lambda \in [0,1]$ balances immediate control agreement against multi-step trajectory agreement.
+
 The final estimate is chosen by minimizing $S_{\mathrm{comb}}$.
 In binary comparisons, the implementation falls back to $S_u$ rather than
 $S_{\mathrm{comb}}$, since min-max normalization can
@@ -341,8 +337,7 @@ The offline estimators infer a single non-ego preference profile before a
 closed-loop rollout begins.
 In practice, however, an ego agent should update its beliefs while the interaction unfolds.
 The implementation also includes an adaptive extension in which inference and control are
-performed simultaneously.
-The closed-loop structure is summarized in \cref{fig:inverse_online_loop}.
+performed simultaneously (\cref{fig:inverse_online_loop}).
 
 \begin{figure}[t]
     \centering
@@ -363,6 +358,7 @@ In the implementation used here, each $\mathcal{C}^i$ is formed from a nominal o
 number of simple perturbations, such as swapping the first two priorities or reversing the list.
 The resulting Cartesian product is a small menu of plausible joint profiles rather than the full
 permutation space, which keeps the online computations tractable.
+
 Let $W$ be the observation-window length, expressed in executed control steps.
 At update index $m$, each candidate profile $\mathbf{c}^{-e} \in \mathcal{C}^{-e}$ is evaluated by
 starting from the observed state at the beginning of the current window, rolling out a short
@@ -370,11 +366,13 @@ forward prediction under $\mathbf{c}^{-e}$, and matching the predicted non-ego t
 against the measurements collected over that same window.
 Each online update requires $|\mathcal{C}^{-e}|$ short forward rollouts over the current
 window, followed by one additional refresh rollout for the selected profile before the ego replan.
+
 In the benchmarked implementation, these candidate rollouts are intentionally restarted from the
 observed window state rather than carrying candidate-local solver state across windows.
 Under the tight relaxation budgets used here, more aggressive warm-start reuse was found to alter
 the resulting closed-loop trajectories enough that it was not retained in the reported online
 estimator.
+
 The raw score of candidate profile
 $\mathbf{c}^{-e} \in \mathcal{C}^{-e}$ is
 \begin{equation}
