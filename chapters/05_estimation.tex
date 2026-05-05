@@ -43,10 +43,11 @@ The unknown object is the joint profile
 \in
 \mathfrak{S}^{-e}
 \equiv
-\prod_{i \in [N]^{-e}} \mathfrak{S}_{K^i} .
+\prod_{i \in [N]^{-e}} \mathfrak{S}_{K^i} ,
 \end{equation*}
-We denote the number of admissible joint candidate profiles by
-\(M \coloneq |\mathfrak{S}^{-e}|\).
+which has 
+\(M \coloneq |\mathfrak{S}^{-e}|\)
+admissible joint candidate profiles.
 
 For a measured joint state $\hat{\mathbf{x}}_t$ over a receding horizon of length $T$,
 we define the associated short-horizon index range
@@ -63,20 +64,10 @@ where \(\mathbf{z}^{*}_{\mathbb{T}_t}\!\left(\hat{\mathbf{x}}_t; \sigma^e, \bold
 denotes the joint optimal strategy returned by the forward ordered-preference solve
 of Chapter~\ref{ch:lex-ibr-ot} on the horizon \(\mathbb{T}_t\), with the ego order
 fixed to \(\sigma^e\) and the non-ego orders fixed to \(\boldsymbol{\sigma}^{-e}\).
-% As in Chapters~\ref{ch:goop} and~\ref{ch:lex-ibr-ot}, this forward solve also depends
-% on fixed game data such as the objective parameters \(\theta^i\), but those quantities
-% are assumed known and are suppressed in the notation here because the inverse problem
-% varies only the preference orders.
 Here and throughout the chapter, hats denote quantities observed in the data window,
 such as \(\hat{\mathbf{x}}_t\) and \(\hat{\mathbf{z}}_{\mathbb{T}_t}\), while tildes
 denote the corresponding short-horizon predictions generated under a candidate
 profile, such as \(\tilde{\mathbf{z}}_{\mathbb{T}_t}(\boldsymbol{\sigma}^{-e})\).
-% The superscript \(*\) remains reserved for the optimal solution of the forward
-% ordered-preference solve, as in Chapter~\ref{ch:lex-ibr-ot}.
-% Chapter~\ref{ch:lex-ibr-ot}
-% uses the plain symbol \(\mathbf{x}_t\) because only the measured forward state is in
-% play there, whereas the inverse setting requires a visual distinction between observed
-% and predicted quantities.
 
 This prediction step must be evaluated at the profile level, since
 estimating one non-ego order while holding the other unknown players outside the
@@ -111,18 +102,6 @@ The specific choices used in this chapter are the baseline score
 $S_{\mathrm{base}}$ in \cref{sec:inverse-baseline} and the combined multi-step
 score $S_{\mathrm{comb}}$ in \cref{sec:inverse-bayesian}.
 
-% Following the validation metrics used in \cref{ch:lex-ibr-ot}, we use an $L_1$
-% trajectory distance as the basic mismatch measure.
-
-% % The overall estimation pipeline is summarized in \cref{fig:inverse_pipeline}.
-% Observed trajectories define the data window, each admissible profile is evaluated by
-% retrospective prediction solves at the observed time indices, and the resulting predictions are scored by
-% their similarity to the observed trajectories.
-% %The discrete search space is illustrated in \cref{fig:inverse_candidate_space}, while
-% The
-% lexicographic cascade used inside each prediction solve is summarized in
-% \cref{fig:inverse_lexicographic_rule}.
-
 \begin{figure}[t]
     \centering
     \def\svgwidth{0.98\textwidth}
@@ -134,16 +113,6 @@ score $S_{\mathrm{comb}}$ in \cref{sec:inverse-bayesian}.
     computed, and the lowest-scoring profile is selected.}
     \label{fig:inverse_pipeline}
 \end{figure}
-
-% \begin{figure}[t]
-%     \centering
-%     \def\svgwidth{0.98\textwidth}
-%     \subimport{figures/inverse_goop/}{candidate_order_tree.pdf_tex}
-%     \caption{Discrete candidate space for inverse games of ordered preference. A known objective library induces a factorial
-%     number of admissible preference orders, one of which is highlighted as the candidate recovered by the
-%     estimator.}
-%     \label{fig:inverse_candidate_space}
-% \end{figure}
 
 The inverse layer does not introduce a new game solution concept.
 Its role is to wrap the forward ordered-preference solver in a discrete hypothesis test over
@@ -166,15 +135,6 @@ a finite set of latent hypotheses about the other agent \cite{wang:2020}. Here, 
 the latent hypothesis is not a maneuver label or a single intent variable, but a joint profile of
 lexicographic orders over a known objective library. That distinction is what makes the search
 space finite yet combinatorial, and it motivates the exhaustive profile evaluation introduced next.
-
-% \begin{figure}[h]
-%     \centering
-%     \def\svgwidth{0.90\textwidth}
-%     \subimport{figures/inverse_goop/}{lexicographic_rule.pdf_tex}
-%     \caption{Lexicographic decision rule used inside each ordered-preference solve. The first objective level is
-%     minimized first, and additional levels are only considered when the previous one remains tied.}
-%     \label{fig:inverse_lexicographic_rule}
-% \end{figure}
 
 \section{Exhaustive order identification}
 \label{sec:inverse-baseline}
@@ -241,8 +201,6 @@ executed control.
 A stronger criterion should also account for the short trajectory segment that the candidate profile
 predicts after that control is applied.
 To that end, we compare the predicted and observed trajectories over multiple future steps.
-% The ambiguity that motivates the multi-step loss is illustrated in
-% \cref{fig:inverse_ambiguity_identifiability}.
 
 Let $p_t^i = \operatorname{pos}(x_t^i) \in \mathbb{R}^2$ denote the planar position extracted from
 the state of agent $i$ at time $t$.
@@ -288,27 +246,6 @@ Geometrically, a candidate profile is preferred when the predicted short-horizon
 motion remains close to the observed trajectory, and penalized when the prediction diverges even if the
 first action is locally plausible.
 
-% \begin{figure}[t]
-%     \centering
-%     \def\svgwidth{0.96\textwidth}
-%     \subimport{figures/inverse_goop/}{trajectory_matching.pdf_tex}
-%     \caption{Interpretation of the multi-step matching loss. The observed trajectory is compared with
-%     candidate short-horizon predictions generated by ordered-preference solves. Candidate profiles that reproduce
-%     both the immediate control action and the subsequent trajectory segment receive lower loss values than
-%     candidates whose predicted motion quickly diverges.}
-%     \label{fig:trajectory_matching_schema}
-% \end{figure}
-
-% \begin{figure}[t]
-%     \centering
-%     \def\svgwidth{0.98\textwidth}
-%     \subimport{figures/inverse_goop/}{ambiguity_identifiability.pdf_tex}
-%     \caption{Why short-horizon information matters. In the ambiguous case, two candidate profiles produce
-%     nearly identical first-step behavior and can only be separated by looking further ahead. In the
-%     identifiable case, the divergence appears earlier and the profile is easier to recover.}
-%     \label{fig:inverse_ambiguity_identifiability}
-% \end{figure}
-
 Accumulating \cref{eq:inverse_step_loss} over the identification window yields the trajectory score
 \begin{equation*}
 S_{\mathrm{traj}}(\boldsymbol{\sigma}^{-e}) =
@@ -344,32 +281,9 @@ S_{\mathrm{comb}}(\boldsymbol{\sigma}^{-e})
 \end{equation}
 where $\lambda \in [0,1]$ balances immediate control agreement against multi-step trajectory agreement.
 The final estimate is chosen by minimizing $S_{\mathrm{comb}}$.
-% The one-player diagnostic implementation used in the offline table below falls back to $S_u$ when its
-% candidate set has two elements, in order to avoid spurious rescaling effects in nearly symmetric binary
-% comparisons.
 In binary comparisons, the implementation falls back to $S_u$ rather than
 $S_{\mathrm{comb}}$, since min-max normalization can
 exaggerate very small score differences into an artificial separation with only two candidates.
-
-% In addition to the deterministic score above, we maintain an online posterior over candidate profiles.
-% Starting from the uniform prior $p_0(\boldsymbol{\sigma}^{-e}) = 1 / |\Sigma^{-e}|$, we update
-% \begin{equation}
-% p_t(\boldsymbol{\sigma}^{-e})
-% =
-% \frac{
-% p_{t-1}(\boldsymbol{\sigma}^{-e}) \exp\!\left(-L_t(\boldsymbol{\sigma}^{-e}) / \tau\right)
-% }{
-% \sum_{\boldsymbol{\sigma} \in \Sigma^{-e}}
-% p_{t-1}(\boldsymbol{\sigma}) \exp\!\left(-L_t(\boldsymbol{\sigma}) / \tau\right)
-% },
-% \label{eq:inverse_posterior}
-% \end{equation}
-% where $\tau > 0$ is a temperature parameter.
-% The posterior is not used directly to choose the final profile.
-% Instead, it acts as a confidence trace that reveals whether the candidate set is sharply separated or
-% whether several profiles remain observationally similar.
-% Its evolution over the identification window is shown in
-% \cref{fig:inverse_posterior_evolution}.
 
 Besides the deterministic score above, we maintain a belief distribution over candidate profiles.
 This distribution is initialized uniformly, so every candidate starts with probability
@@ -391,25 +305,6 @@ where $\tau > 0$ is a temperature parameter.
 This belief update is not used directly to choose the final profile.
 It serves as a confidence trace, showing whether the evidence concentrates around one candidate or
 remains spread across several behaviorally similar profiles.
-%Its evolution over the identification window is shown in \cref{fig:inverse_posterior_evolution}.
-
-% \begin{figure}[t]
-%     \centering
-%     \def\svgwidth{0.98\textwidth}
-%     \subimport{figures/inverse_goop/}{score_decomposition.pdf_tex}
-%     \caption{Decomposition of the ranking score. The control-only term, the multi-step trajectory term,
-%     and the posterior confidence trace are combined to obtain the final profile estimate.}
-%     \label{fig:inverse_score_decomposition}
-% \end{figure}
-
-% \begin{figure}[t]
-%     \centering
-%     \def\svgwidth{0.82\textwidth}
-%     \subimport{figures/inverse_goop/}{posterior_evolution.pdf_tex}
-%     \caption{Posterior concentration over time for a small candidate set. The confidence mass shifts
-%     gradually toward the most plausible profile as more windows are observed.}
-%     \label{fig:inverse_posterior_evolution}
-% \end{figure}
 
 Algorithm~\ref{alg:inverse_bayesian} implements the resulting estimator in a single sweep over the
 identification window. Each forward prediction solve contributes simultaneously to the control-only
@@ -644,11 +539,6 @@ value $1$ meaning the intended maneuver is completed over the rollout horizon. F
 \emph{solve-success rate} is the fraction of local solves in the rollout that return a numerically acceptable
 solution; the reported value is the minimum across players.
 \enlargethispage{2\baselineskip}
-% Two additional offline checks are also reported below.
-% The first uses a longer identification window with $T_{\mathrm{id}} = 6$.
-% The second perturbs the multi-step weights to
-% $(w_x, w_p, \lambda) \in \{(1.5, 0.25, 0.60), (2.5, 0.45, 0.75)\}$,
-% while $w_u = 1$, $H_p = 3$, and $\tau = 0.1$ remain fixed.
 
 \subsection{Offline Diagnostic Comparison}
 
@@ -657,16 +547,6 @@ It places the exhaustive one-step baseline of \cref{sec:inverse-baseline} and th
 diagnostic of \cref{sec:inverse-bayesian} on the same reduced two-non-ego joint inverse task.
 Because strict reduced-profile recovery is too coarse to be informative offline, the comparison is based on the
 weighted order score $a_{\mathrm{ord}}$ and the first-priority recovery rate $r_1$.
-
-% \begin{figure}[t]
-%     \centering
-%     \input{figures/inverse_goop/offline_metrics_tikz.tex}
-%     \caption{Offline reduced joint non-ego sweep on the nominal highway and city scenarios.
-%     The one-step baseline and the richer multi-step score are compared through
-%     (\subref{fig:inverse_offline_metrics_a}) the weighted order-agreement score $a_{\mathrm{ord}}$ and
-%     (\subref{fig:inverse_offline_metrics_b}) the first-priority recovery rate $r_1$.}
-%     \label{fig:inverse_offline_metrics}
-% \end{figure}
 
 \begin{table}[!htbp]
     \centering
@@ -767,15 +647,6 @@ candidate profile explains more than the next control action, and the online upd
 same idea into closed-loop interaction. Taken together, the experiments show that
 preference-order information can be recovered and used online, but only within the
 identifiability limits of the available observation window and candidate set.
-
-% The same experiments also make those limits clear.
-% Highway remains ambiguous offline even when the identification window is doubled from $T_{\mathrm{id}} = 3$ to
-% $T_{\mathrm{id}} = 6$, and the nominal offline rankings do not change under nearby multi-step weights.
-% The online method therefore earns its performance not from exhaustive discovery, but from local discrimination around a
-% good prior.
-% It also relies on a hand-designed finite candidate set rather than the full permutation space.
-% Finally, the robustness batches show that correct local profile identification does not by itself guarantee comfortable
-% closed-loop margins in the tighter city geometry.
 
 This offline ambiguity is consistent with the structure of ordered preferences. To identify an order from observations,
 it is not enough to watch a player while only its highest-priority objective is active. Informative evidence appears
