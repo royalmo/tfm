@@ -60,11 +60,18 @@ details of the physical platform.\footnote{The code used for the experiments in 
 
 \Cref{fig:duckietown_architecture} summarizes the closed-loop execution path.
 At each sampling instant \(\Delta t\), the runtime manager receives the latest per-robot state estimates
-\(\hat{x}_k^i\) over ROS, bundles them into \(\hat{\mathbf{x}}_k\), and queries the bridge.
+\(\hat{x}_k^i\) over ROS, bundles them into
+\[
+\hat{\mathbf{x}}_k = (\hat{x}_k^1,\hat{x}_k^2,\dots,\hat{x}_k^N),
+\]
+and queries the bridge.
 The bridge issues the local TCP call to the solver, which replans only after the current open-loop plan has
 executed for \(T_l\) steps and otherwise returns the next command from the existing plan.
 Each robot-side adapter then maps the returned sample to the low-level drive input
-\(u_k^i = (v_k^i,\omega_k^i)\), while the watchdog enforces the zero-input fallback if the command stream is
+\[
+u_k^i = (v_k^i,\omega_k^i),
+\]
+while the watchdog enforces the zero-input fallback if the command stream is
 interrupted.
 
 % The same split also fixes the failure mode.
@@ -127,13 +134,21 @@ must be converted before it can be executed on the robot.
 
 The robot adapter implements a compact controller that maps the commanded planar acceleration to a
 velocity-vector state and then to the standard driving inputs.
-Let \(\mathbf{a}_k = (a_{x,k}, a_{y,k})\) denote the acceleration vector received at time step \(k\).
+Let
+\[
+\mathbf{a}_k = (a_{x,k}, a_{y,k})
+\]
+denote the acceleration vector received at time step \(k\).
 After clamping \(\mathbf{a}_k\) to the admissible magnitude and applying a velocity-decay factor, the
 controller updates its internal planar velocity estimate as
 \begin{equation}
 \mathbf{v}_{k+1} = \alpha \mathbf{v}_k + \Delta t \,\mathrm{clip}_{a_{\max}}(\mathbf{a}_k),
 \end{equation}
-where \(\alpha = \max(0, 1 - \lambda \Delta t)\) and \(\lambda\) is the decay parameter.
+where
+\[
+\alpha = \max(0, 1 - \lambda \Delta t)
+\]
+and \(\lambda\) is the decay parameter.
 The desired heading is then extracted from the updated vector,
 \begin{equation}
 \theta^{\mathrm{des}}_{k+1} = \operatorname{atan2}(v_{y,k+1}, v_{x,k+1}),
@@ -171,8 +186,15 @@ producing requests that the robot cannot track reliably.
 % \end{algorithm}
 
 The published \texttt{RobotStateStamped} message is richer than a simple pose estimate.
-In addition to \(x\), \(y\), \(\theta\), \(v_x\), and \(v_y\), it carries the command pair
-\(v^{\mathrm{cmd}}\) and \(\omega^{\mathrm{cmd}}\), encoder-based estimates when available, and wheel
+In addition to
+\[
+(x,y,\theta,v_x,v_y),
+\]
+it carries the command pair
+\[
+(v^{\mathrm{cmd}},\omega^{\mathrm{cmd}}),
+\]
+encoder-based estimates when available, and wheel
 command feedback when the robot firmware exposes it. This supports a more precise state estimate
 at the next solve step.
 The adapter also includes a watchdog timer that zeros the command when no fresh acceleration message has been
@@ -187,6 +209,16 @@ received within a configured timeout.
 \section{Results}
 \label{sec:duckietown-results}
 
+\begin{figure}[t]
+    \centering
+    \input{figures/duckietown/duckietown_solve_times_tikz.tex}
+    \caption{Solve times at different replanning instants in two runs of the same Duckietown interaction.
+    The vertical axis is logarithmic. The horizontal dashed lines at \(\Delta t\)
+    and \(2\Delta t\) mark the one-sample budget and the latest finish time that still meets the next replanning
+    deadline when \(T_l = 2\).}
+    \label{fig:duckietown_solve_times}
+\end{figure}
+
 The experiments address two practical questions that do not arise in the idealized simulations of the
 previous chapters.
 First, can the ordered-preference solver return a fresh plan fast enough for the robot loop to keep moving?
@@ -197,7 +229,10 @@ preference-induced behaviors, this chapter does not compare alternative preferen
 It focuses instead on one representative interaction setting and on executability rather than broad
 experimental comparison.
 
-For the reported runs, the manager uses turn length \(T_l = 2\) and sampling period \(\Delta t = 0.3\,\mathrm{s}\).
+For the reported runs, the manager uses
+\[
+T_l = 2,\qquad \Delta t = 0.3\,\mathrm{s}.
+\]
 A solve that finishes within one sampling period \(\Delta t\) can be applied immediately at the next update, whereas
 a solve that finishes between \(\Delta t\) and \(2\Delta t\) still leaves one executed control step in reserve before
 the next mandatory replan.
@@ -206,16 +241,6 @@ As the overtaking maneuver resolves, the collision-avoidance constraints relax, 
 solved faster.
 All but one of the logged solves finish before \(\Delta t\), and more than half finish below \(30\,\mathrm{ms}\).
 The platform runs near real time, but with limited timing slack.
-
-\begin{figure}[h]
-    \centering
-    \input{figures/duckietown/duckietown_solve_times_tikz.tex}
-    \caption{Solve times at different replanning instants in two runs of the same Duckietown interaction.
-    The vertical axis is logarithmic. The horizontal dashed lines at \(\Delta t\)
-    and \(2\Delta t\) mark the one-sample budget and the latest finish time that still meets the next replanning
-    deadline when \(T_l = 2\).}
-    \label{fig:duckietown_solve_times}
-\end{figure}
 
 The second result concerns trajectory tracking.
 \Cref{fig:duckietown_trajectory} compares the motion planned by the acceleration-domain solver with the motion

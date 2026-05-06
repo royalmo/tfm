@@ -62,7 +62,10 @@ We denote the number of admissible joint profiles by
 M \coloneq |\mathcal R^{-e}|.
 \]
 
-Given a measured state $\hat{\mathbf{x}}_t = \left[\hat{x}^1_t,\dots,\hat{x}^N_t\right]$,
+Given a measured state
+\[
+\hat{\mathbf{x}}_t = \left[\hat{x}^1_t,\dots,\hat{x}^N_t\right],
+\]
 a candidate profile \(\boldsymbol{r}^{-e}\), and the fixed and known ego ranking
 \(r^e\), we can obtain
 the joint optimal strategy returned by the forward ordered-preference solve
@@ -73,7 +76,10 @@ of Chapter~\ref{ch:lex-ibr-ot},
 \mathbf{z}^{*}_{\mathbb{T}_t}\!\left(\hat{\mathbf{x}}_t; r^e, \boldsymbol{r}^{-e}\right),
 \label{eq:inverse_prediction}
 \end{equation}
-on the short-horizon index range \(\mathbb{T}_t \coloneq t:t+T-1\).
+on the short-horizon index range
+\[
+\mathbb{T}_t \coloneq t:t+T-1.
+\]
 % over a receding horizon of length $T$,
 This prediction step must be evaluated at the profile level (i.e. for all
 non-ego players $\left[N\right]^{-e}$ at once), since
@@ -90,13 +96,16 @@ Let $T_{\mathrm{id}}$ denote the identification window.
 Given the observed trajectory window
 $\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$,
 let
-\(
+\[
 S\!\left(\,\cdot\,; \hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}\right) : \mathcal R^{-e} \to \mathbb{R}
-\)
+\]
 denote a profile-level consistency score.
-The score function $S$ compares the predicted non-ego motion
-$\tilde{\mathbf{z}}^{-e}_{\mathbb{T}_t}(\boldsymbol{r}^{-e})$ with the observed
-motion $\hat{\mathbf{z}}^{-e}_{\mathbb{T}_t}$.
+The score function $S$ compares the predicted and observed non-ego motion,
+\[
+\tilde{\mathbf{z}}^{-e}_{\mathbb{T}_t}(\boldsymbol{r}^{-e})
+\quad\text{and}\quad
+\hat{\mathbf{z}}^{-e}_{\mathbb{T}_t}.
+\]
 This mismatch can be quantified, for example, through a $L_1$ distance as in \cref{ch:lex-ibr-ot}, or through squared
 Euclidean errors on the relevant control and position components over the
 identification window.
@@ -131,7 +140,10 @@ joint non-ego profiles.
 Once a candidate profile $\boldsymbol{r}^{-e}$ is fixed, the remaining task is to evaluate
 how well the resulting predicted motion matches the observations.
 The main difficulty is therefore combinatorial. The candidate set grows as the Cartesian product
-$\mathcal R^{-e} = \prod_{i \in [N]^{-e}} \mathcal R^i$, and each candidate requires one or more forward
+\[
+\mathcal R^{-e} = \prod_{i \in [N]^{-e}} \mathcal R^i,
+\]
+and each candidate requires one or more forward
 prediction solves over the identification window.
 
 Under this interpretation, the estimator is best understood as a finite-hypothesis model-selection
@@ -268,7 +280,10 @@ S_{\mathrm{traj}}(\boldsymbol{r}^{-e}) =
 \end{equation*}
 
 To still give higher importance to the immediate control steps,
-we also retain the control-only score $S_u(\boldsymbol{r}^{-e}) = S_{\mathrm{base}}(\boldsymbol{r}^{-e})$,
+we also retain the control-only score
+\[
+S_u(\boldsymbol{r}^{-e}) = S_{\mathrm{base}}(\boldsymbol{r}^{-e}),
+\]
 from the baseline score in \cref{eq:inverse_baseline_score}.
 After min-max normalization over the candidate set,
 \begin{equation}
@@ -296,7 +311,9 @@ exaggerate very small score differences into an artificial separation with only 
 
 Besides the deterministic score above, we maintain a belief distribution over candidate profiles.
 This distribution is initialized uniformly, so every candidate starts with probability
-$q_0(\boldsymbol{r}^{-e}) = 1 / |\mathcal R^{-e}|$.
+\[
+q_0(\boldsymbol{r}^{-e}) = \frac{1}{|\mathcal R^{-e}|}.
+\]
 After each observation step, candidates with smaller loss receive larger exponential weight, and the
 distribution is renormalized according to
 \begin{equation}
@@ -352,6 +369,21 @@ In practice, however, an ego agent should update its beliefs while the interacti
 The implementation also includes an adaptive extension in which inference and control are
 performed simultaneously (\cref{fig:inverse_online_loop}).
 
+For each non-ego player $i \in [N]^{-e}$, we consider a small candidate set
+\[
+\mathcal{C}^i \subseteq \mathcal R^i.
+\]
+The online profile set is
+\[
+\mathcal{C}^{-e} = \prod_{i \in [N]^{-e}} \mathcal{C}^i.
+\]
+Unlike the offline case, these sets are not full permutation spaces.
+In the implementation used here, each $\mathcal{C}^i$ is formed from a nominal ranking by a small
+number of simple perturbations, such as swapping the first two priorities or reversing the list.
+The resulting Cartesian product is a small menu of plausible joint profiles rather than the full
+permutation space, which keeps the online computations tractable.
+
+
 \begin{figure}[t]
     \centering
     \def\svgwidth{0.98\textwidth}
@@ -361,16 +393,6 @@ performed simultaneously (\cref{fig:inverse_online_loop}).
     profile is decisively better, and the ego player replans against the resulting predictions.}
     \label{fig:inverse_online_loop}
 \end{figure}
-
-For each non-ego player $i \in [N]^{-e}$, we consider a small candidate set
-$\mathcal{C}^i \subseteq \mathcal R^i$.
-The online profile set is
-$\mathcal{C}^{-e} = \prod_{i \in [N]^{-e}} \mathcal{C}^i$.
-Unlike the offline case, these sets are not full permutation spaces.
-In the implementation used here, each $\mathcal{C}^i$ is formed from a nominal ranking by a small
-number of simple perturbations, such as swapping the first two priorities or reversing the list.
-The resulting Cartesian product is a small menu of plausible joint profiles rather than the full
-permutation space, which keeps the online computations tractable.
 
 Let $W$ be the observation-window length, expressed in executed control steps.
 At update index $m$, each candidate profile $\boldsymbol{r}^{-e} \in \mathcal{C}^{-e}$ is evaluated by
@@ -481,7 +503,14 @@ road geometry, and control bounds.
 Only the inference-specific settings change here.
 The nominal offline identification window was set to $T_{\mathrm{id}} = 3$.
 For the multi-step method, the weights were chosen as
-$w_u = 1$, $w_x = 2$, $w_p = 0.35$, and $H_p = 3$, with temperature $\tau = 0.1$ and $\lambda = \frac{2}{3}$.
+\[
+w_u = 1,\qquad
+w_x = 2,\qquad
+w_p = 0.35,\qquad
+H_p = 3,\qquad
+\tau = 0.1,\qquad
+\lambda = \frac{2}{3}.
+\]
 Optimization failures were penalized by a fixed additive term, while successful solves incurred a small
 residual penalty.
 
@@ -497,9 +526,12 @@ $K_i$ priority levels included in the score, we define the weighted inversion sc
     \sum_{b=a+1}^{K_i}
     \mathbf{1}\!\left[
         r^i(b)\ \text{is ranked above}\ r^i(a)\ \text{in}\ r^{i,*}
-    \right].
+    \right],
 \end{equation*}
-where \(Z_i = \sum_{a=1}^{K_i-1} 2^{-(a-1)} (K_i-a)\).
+where
+\[
+Z_i = \sum_{a=1}^{K_i-1} 2^{-(a-1)} (K_i-a).
+\]
 We then define the weighted order-agreement score $a_{\mathrm{ord}}^i$ as
 \begin{equation*}
     a_{\mathrm{ord}}^i = 1 - d_{\mathrm{ord}}^i.
@@ -588,7 +620,11 @@ Both ablations lead to the same conclusion.
 Extending the window from $T_{\mathrm{id}} = 3$ to $T_{\mathrm{id}} = 6$ doubles the reduced sweep from $108$ to
 $216$ joint window fits without changing the selected reduced profile in any of the nominal runs.
 Likewise, the nearby weight settings
-$(w_x, w_p, \lambda) = (1.5, 0.25, 0.60)$ and $(2.5, 0.45, 0.75)$
+\[
+(w_x, w_p, \lambda) = (1.5, 0.25, 0.60)
+\quad\text{and}\quad
+(w_x, w_p, \lambda) = (2.5, 0.45, 0.75)
+\]
 leave the multi-step endpoints unchanged in both scenarios.
 The main offline limitation is thus not search size or narrow tuning, but the lack of identifying
 signal in these short windows.
