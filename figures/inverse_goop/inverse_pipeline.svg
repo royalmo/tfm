@@ -179,13 +179,13 @@
        y="286"
        text-anchor="middle"
        style="font-family:Sans;font-size:17px"
-       id="text295">\footnotesize{$\boldsymbol{\sigma}^{-e}_1$}</text>
+       id="text295">\footnotesize{$\boldsymbol{r}^{-e}_1$}</text>
     <text
        x="148"
        y="286"
        text-anchor="middle"
        style="font-family:Sans;font-size:17px"
-       id="text297">\footnotesize{$\boldsymbol{\sigma}^{-e}_2$}</text>
+       id="text297">\footnotesize{$\boldsymbol{r}^{-e}_2$}</text>
     <text
        x="197"
        y="285"
@@ -197,7 +197,7 @@
        y="286"
        text-anchor="middle"
        style="font-family:Sans;font-size:17px"
-       id="text301">\footnotesize{$\boldsymbol{\sigma}^{-e}_M$}</text>
+       id="text301">\footnotesize{$\boldsymbol{r}^{-e}_M$}</text>
   </g>
   <g
      id="solve-panel">
@@ -229,12 +229,12 @@
        x="378.37985"
        y="181.39056"
        style="font-size:17px;font-family:Sans"
-       id="text310">\footnotesize{for each $(t,\boldsymbol{\sigma}^{-e})$}</text>
+       id="text310">\footnotesize{for each $(t,\boldsymbol{r}^{-e})$}</text>
     <text
        x="407"
        y="223.22795"
        style="font-size:14px;font-family:Sans"
-       id="text312">\footnotesize{$\tilde{\mathbf{z}}_{\mathbb{T}_t}=\mathbf{z}^{*}_{\mathbb{T}_t}(\hat{\mathbf{x}}_t;\sigma^e,\boldsymbol{\sigma}^{-e})$}</text>
+       id="text312">\footnotesize{$\tilde{\mathbf{z}}_{\mathbb{T}_t}=\mathbf{z}^{*}_{\mathbb{T}_t}(\hat{\mathbf{x}}_t;r^e,\boldsymbol{r}^{-e})$}</text>
     <text
        x="406.89255"
        y="230"
@@ -294,7 +294,7 @@
        y="205"
        text-anchor="middle"
        style="font-size:17px;font-family:Sans"
-       id="text329">\footnotesize{score $S(\boldsymbol{\sigma}^{-e})$}</text>
+       id="text329">\footnotesize{score $S(\boldsymbol{r}^{-e})$}</text>
     <rect
        x="790"
        y="246"
@@ -309,7 +309,7 @@
        y="271"
        text-anchor="middle"
        style="font-size:17px;font-family:Sans"
-       id="text333">\footnotesize{best profile $\boldsymbol{\sigma}^{-e,*}$}</text>
+       id="text333">\footnotesize{best profile $\boldsymbol{r}^{-e,*}$}</text>
   </g>
   <path
      d="m 298,105.46104 50,27"
