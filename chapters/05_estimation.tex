@@ -92,12 +92,16 @@ such as \(\hat{\mathbf{x}}_t\) and \(\hat{\mathbf{z}}_{\mathbb{T}_t}\), while ti
 denote the corresponding short-horizon predictions generated under a candidate
 profile, such as \(\tilde{\mathbf{z}}_{\mathbb{T}_t}(\boldsymbol{r}^{-e})\).
 
-Let $T_{\mathrm{id}}$ denote the identification window.
+Let $T_{\mathrm{id}}$ denote the identification window, and let
+\[
+\mathcal{I}_{\mathrm{id}} \coloneq 0:T_{\mathrm{id}}+T-1
+\]
+denote the index range of the observed trajectory data used by the estimator.
 Given the observed trajectory window
-$\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$,
+$\hat{\mathbf{z}}_{\mathcal{I}_{\mathrm{id}}}$,
 let
 \[
-S\!\left(\,\cdot\,; \hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}\right) : \mathcal R^{-e} \to \mathbb{R}
+S\!\left(\,\cdot\,; \hat{\mathbf{z}}_{\mathcal{I}_{\mathrm{id}}}\right) : \mathcal R^{-e} \to \mathbb{R}
 \]
 denote a profile-level consistency score.
 The score function $S$ compares the predicted and observed non-ego motion,
@@ -119,7 +123,7 @@ this score,
 \boldsymbol{r}^{-e,*}
 =
 \argmin_{\boldsymbol{r}^{-e} \in \mathcal R^{-e}}
-S\left(\boldsymbol{r}^{-e}; \hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}\right).
+S\left(\boldsymbol{r}^{-e}; \hat{\mathbf{z}}_{\mathcal{I}_{\mathrm{id}}}\right).
 \label{eq:inverse_problem}
 \end{equation}
 
@@ -190,7 +194,7 @@ distinguish.
 The method also scales with the Cartesian product of the candidate ranking sets.
 
 \begin{algorithm}
-\KwData{Known ego ranking $r^e$, non-ego candidate profile set $\mathcal R^{-e}$, observed trajectory $\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$, and receding horizon $T$}
+\KwData{Known ego ranking $r^e$, non-ego candidate profile set $\mathcal R^{-e}$, observed trajectory $\hat{\mathbf{z}}_{\mathcal{I}_{\mathrm{id}}}$, and receding horizon $T$}
 \KwResult{Inferred non-ego preference profile $\boldsymbol{r}^{-e,*}$}
 \medskip
 \ForEach{$\boldsymbol{r}^{-e} \in \mathcal R^{-e}$}{
@@ -338,7 +342,7 @@ score, the multi-step trajectory score, and the belief update, so the ranking an
 are built from the same sequence of candidate evaluations.
 
 \begin{algorithm}
-\KwData{Known ego ranking $r^e$, non-ego candidate profile set $\mathcal R^{-e}$, observed trajectory $\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$, plan-matching horizon $H_p$, score weight $\lambda$, and temperature $\tau$}
+\KwData{Known ego ranking $r^e$, non-ego candidate profile set $\mathcal R^{-e}$, observed trajectory $\hat{\mathbf{z}}_{\mathcal{I}_{\mathrm{id}}}$, plan-matching horizon $H_p$, score weight $\lambda$, and temperature $\tau$}
 \KwResult{Inferred non-ego preference profile $\boldsymbol{r}^{-e,*}$ and posterior history $q_t$}
 \medskip
 Initialize $q_0(\boldsymbol{r}^{-e}) = 1 / |\mathcal R^{-e}|$ for all $\boldsymbol{r}^{-e} \in \mathcal R^{-e}$\;

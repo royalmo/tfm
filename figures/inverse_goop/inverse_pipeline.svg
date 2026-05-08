@@ -81,7 +81,7 @@
        y="82"
        text-anchor="middle"
        style="font-family:Sans;font-size:16px"
-       id="text266">\footnotesize{$\hat{\mathbf{z}}_{0:T_{\mathrm{id}}+T-1}$}</text>
+       id="text266">\footnotesize{$\hat{\mathbf{z}}_{\mathcal{I}_{\mathrm{id}}}$}</text>
     <rect
        x="44"
        y="101"
